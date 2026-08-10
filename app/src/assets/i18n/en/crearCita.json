@@ -1,0 +1,17 @@
+{
+    "gestion_citas_crear": "Appointment management",
+    "agendar_cita_titulo": "Appointment scheduling form",
+    "agendar_cita_descripcion": "At Soluvix, we make it easier for clients and professionals to connect, allowing photography services to be booked in a fast, clear, and accessible way.",
+    "programar_servicio": "Schedule your service easily",
+    "programar_servicio_descripcion": "Select the client, professional, service, date, time, and modality for the new appointment.",
+    "seleccionar_servicio_paso": "Select the service",
+    "seleccionar_servicio_descripcion": "Choose the professional and the required service.",
+    "definir_fecha": "Set the date",
+    "definir_fecha_descripcion": "Enter the appointment date and time.",
+    "confirmar_informacion": "Confirm the information",
+    "confirmar_informacion_descripcion": "Review the information before registering the appointment.",
+    "formulario_cita": "Form",
+    "informacion_cita": "Appointment information",
+    "completar_datos_cita": "Complete the required information to schedule a new appointment.",
+    "cargando_informacion_cita": "Loading information..."
+}

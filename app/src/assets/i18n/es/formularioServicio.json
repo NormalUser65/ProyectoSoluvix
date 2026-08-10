@@ -1,0 +1,22 @@
+{
+    "servicio_form_profesional": "Profesional",
+    "servicio_form_seleccionar_profesional": "Seleccione un profesional",
+    "servicio_form_error_profesional": "Debe seleccionar un profesional",
+    "servicio_form_categoria": "Categoría",
+    "servicio_form_seleccionar_categoria": "Seleccione una categoría",
+    "servicio_form_error_categoria": "Debe seleccionar una categoría",
+    "servicio_form_modalidad": "Modalidad",
+    "servicio_form_seleccionar_modalidad": "Seleccione una modalidad",
+    "servicio_form_error_modalidad": "Debe seleccionar una modalidad",
+    "servicio_form_nombre": "Nombre del servicio",
+    "servicio_form_descripcion": "Descripción",
+    "servicio_form_precio": "Precio",
+    "servicio_form_duracion": "Duración estimada (min)",
+    "servicio_form_especialidades": "Especialidades",
+    "servicio_form_activo": "Servicio activo",
+    "servicio_form_activo_descripcion": "| Si está activo, será visible para los clientes.",
+    "servicio_form_cancelar": "Cancelar",
+    "servicio_form_guardando": "Guardando...",
+    "servicio_form_actualizar": "Actualizar",
+    "servicio_form_registrar": "Registrar"
+}

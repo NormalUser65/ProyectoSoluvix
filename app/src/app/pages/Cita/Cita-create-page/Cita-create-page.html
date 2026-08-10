@@ -1,0 +1,178 @@
+<section class="appointment-create-panel">
+
+  <!-- Panel informativo izquierdo -->
+
+  <section class="appointment-visual">
+
+    <div class="visual-content">
+
+      <span class="visual-eyebrow">
+        {{ 'gestion_citas_crear' | transloco }}
+      </span>
+
+      <h1>
+        {{ 'agendar_cita_titulo' | transloco }}
+      </h1>
+
+      <p>
+        {{ 'agendar_cita_descripcion' | transloco }}
+      </p>
+
+
+      <div class="visual-highlight">
+
+        <span class="highlight-mark">
+          ✓
+        </span>
+
+        <div>
+
+          <strong>
+            {{ 'programar_servicio' | transloco }}
+          </strong>
+
+          <small>
+            {{ 'programar_servicio_descripcion' | transloco }}
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <div class="visual-steps">
+
+        <div class="step-item">
+
+          <span>
+            1
+          </span>
+
+          <div>
+            <strong>
+              {{ 'seleccionar_servicio_paso' | transloco }}
+            </strong>
+
+            <small>
+              {{ 'seleccionar_servicio_descripcion' | transloco }}
+            </small>
+          </div>
+
+        </div>
+
+
+        <div class="step-item">
+
+          <span>
+            2
+          </span>
+
+          <div>
+            <strong>
+              {{ 'definir_fecha' | transloco }}
+            </strong>
+
+            <small>
+              {{ 'definir_fecha_descripcion' | transloco }}
+            </small>
+          </div>
+
+        </div>
+
+
+        <div class="step-item">
+
+          <span>
+            3
+          </span>
+
+          <div>
+            <strong>
+              {{ 'confirmar_informacion' | transloco }}
+            </strong>
+
+            <small>
+              {{ 'confirmar_informacion_descripcion' | transloco }}
+            </small>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- Panel derecho con el formulario -->
+
+  <section class="form-section">
+
+    <header class="form-header">
+
+      <span class="form-eyebrow">
+        {{ 'formulario_cita' | transloco }}
+      </span>
+
+      <h2>
+        {{ 'informacion_cita' | transloco }}
+      </h2>
+
+      <p>
+        {{ 'completar_datos_cita' | transloco }}
+      </p>
+
+    </header>
+
+
+    @if (loading()) {
+
+      <div class="state">
+
+        <div class="loading-spinner"></div>
+
+        <p>
+          {{ 'cargando_informacion_cita' | transloco }}
+        </p>
+
+      </div>
+
+    } @else {
+
+      @if (error()) {
+
+        <div class="error-message">
+
+          <span class="error-symbol">
+            !
+          </span>
+
+          <span>
+            {{ error() }}
+          </span>
+
+        </div>
+
+      }
+
+
+      <div class="appointment-form-container">
+
+        <app-cita-form
+          [clientes]="clientes()"
+          [profesionales]="profesionales()"
+          [servicios]="servicios()"
+          [modalidades]="modalidades()"
+          [saving]="saving()"
+          (guardar)="guardar($event)"
+          (cancelar)="cancelar()"
+        />
+
+      </div>
+
+    }
+
+  </section>
+
+</section>

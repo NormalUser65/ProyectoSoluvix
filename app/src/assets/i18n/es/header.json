@@ -1,0 +1,18 @@
+{
+  "subtitle": "Soluciones Visuales",
+  "language": "Idioma",
+  "adminSubtitle": "Administración de Soluvix",
+  "home": "Inicio",
+  "listados": "Listados",
+  "logout": "Salir",
+  "client": "Cliente",
+  "admin": "Administrador",
+  "clientLogin": "Ingresar como Cliente",
+  "adminLogin": "Ingresar como Administrador",
+  "Usuarios": "Usuarios",
+  "Categorías": "Categorías",
+  "Especialidades": "Especialidades",
+  "Profesionales": "Profesionales",
+  "Servicios": "Servicios",
+  "Citas": "Citas"
+}

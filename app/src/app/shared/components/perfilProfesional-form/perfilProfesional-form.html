@@ -1,0 +1,151 @@
+<mat-card class="perfil-form-card">
+  <mat-card-content>
+    <form class="perfil-form" (submit)="$event.preventDefault(); submit()">
+
+      <!-- Usuario -->
+      <section class="form-section">
+        <div class="form-grid">
+          @if (perfil() !== null && perfil()?.usuario) {
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>{{ 'usuario' | transloco }}</mat-label>
+              <input matInput type="text"
+                     [value]="perfil()!.usuario!.nombre + ' ' + perfil()!.usuario!.apellidos + ' (' + (perfil()!.usuario!.rol?.nombre ?? '') + ')'"
+                     disabled />
+              <mat-hint>{{ 'usuario_con_perfil' | transloco }}</mat-hint>
+            </mat-form-field>
+          }
+
+          @if (perfil() === null) {
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>{{ 'usuario' | transloco }}</mat-label>
+              <mat-select [formField]="perfilForm.idUsuario">
+                <mat-option [value]="null">{{ 'seleccionar_usuario' | transloco }}</mat-option>
+                @for (usr of usuarios(); track usr.id) {
+                  <mat-option [value]="usr.id">
+                    {{ usr.nombre }} {{ usr.apellidos }} ({{ usr.rol?.nombre ?? '' }})
+                  </mat-option>
+                }
+              </mat-select>
+              @if (perfilForm.idUsuario().touched() && perfilForm.idUsuario().invalid()) {
+                <mat-error>{{ 'debe_seleccionar_usuario' | transloco }}</mat-error>
+              }
+            </mat-form-field>
+          }
+        </div>
+      </section>
+
+      <!-- Perfil profesional -->
+      <section class="form-section">
+        <div class="form-grid">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'titulo_profesional' | transloco }}</mat-label>
+            <input matInput type="text" [formField]="perfilForm.tituloProfesional" />
+            @if (perfilForm.tituloProfesional().touched() && perfilForm.tituloProfesional().invalid()) {
+              <mat-error>{{ perfilForm.tituloProfesional().errors()[0].message }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'descripcion' | transloco }}</mat-label>
+            <textarea matInput rows="4" [formField]="perfilForm.descripcion"></textarea>
+            @if (perfilForm.descripcion().touched() && perfilForm.descripcion().invalid()) {
+              <mat-error>{{ perfilForm.descripcion().errors()[0].message }}</mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </section>
+
+      <!-- Tarifa, modalidad y especialidades -->
+      <section class="form-section">
+        <div class="form-grid three-columns">
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'tarifa_base' | transloco }}</mat-label>
+            <input matInput type="number" [formField]="perfilForm.tarifaBase" />
+            @if (perfilForm.tarifaBase().touched() && perfilForm.tarifaBase().invalid()) {
+              <mat-error>{{ perfilForm.tarifaBase().errors()[0].message }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'modalidad' | transloco }}</mat-label>
+            <mat-select [formField]="perfilForm.idModalidad">
+              <mat-option [value]="null">{{ 'seleccionar_modalidad' | transloco }}</mat-option>
+              @for (mod of modalidades(); track mod.id) {
+                <mat-option [value]="mod.id">{{ mod.nombre }}</mat-option>
+              }
+            </mat-select>
+            @if (perfilForm.idModalidad().touched() && perfilForm.idModalidad().invalid()) {
+              <mat-error>{{ perfilForm.idModalidad().errors()[0].message }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'especialidades' | transloco }}</mat-label>
+            <mat-select multiple [formField]="perfilForm.especialidadIds">
+              @for (esp of especialidades(); track esp.id) {
+                <mat-option [value]="esp.id">{{ esp.nombre }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="publish-box">
+          <mat-slide-toggle [formField]="perfilForm.disponible">
+            {{ 'profesional_disponible' | transloco }}
+          </mat-slide-toggle>
+          <small>| {{ 'si_activo_visible' | transloco }}</small>
+        </div>
+      </section>
+
+      <!-- Ubicación e imagen -->
+      <section class="form-section">
+        <div class="form-grid">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'provincia' | transloco }}</mat-label>
+            <input matInput type="text" [formField]="perfilForm.provincia" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'canton' | transloco }}</mat-label>
+            <input matInput type="text" [formField]="perfilForm.canton" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'distrito' | transloco }}</mat-label>
+            <input matInput type="text" [formField]="perfilForm.distrito" />
+          </mat-form-field>
+
+          <div class="file-upload">
+            <label for="imagenPerfil">{{ 'imagen_perfil' | transloco }}</label>
+            <input id="imagenPerfil" type="file" (change)="onImageSelected($event)" />
+          </div>
+        </div>
+
+        <div class="image-preview" *ngIf="imagePreview()">
+          <img [src]="imagePreview()" [alt]="'vista_previa' | transloco" class="preview-img" />
+        </div>
+      </section>
+
+      <!-- Botones -->
+      <div class="form-actions">
+        <button mat-stroked-button color="accent" type="button" (click)="cancelar.emit()">
+          <mat-icon>close</mat-icon>
+          {{ 'cancelar' | transloco }}
+        </button>
+
+        <button mat-stroked-button type="submit"
+                [color]="isEdit() ? 'accent' : 'primary'"
+                [disabled]="isSubmitting()">
+          @if (isSubmitting()) {
+            <mat-icon>hourglass_top</mat-icon>
+            {{ 'guardando' | transloco }}
+          } @else {
+            <mat-icon>{{ isEdit() ? 'edit' : 'add_circle' }}</mat-icon>
+            {{ isEdit() ? ('actualizar' | transloco) : ('registrar' | transloco) }}
+          }
+        </button>
+      </div>
+
+    </form>
+  </mat-card-content>
+</mat-card>

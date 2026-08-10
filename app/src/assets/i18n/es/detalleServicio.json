@@ -1,0 +1,18 @@
+{
+    "volver_catalogo": "Volver al catálogo",
+    "cargando_detalle": "Cargando detalle...",
+    "detalle_servicio_alt": "Detalle del servicio",
+    "activo": "Activo",
+    "inactivo": "Inactivo",
+    "sin_categoria": "Sin categoría",
+    "precio_servicio": "Precio del servicio",
+    "duracion": "Duración",
+    "minutos_abreviado": "min",
+    "modalidad": "Modalidad",
+    "no_disponible": "N/A",
+    "estado": "Estado",
+    "profesional_encargado": "Profesional encargado",
+    "sin_asignar": "Sin asignar",
+    "especialidades": "Especialidades",
+    "sin_especialidades": "No hay especialidades registradas."
+}

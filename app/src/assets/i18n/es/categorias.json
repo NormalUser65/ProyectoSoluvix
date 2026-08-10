@@ -1,0 +1,21 @@
+{
+  "eyebrow": "Catálogo",
+  "titulo": "Categorías disponibles",
+  "subtitulo": "Listado de categorías de servicios.",
+  "buscar_label": "Buscar categoría",
+  "buscar_placeholder": "Ejemplo: Fotografía, Retrato...",
+  "limpiar": "Limpiar",
+  "encontrados": "{{count}} categorías encontradas",
+  "cargando": "Cargando categorías...",
+  "error_carga": "No se pudieron cargar las categorías",
+  "sin_resultados": "No hay categorías disponibles.",
+  "imagen_alt": "Imagen de la categoría {{nombre}}",
+  "estado_activa": "Activa",
+  "estado_inactiva": "Inactiva",
+  "etiqueta_categoria": "Categoría",
+  "sin_descripcion": "Sin descripción disponible",
+  "servicios_registrados": "Servicios registrados",
+  "desactivar": "Desactivar",
+  "activar": "Activar",
+  "error_estado": "No se pudo cambiar el estado"
+}

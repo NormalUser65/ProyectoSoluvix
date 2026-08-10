@@ -1,0 +1,18 @@
+{
+  "eyebrow": "Administración",
+  "titulo": "Gestión de usuarios",
+  "buscar_label": "Buscar usuario",
+  "buscar_placeholder": "Nombre, correo o rol",
+  "rol_label": "Rol",
+  "todos": "Todos",
+  "cargando": "Cargando usuarios...",
+  "error_carga": "No se pudieron cargar los usuarios.",
+  "encontrados": "usuarios encontrados",
+  "nombre_completo": "Nombre completo",
+  "correo": "Correo",
+  "rol": "Rol",
+  "estado": "Estado",
+  "activo": "Activo",
+  "inactivo": "Inactivo",
+  "limpiar": "Limpiar filtros"
+}

@@ -1,0 +1,59 @@
+<section class="home-hero">
+  <div class="hero-actions">
+    <button
+      mat-flat-button
+      type="button"
+      class="hero-action service-action"
+      [routerLink]="'/servicios'"
+    >
+      <mat-icon>search</mat-icon>
+      <span>{{ 'buscar_servicio' | transloco }}</span>
+    </button>
+
+    <button
+      mat-flat-button
+      type="button"
+      class="hero-action professional-action"
+      [routerLink]="'/admin/profesionales/create'"
+    >
+      <mat-icon>photo_camera</mat-icon>
+      <span>{{ 'convertirse_profesional' | transloco }}</span>
+    </button>
+
+    <button
+      mat-stroked-button
+      type="button"
+      class="hero-action login-action"
+      [routerLink]="'/login'"
+    >
+      <mat-icon>login</mat-icon>
+      <span>{{ 'iniciar_sesion' | transloco }}</span>
+    </button>
+  </div>
+
+  <div class="photographer-container">
+    <div class="decorative-circle circle-one"></div>
+    <div class="decorative-circle circle-two"></div>
+    <img
+      class="photographer-image"
+      src="http://localhost:3000/images/Fotografo-Home.png"
+      [alt]="'imagen_alt' | transloco"
+    />
+  </div>
+
+  <div class="hero-content">
+    <span class="eyebrow">{{ 'eyebrow' | transloco }}</span>
+    <h1>{{ 'titulo' | transloco }}</h1>
+    <p>
+      {{ 'descripcion' | transloco }}
+    </p>
+
+    <div class="hero-highlight">
+      <span class="highlight-line"></span>
+      <div>
+        <strong>{{ 'highlight_titulo' | transloco }}</strong>
+        <small>{{ 'highlight_descripcion' | transloco }}</small>
+      </div>
+    </div>
+  </div>
+</section>

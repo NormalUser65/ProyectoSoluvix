@@ -1,0 +1,11 @@
+{
+    "admin_servicios": "Administración de servicios",
+    "registrar_servicio_titulo": "Formulario para registrar un servicio",
+    "registrar_servicio_descripcion": "En Soluvix nos preocupamos por brindar una experiencia fácil, rápida y accesible para quienes buscan y ofrecen servicios profesionales.",
+    "presentar_servicio": "Presente su servicio con claridad",
+    "presentar_servicio_descripcion": "Registre información completa y precisa para facilitar que los clientes encuentren el servicio adecuado.",
+    "formulario": "Formulario",
+    "informacion_servicio": "Información del servicio",
+    "completar_datos_servicio": "Complete los datos necesarios para agregar el servicio al catálogo.",
+    "cargando_formulario": "Cargando datos del formulario..."
+}

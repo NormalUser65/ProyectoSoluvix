@@ -1,0 +1,281 @@
+<section class="detail-panel">
+
+  <a
+    mat-button
+    routerLink="/admin/servicios"
+    class="back-button"
+  >
+
+    <mat-icon>
+      arrow_back
+    </mat-icon>
+
+    {{ 'volver_catalogo' | transloco }}
+
+  </a>
+
+
+  @if(loading()) {
+
+    <div class="state">
+
+      <mat-spinner diameter="42"></mat-spinner>
+
+      <p>
+        {{ 'cargando_detalle' | transloco }}
+      </p>
+
+    </div>
+
+  } @else if(error()) {
+
+    <div class="state error">
+
+      <mat-icon>
+        error
+      </mat-icon>
+
+      <p>
+        {{ error() }}
+      </p>
+
+    </div>
+
+  } @else if(servicio(); as srv) {
+
+    <section class="detail-layout">
+
+
+      <!-- IMAGEN -->
+
+      <div class="service-visual">
+
+        <div class="image-decoration"></div>
+
+        <div class="service-image-container">
+
+          <img
+            class="service-image"
+            src="http://localhost:3000/images/ImagenDetalleServicio.jpg"
+            [alt]="('detalle_servicio_alt' | transloco) + ' ' + srv.nombre"
+          />
+
+        </div>
+
+        <span
+          class="status-badge"
+          [class.inactive-status]="!srv.estado"
+        >
+
+          {{ (srv.estado ? 'activo' : 'inactivo') | transloco }}
+
+        </span>
+
+      </div>
+
+
+
+      <!-- INFORMACIÓN -->
+
+      <div class="service-information">
+
+        <span class="eyebrow">
+
+          <mat-icon>
+            photo_camera
+          </mat-icon>
+
+          {{ srv.categoria.nombre || ('sin_categoria' | transloco) }}
+
+        </span>
+
+
+        <h1>
+          {{ srv.nombre }}
+        </h1>
+
+
+        <p class="description">
+          {{ srv.descripcion }}
+        </p>
+
+
+
+        <!-- PRECIO -->
+
+        <div class="price-section">
+
+          <small>
+            {{ 'precio_servicio' | transloco }}
+          </small>
+
+          <strong>
+            {{ srv.precio | currency:'CRC' }}
+          </strong>
+
+        </div>
+
+
+
+        <!-- INFORMACIÓN DEL SERVICIO -->
+
+        <div class="service-features">
+
+
+          <div class="feature-item">
+
+            <span class="feature-icon">
+
+              <mat-icon>
+                schedule
+              </mat-icon>
+
+            </span>
+
+
+            <div>
+
+              <small>
+                {{ 'duracion' | transloco }}
+              </small>
+
+              <strong>
+                {{ srv.duracionEstimada }} {{ 'minutos_abreviado' | transloco }}
+              </strong>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="feature-item">
+
+            <span class="feature-icon">
+
+              <mat-icon>
+                location_on
+              </mat-icon>
+
+            </span>
+
+
+            <div>
+
+              <small>
+                {{ 'modalidad' | transloco }}
+              </small>
+
+              <strong>
+                {{ srv.modalidad.nombre || ('no_disponible' | transloco) }}
+              </strong>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="feature-item">
+
+            <span class="feature-icon">
+
+              <mat-icon>
+                verified
+              </mat-icon>
+
+            </span>
+
+
+            <div>
+
+              <small>
+                {{ 'estado' | transloco }}
+              </small>
+
+              <strong>
+                {{ (srv.estado ? 'activo' : 'inactivo') | transloco }}
+              </strong>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- PROFESIONAL -->
+
+        <section class="professional-section">
+
+          <span class="professional-icon">
+
+            <mat-icon>
+              person
+            </mat-icon>
+
+          </span>
+
+
+          <div>
+
+            <small>
+              {{ 'profesional_encargado' | transloco }}
+            </small>
+
+            <strong>
+              {{ srv.perfil.usuario.nombre || ('sin_asignar' | transloco) }}
+            </strong>
+
+          </div>
+
+        </section>
+
+
+
+        <!-- ESPECIALIDADES -->
+
+        <section class="specialties-section">
+
+          <h2>
+            {{ 'especialidades' | transloco }}
+          </h2>
+
+
+          @if(srv.especialidades.length) {
+
+            <mat-chip-listbox>
+
+              @for (
+                esp of srv.especialidades;
+                track esp.id
+              ) {
+
+                <mat-chip>
+
+                  {{ esp.especialidad.nombre }}
+
+                </mat-chip>
+
+              }
+
+            </mat-chip-listbox>
+
+          } @else {
+
+            <p class="muted">
+              {{ 'sin_especialidades' | transloco }}
+            </p>
+
+          }
+
+        </section>
+
+      </div>
+
+    </section>
+
+  }
+
+</section>

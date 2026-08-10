@@ -1,0 +1,295 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+//Modelos
+model Rol {
+  id       Int       @id @default(autoincrement()) @map("ID")
+  nombre   String    @unique @db.VarChar(50)
+
+  usuarios Usuario[]
+
+  @@map("roles")
+}
+
+model Modalidad {
+  id        Int       @id @default(autoincrement()) @map("ID")
+  nombre    String    @unique @db.VarChar(50)
+
+  perfiles  PerfilProfesional[]
+  servicios Servicio[]
+  citas     Cita[]
+
+  @@map("modalidades")
+}
+
+model EstadoCita {
+
+  id      Int      @id @default(autoincrement()) @map("ID")
+  nombre  String   @unique @db.VarChar(50)
+
+  citas              Cita[]
+  historialAnterior  HistorialEstadoCita[] @relation("EstadoAnterior")
+  historialNuevo     HistorialEstadoCita[] @relation("EstadoNuevo")
+
+  @@map("estados_cita")
+}
+
+model Usuario {
+
+  id               Int       @id @default(autoincrement()) @map("ID")
+
+  nombre           String    @db.VarChar(100)
+
+  apellidos        String    @db.VarChar(100)
+
+  correo           String    @unique @db.VarChar(150)
+
+  contrasenna      String    @db.VarChar(255)
+
+  telefono         String?   @db.VarChar(20)
+
+  estado           Boolean   @default(true)
+
+  fechaRegistro    DateTime  @default(now()) @map("fecha_registro")
+
+  idRol            Int       @map("IDRol")
+
+  rol              Rol       @relation(fields:[idRol], references:[id])
+
+  perfilProfesional PerfilProfesional?
+
+  citasCliente      Cita[]   @relation("Cliente")
+
+  resenas           Resena[]
+
+  @@map("usuarios")
+}
+
+model PerfilProfesional {
+
+  id                  Int @id @default(autoincrement()) @map("ID")
+
+  idUsuario           Int @unique @map("IDUsuario")
+
+  idModalidad         Int? @map("IDModalidad")
+
+  tituloProfesional   String @map("titulo_profesional")
+
+  descripcion         String?
+
+  annosExperiencia    Int? @map("annos_experiencia")
+
+  provincia           String?
+
+  canton              String?
+
+  distrito            String?
+
+  tarifaBase          Decimal? @map("tarifa_base")
+
+  disponible          Boolean @default(true)
+
+  imagenPerfil        String? @map("imagen_perfil")
+
+  usuario             Usuario @relation(fields:[idUsuario], references:[id])
+
+  modalidad           Modalidad? @relation(fields:[idModalidad], references:[id])
+
+  servicios           Servicio[]
+
+  especialidades      ProfesionalEspecialidad[]
+
+  citas              Cita[]
+
+  resenas            Resena[]
+
+  @@map("perfiles_profesionales")
+}
+
+model Categoria {
+  id          Int        @id @default(autoincrement()) @map("ID")
+  nombre      String     @db.VarChar(100) 
+  descripcion String?
+  estado      Boolean    @default(true)
+
+  servicios   Servicio[]
+
+  @@map("categorias")
+}
+
+model Especialidad {
+  id          Int        @id @default(autoincrement()) @map("ID")
+  nombre      String     @db.VarChar(100)
+  descripcion String?
+  estado      Boolean    @default(true)
+
+  profesionales ProfesionalEspecialidad[]
+  servicios      ServicioEspecialidad[]
+
+  @@map("especialidades")
+}
+
+model ProfesionalEspecialidad {
+  id               Int @id @default(autoincrement()) @map("ID")
+
+  idPerfil         Int @map("IDPerfil")
+  idEspecialidad   Int @map("IDEspecialidad")
+
+  perfil           PerfilProfesional @relation(fields: [idPerfil], references: [id])
+  especialidad     Especialidad      @relation(fields: [idEspecialidad], references: [id])
+
+  @@unique([idPerfil, idEspecialidad])
+
+  @@map("profesional_especialidad")
+}
+
+model Servicio {
+  id                 Int @id @default(autoincrement()) @map("ID")
+
+  idPerfil           Int @map("IDPerfil")
+  idCategoria        Int @map("IDCategoria")
+  idModalidad        Int @map("IDModalidad")
+
+  nombre             String @db.VarChar(150)
+  descripcion        String?
+
+  precio             Decimal @db.Decimal(10,2)
+
+  duracionEstimada   Int @map("duracion_estimada")
+
+  estado             Boolean @default(true)
+
+  fechaCreacion      DateTime @default(now()) @map("fecha_creacion")
+
+  perfil             PerfilProfesional @relation(fields: [idPerfil], references: [id])
+
+  categoria          Categoria @relation(fields: [idCategoria], references: [id])
+
+  modalidad          Modalidad @relation(fields: [idModalidad], references: [id])
+
+  especialidades     ServicioEspecialidad[]
+
+  citas              Cita[]
+
+  @@map("servicios")
+}
+
+model ServicioEspecialidad {
+  id               Int @id @default(autoincrement()) @map("ID")
+
+  idServicio       Int @map("IDServicio")
+
+  idEspecialidad   Int @map("IDEspecialidad")
+
+  servicio         Servicio @relation(fields: [idServicio], references: [id])
+
+  especialidad     Especialidad @relation(fields: [idEspecialidad], references: [id])
+
+  @@unique([idServicio, idEspecialidad])
+
+  @@map("servicio_especialidad")
+}
+
+model Cita {
+
+  id                     Int @id @default(autoincrement()) @map("ID")
+
+  idCliente              Int @map("IDCliente")
+
+  idProfesional          Int @map("IDProfesional")
+
+  idServicio             Int @map("IDServicio")
+
+  idModalidad            Int @map("IDModalidad")
+
+  idEstado               Int @map("IDEstado")
+
+  fechaCreacion          DateTime @default(now()) @map("fecha_creacion")
+
+  fechaCita              DateTime @map("fecha_cita")
+
+  horaInicio             DateTime @map("hora_inicio")
+
+  horaFin                DateTime @map("hora_fin")
+
+  comentarioCliente      String? @map("comentario_cliente")
+
+  comentarioProfesional  String? @map("comentario_profesional")
+
+  montoEstimado          Decimal? @db.Decimal(10,2) @map("monto_estimado")
+
+  cliente                Usuario @relation("Cliente", fields: [idCliente], references: [id])
+
+  profesional            PerfilProfesional @relation(fields: [idProfesional], references: [id])
+
+  servicio               Servicio @relation(fields: [idServicio], references: [id])
+
+  modalidad              Modalidad @relation(fields: [idModalidad], references: [id])
+
+  estado                 EstadoCita @relation(fields: [idEstado], references: [id])
+
+  historial              HistorialEstadoCita[]
+
+  resena                 Resena?
+
+  @@map("citas")
+}
+
+model HistorialEstadoCita {
+
+  id                  Int @id @default(autoincrement()) @map("ID")
+
+  idCita              Int @map("IDCita")
+
+  idEstadoAnterior    Int? @map("IDEstadoAnterior")
+
+  idEstadoNuevo       Int @map("IDEstadoNuevo")
+
+  fechaCambio         DateTime @default(now()) @map("fecha_cambio")
+
+  comentario          String?
+
+  cita                Cita @relation(fields: [idCita], references: [id])
+
+  estadoAnterior      EstadoCita? @relation("EstadoAnterior", fields: [idEstadoAnterior], references: [id])
+
+  estadoNuevo         EstadoCita @relation("EstadoNuevo", fields: [idEstadoNuevo], references: [id])
+
+  @@map("historial_estados_cita")
+}
+
+model Resena {
+
+  id                 Int @id @default(autoincrement()) @map("ID")
+
+  idCita             Int @unique @map("IDCita")
+
+  idCliente          Int @map("IDCliente")
+
+  idProfesional      Int @map("IDProfesional")
+
+  puntuacion         Int
+
+  comentario         String?
+
+  fechaResenna       DateTime @default(now()) @map("fecha_resenna")
+
+  cita               Cita @relation(fields: [idCita], references: [id])
+
+  cliente            Usuario @relation(fields: [idCliente], references: [id])
+
+  profesional        PerfilProfesional @relation(fields: [idProfesional], references: [id])
+
+  @@map("resenas")
+}

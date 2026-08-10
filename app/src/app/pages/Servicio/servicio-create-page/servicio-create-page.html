@@ -1,0 +1,108 @@
+<section class="edit-panel">
+
+  <section class="edit-visual">
+
+    <div class="visual-content">
+
+      <span class="visual-eyebrow">
+        {{ 'admin_servicios' | transloco }}
+      </span>
+
+      <h1>
+        {{ 'registrar_servicio_titulo' | transloco }}
+      </h1>
+
+      <p>
+        {{ 'registrar_servicio_descripcion' | transloco }}
+      </p>
+
+      <div class="visual-highlight">
+
+        <span class="highlight-mark">
+          ✓
+        </span>
+
+        <div>
+
+          <strong>
+            {{ 'presentar_servicio' | transloco }}
+          </strong>
+
+          <small>
+            {{ 'presentar_servicio_descripcion' | transloco }}
+          </small>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <section class="form-section">
+
+    <header class="form-header">
+
+      <span class="form-eyebrow">
+        {{ 'formulario' | transloco }}
+      </span>
+
+      <h2>
+        {{ 'informacion_servicio' | transloco }}
+      </h2>
+
+      <p>
+        {{ 'completar_datos_servicio' | transloco }}
+      </p>
+
+    </header>
+
+
+    @if (loading()) {
+
+      <div class="state">
+
+        <div class="loading-spinner"></div>
+
+        <p>
+          {{ 'cargando_formulario' | transloco }}
+        </p>
+
+      </div>
+
+    } @else {
+
+      @if (error()) {
+
+        <div class="error-message">
+
+          <span class="error-symbol">
+            !
+          </span>
+
+          <span>
+            {{ error() }}
+          </span>
+
+        </div>
+
+      }
+
+
+      <app-servicio-form
+        [perfiles]="perfiles()"
+        [categorias]="categorias()"
+        [modalidades]="modalidades()"
+        [especialidades]="especialidades()"
+        [saving]="saving()"
+        (guardar)="guardar($event)"
+        (cancelar)="cancelar()"
+      />
+
+    }
+
+  </section>
+
+</section>

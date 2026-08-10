@@ -1,0 +1,111 @@
+<section class="edit-panel">
+
+  <!-- Panel izquierdo con la imagen como fondo -->
+
+  <section class="edit-visual">
+
+    <div class="visual-content">
+
+      <span class="visual-eyebrow">
+        {{ 'admin_servicios_editar' | transloco }}
+      </span>
+
+      <h1>
+        {{ 'editar_servicio_titulo' | transloco }}
+      </h1>
+
+      <p>
+        {{ 'editar_servicio_descripcion' | transloco }}
+      </p>
+
+      <div class="visual-highlight">
+
+        <span class="highlight-mark">
+          ✓
+        </span>
+
+        <div>
+          <strong>
+            {{ 'informacion_actualizada' | transloco }}
+          </strong>
+
+          <small>
+            {{ 'informacion_actualizada_descripcion' | transloco }}
+          </small>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- Panel derecho con el formulario -->
+
+  <section class="form-section">
+
+    <header class="form-header">
+
+      <span class="form-eyebrow">
+        {{ 'formulario_editar' | transloco }}
+      </span>
+
+      <h2>
+        {{ 'informacion_servicio_editar' | transloco }}
+      </h2>
+
+      <p>
+        {{ 'actualizar_datos_servicio' | transloco }}
+      </p>
+
+    </header>
+
+
+    @if (loading()) {
+
+      <div class="state">
+
+        <div class="loading-spinner"></div>
+
+        <p>
+          {{ 'cargando_formulario_editar' | transloco }}
+        </p>
+
+      </div>
+
+    } @else {
+
+      @if (error()) {
+
+        <div class="error-message">
+
+          <span class="error-symbol">
+            !
+          </span>
+
+          <span>
+            {{ error() }}
+          </span>
+
+        </div>
+
+      }
+
+
+      <app-servicio-form
+        [servicio]="servicio()"
+        [perfiles]="perfiles()"
+        [categorias]="categorias()"
+        [modalidades]="modalidades()"
+        [especialidades]="especialidades()"
+        [saving]="saving()"
+        (guardar)="guardar($event)"
+        (cancelar)="cancelar()"
+      />
+
+    }
+
+  </section>
+
+</section>

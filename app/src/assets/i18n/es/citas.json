@@ -1,0 +1,15 @@
+{
+    "gestion": "Gestión",
+    "citas_registradas": "Citas registradas",
+    "listado_citas": "Listado de citas agendadas.",
+    "nueva_cita": "Nueva cita",
+    "citas_encontradas": "citas encontradas",
+    "cargando_citas": "Cargando citas...",
+    "sin_citas": "No hay citas registradas.",
+    "sin_estado": "Sin estado",
+    "servicio_no_disponible": "Servicio no disponible",
+    "cliente": "Cliente",
+    "profesional": "Profesional",
+    "no_disponible": "N/A",
+    "ver_detalle": "Ver detalle"
+}

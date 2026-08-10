@@ -1,0 +1,636 @@
+.detail-panel {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 1.5rem;
+
+  border-radius: 28px;
+
+  background: rgba(255, 255, 255, 0.96);
+
+  border:
+    1px solid
+    rgba(2, 48, 71, 0.08);
+
+  box-shadow:
+    0 20px 50px
+    rgba(2, 48, 71, 0.1);
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+
+/*
+ * Botón para volver.
+ */
+
+.back-button {
+  margin-bottom: 1rem;
+
+  border-radius: 999px !important;
+
+  color: #023047 !important;
+
+  font-weight: 700;
+}
+
+
+.back-button:hover {
+  background:
+    color-mix(
+      in srgb,
+      #ffb703 16%,
+      transparent
+    ) !important;
+}
+
+
+/*
+ * Distribución general.
+ */
+
+.detail-layout {
+  display: flex;
+  flex-direction: column;
+
+  gap: 1rem;
+}
+
+
+/*
+ * Encabezado.
+ */
+
+.header-card {
+  padding: 1.25rem;
+
+  border-radius: 22px;
+
+  color: #023047;
+
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(
+        in srgb,
+        var(--mat-sys-primary) 5%,
+        white
+      ),
+      #ffffff
+    );
+
+  border:
+    1px solid
+    rgba(2, 48, 71, 0.08);
+
+  box-shadow:
+    0 12px 28px
+    rgba(2, 48, 71, 0.08);
+}
+
+
+.header-content {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 1.5rem;
+}
+
+
+.header-information {
+  min-width: 0;
+}
+
+
+.eyebrow {
+  display: block;
+
+  margin-bottom: 0.45rem;
+
+  color: #fb8500;
+
+  font-size: 0.68rem;
+
+  font-weight: 800;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.08em;
+}
+
+
+.status-badge {
+  display: inline-flex;
+
+  padding: 0.3rem 0.65rem;
+
+  border-radius: 999px;
+
+  color: #023047;
+
+  background: #ffb703;
+
+  font-size: 0.68rem;
+
+  font-weight: 800;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.04em;
+}
+
+
+.pending-status {
+  color: #023047;
+
+  background: #ffb703;
+}
+
+
+.accepted-status {
+  color: #ffffff;
+
+  background: #1976d2;
+}
+
+
+.completed-status {
+  color: #ffffff;
+
+  background: #2e7d32;
+}
+
+
+.cancelled-status {
+  color: #ffffff;
+
+  background: var(--mat-sys-error);
+}
+
+
+.header-information h1 {
+  margin: 0.6rem 0 0;
+
+  color: #023047;
+
+  font-size:
+    clamp(1.8rem, 4vw, 2.65rem);
+
+  font-weight: 900;
+
+  line-height: 1.05;
+
+  letter-spacing: -0.03em;
+}
+
+
+.subtitle {
+  margin: 0.45rem 0 0;
+
+  color:
+    rgba(2, 48, 71, 0.66);
+
+  font-size: 0.88rem;
+
+  line-height: 1.5;
+}
+
+
+/*
+ * Fecha y hora.
+ */
+
+.date-box {
+  min-width: 220px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 0.7rem;
+
+  padding: 0.8rem;
+
+  border-radius: 16px;
+
+  color: #023047;
+
+  background:
+    color-mix(
+      in srgb,
+      #ffb703 18%,
+      white
+    );
+
+  border:
+    1px solid
+    rgba(2, 48, 71, 0.1);
+}
+
+
+.date-icon {
+  width: 40px;
+  height: 40px;
+
+  display: grid;
+  place-items: center;
+
+  flex-shrink: 0;
+
+  border-radius: 13px;
+
+  color: #023047;
+
+  background: #ffb703;
+}
+
+
+.date-icon mat-icon {
+  width: 21px;
+  height: 21px;
+
+  font-size: 21px;
+}
+
+
+.date-box div {
+  display: flex;
+
+  flex-direction: column;
+}
+
+
+.date-box small {
+  color:
+    rgba(2, 48, 71, 0.6);
+
+  font-size: 0.62rem;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.05em;
+}
+
+
+.date-box strong {
+  margin-top: 0.1rem;
+
+  color: #023047;
+
+  font-size: 0.84rem;
+}
+
+
+.date-box div > span {
+  margin-top: 0.1rem;
+
+  color:
+    rgba(2, 48, 71, 0.72);
+
+  font-size: 0.74rem;
+}
+
+
+/*
+ * Cuadrícula de casillas.
+ */
+
+.info-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(0, 1fr)
+    );
+
+  gap: 1rem;
+}
+
+
+/*
+ * Cada tarjeta de información.
+ */
+
+.info-card {
+  min-width: 0;
+
+  padding: 1.1rem;
+
+  border-radius: 20px;
+
+  color: #023047;
+
+  background: #ffffff;
+
+  border:
+    1px solid
+    rgba(2, 48, 71, 0.09);
+
+  box-shadow:
+    0 10px 26px
+    rgba(2, 48, 71, 0.07);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.info-card:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 16px 34px
+    rgba(2, 48, 71, 0.11);
+}
+
+
+/*
+ * Título de cada tarjeta.
+ */
+
+.card-heading {
+  display: flex;
+
+  align-items: center;
+
+  gap: 0.7rem;
+
+  margin-bottom: 0.75rem;
+}
+
+
+.card-icon {
+  width: 38px;
+  height: 38px;
+
+  display: grid;
+  place-items: center;
+
+  flex-shrink: 0;
+
+  border-radius: 13px;
+
+  color: #023047;
+
+  background:
+    color-mix(
+      in srgb,
+      #ffb703 28%,
+      white
+    );
+}
+
+
+.card-icon mat-icon {
+  width: 20px;
+  height: 20px;
+
+  color: #fb8500;
+
+  font-size: 20px;
+}
+
+
+.card-heading div {
+  min-width: 0;
+}
+
+
+.card-heading small {
+  display: block;
+
+  color:
+    rgba(2, 48, 71, 0.56);
+
+  font-size: 0.62rem;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.05em;
+}
+
+
+.card-heading h2 {
+  margin: 0.1rem 0 0;
+
+  color: #023047;
+
+  font-size: 1rem;
+
+  font-weight: 800;
+}
+
+
+/*
+ * Filas de datos.
+ */
+
+.info-list {
+  display: flex;
+
+  flex-direction: column;
+}
+
+
+.info-row {
+  display: grid;
+
+  grid-template-columns:
+    minmax(105px, 0.75fr)
+    minmax(0, 1.25fr);
+
+  gap: 1rem;
+
+  align-items: center;
+
+  padding: 0.55rem 0;
+
+  border-bottom:
+    1px solid
+    rgba(2, 48, 71, 0.08);
+}
+
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+
+.info-row strong {
+  color:
+    rgba(2, 48, 71, 0.64);
+
+  font-size: 0.73rem;
+
+  font-weight: 700;
+}
+
+
+.info-row span {
+  min-width: 0;
+
+  overflow-wrap: anywhere;
+
+  color: #023047;
+
+  font-size: 0.8rem;
+
+  font-weight: 600;
+
+  text-align: right;
+}
+
+
+.info-row .price {
+  color: #fb8500;
+
+  font-size: 0.9rem;
+
+  font-weight: 900;
+}
+
+
+/*
+ * Observaciones.
+ */
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+
+.observations-card {
+  border-left:
+    4px solid
+    var(--mat-sys-tertiary);
+}
+
+
+.description {
+  margin: 0;
+
+  padding: 0.85rem;
+
+  border-radius: 14px;
+
+  color:
+    rgba(2, 48, 71, 0.76);
+
+  background:
+    color-mix(
+      in srgb,
+      var(--mat-sys-primary) 4%,
+      white
+    );
+
+  font-size: 0.84rem;
+
+  line-height: 1.6;
+}
+
+
+/*
+ * Estados de carga y error.
+ */
+
+.state {
+  min-height: 320px;
+
+  display: grid;
+
+  place-items: center;
+
+  text-align: center;
+
+  color: #023047;
+
+  opacity: 0.8;
+}
+
+
+.state mat-icon {
+  width: 3rem;
+  height: 3rem;
+
+  font-size: 3rem;
+}
+
+
+.error {
+  color: var(--mat-sys-error);
+}
+
+
+/*
+ * Responsive.
+ */
+
+@media (max-width: 820px) {
+
+  .header-content {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+
+  .date-box {
+    width: 100%;
+
+    box-sizing: border-box;
+  }
+
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+
+  .full-width {
+    grid-column: auto;
+  }
+
+}
+
+
+@media (max-width: 580px) {
+
+  .detail-panel {
+    padding: 1rem;
+
+    border-radius: 22px;
+  }
+
+
+  .header-card,
+  .info-card {
+    padding: 0.9rem;
+
+    border-radius: 17px;
+  }
+
+
+  .info-row {
+    grid-template-columns: 1fr;
+
+    gap: 0.25rem;
+
+    align-items: flex-start;
+  }
+
+
+  .info-row span {
+    text-align: left;
+  }
+
+}

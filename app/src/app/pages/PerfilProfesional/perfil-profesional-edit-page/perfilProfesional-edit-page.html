@@ -1,0 +1,23 @@
+<section class="page-container">
+  <header class="page-header">
+    <h1>{{ 'editar_perfil_titulo' | transloco }}</h1>
+    <p>{{ 'editar_perfil_subtitulo' | transloco }}</p>
+  </header>
+
+  @if (loading()) {
+    <p>{{ 'cargando_datos' | transloco }}</p>
+  } @else {
+    @if (error()) {
+      <p class="error-message">{{ error() }}</p>
+    }
+
+    <app-perfil-profesional-form
+      [perfil]="perfil()" 
+      [modalidades]="modalidades()"
+      [especialidades]="especialidades()"
+      [saving]="saving()"
+      (guardar)="guardar($event)"
+      (cancelar)="cancelar()"
+    />
+  }
+</section>

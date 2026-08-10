@@ -1,0 +1,18 @@
+{
+    "volver_catalogo": "Back to catalog",
+    "cargando_detalle": "Loading details...",
+    "detalle_servicio_alt": "Service details",
+    "activo": "Active",
+    "inactivo": "Inactive",
+    "sin_categoria": "No category",
+    "precio_servicio": "Service price",
+    "duracion": "Duration",
+    "minutos_abreviado": "min",
+    "modalidad": "Modality",
+    "no_disponible": "N/A",
+    "estado": "Status",
+    "profesional_encargado": "Assigned professional",
+    "sin_asignar": "Unassigned",
+    "especialidades": "Specialties",
+    "sin_especialidades": "No specialties have been registered."
+}

@@ -1,0 +1,18 @@
+{
+  "eyebrow": "Specialties list",
+  "titulo": "Available Specialties",
+  "subtitulo": "List of professional specialties.",
+  "encontrados": "{{count}} specialties found",
+  "cargando": "Loading specialties...",
+  "error_carga": "Could not load specialties",
+  "sin_resultados": "No specialties available.",
+  "estado_activa": "Active",
+  "estado_inactiva": "Inactive",
+  "sin_descripcion": "No description available",
+  "servicios": "Services: {{count}}",
+  "profesionales": "Professionals: {{count}}",
+  "desactivar": "Deactivate specialty",
+  "activar": "Activate specialty",
+  "detalle": "Detail",
+  "error_estado": "Could not change status"
+}

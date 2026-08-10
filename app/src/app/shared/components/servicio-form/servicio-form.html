@@ -1,0 +1,137 @@
+<mat-card class="servicio-form-card">
+  <mat-card-content>
+    <form class="servicio-form" (submit)="$event.preventDefault(); submit()">
+
+      <!-- Profesional asociado -->
+      <section class="form-section">
+        <div class="form-grid">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'servicio_form_profesional' | transloco }}</mat-label>
+            <mat-select [formField]="servicioForm.idPerfil">
+              <mat-option [value]="null">{{ 'servicio_form_seleccionar_profesional' | transloco }}</mat-option>
+              @for (prof of perfiles(); track prof.id) {
+                <mat-option [value]="prof.id">
+                  {{ prof.usuario?.nombre }} {{ prof.usuario?.apellidos }}
+                </mat-option>
+              }
+            </mat-select>
+            @if (servicioForm.idPerfil().touched() && servicioForm.idPerfil().invalid()) {
+              <mat-error>{{ 'servicio_form_error_profesional' | transloco }}</mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </section>
+
+      <!-- Categoría y Modalidad -->
+      <section class="form-section">
+        <div class="form-grid two-columns">
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'servicio_form_categoria' | transloco }}</mat-label>
+            <mat-select [formField]="servicioForm.idCategoria">
+              <mat-option [value]="null">{{ 'servicio_form_seleccionar_categoria' | transloco }}</mat-option>
+              @for (cat of categorias(); track cat.id) {
+                <mat-option [value]="cat.id">{{ cat.nombre }}</mat-option>
+              }
+            </mat-select>
+            @if (servicioForm.idCategoria().touched() && servicioForm.idCategoria().invalid()) {
+              <mat-error>{{ 'servicio_form_error_categoria' | transloco }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'servicio_form_modalidad' | transloco }}</mat-label>
+            <mat-select [formField]="servicioForm.idModalidad">
+              <mat-option [value]="null">{{ 'servicio_form_seleccionar_modalidad' | transloco }}</mat-option>
+              @for (mod of modalidades(); track mod.id) {
+                <mat-option [value]="mod.id">{{ mod.nombre }}</mat-option>
+              }
+            </mat-select>
+            @if (servicioForm.idModalidad().touched() && servicioForm.idModalidad().invalid()) {
+              <mat-error>{{ 'servicio_form_error_modalidad' | transloco }}</mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </section>
+
+      <!-- Nombre y descripción -->
+      <section class="form-section">
+        <div class="form-grid">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'servicio_form_nombre' | transloco }}</mat-label>
+            <input matInput type="text" [formField]="servicioForm.nombre" />
+            @if (servicioForm.nombre().touched() && servicioForm.nombre().invalid()) {
+              <mat-error>{{ servicioForm.nombre().errors()[0].message }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'servicio_form_descripcion' | transloco }}</mat-label>
+            <textarea matInput rows="4" [formField]="servicioForm.descripcion"></textarea>
+            @if (servicioForm.descripcion().touched() && servicioForm.descripcion().invalid()) {
+              <mat-error>{{ servicioForm.descripcion().errors()[0].message }}</mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </section>
+
+      <!-- Precio, duración y especialidades -->
+      <section class="form-section">
+        <div class="form-grid three-columns">
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'servicio_form_precio' | transloco }}</mat-label>
+            <span matTextPrefix>₡&nbsp;</span>
+            <input matInput type="number" [formField]="servicioForm.precio" />
+            @if (servicioForm.precio().touched() && servicioForm.precio().invalid()) {
+              <mat-error>{{ servicioForm.precio().errors()[0].message }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'servicio_form_duracion' | transloco }}</mat-label>
+            <input matInput type="number" [formField]="servicioForm.duracionEstimada" />
+            @if (servicioForm.duracionEstimada().touched() && servicioForm.duracionEstimada().invalid()) {
+              <mat-error>{{ servicioForm.duracionEstimada().errors()[0].message }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'servicio_form_especialidades' | transloco }}</mat-label>
+            <mat-select multiple [formField]="servicioForm.especialidadIds">
+              @for (esp of especialidades(); track esp.id) {
+                <mat-option [value]="esp.id">{{ esp.nombre }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="publish-box">
+          <mat-slide-toggle [formField]="servicioForm.estado">
+            {{ 'servicio_form_activo' | transloco }}
+          </mat-slide-toggle>
+          <small>{{ 'servicio_form_activo_descripcion' | transloco }}</small>
+        </div>
+      </section>
+
+      <!-- Botones -->
+      <div class="form-actions">
+        <button mat-stroked-button color="accent" type="button" (click)="cancelar.emit()">
+          <mat-icon>close</mat-icon>
+          {{ 'servicio_form_cancelar' | transloco }}
+        </button>
+
+        <button mat-stroked-button type="submit"
+                [color]="isEdit() ? 'accent' : 'primary'"
+                [disabled]="isSubmitting()">
+          @if (isSubmitting()) {
+            <mat-icon>hourglass_top</mat-icon>
+            {{ 'servicio_form_guardando' | transloco }}
+          } @else {
+            <mat-icon>{{ isEdit() ? 'edit' : 'add_circle' }}</mat-icon>
+            {{ (isEdit() ? 'servicio_form_actualizar' : 'servicio_form_registrar') | transloco }}
+          }
+        </button>
+      </div>
+
+    </form>
+  </mat-card-content>
+</mat-card>

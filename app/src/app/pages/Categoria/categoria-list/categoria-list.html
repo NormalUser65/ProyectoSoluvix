@@ -1,0 +1,80 @@
+<section class="categories-panel">
+  <section class="page-header">
+    <div>
+      <span class="eyebrow">{{ 'eyebrow' | transloco }}</span>
+      <h1>{{ 'titulo' | transloco }}</h1>
+      <p>{{ 'subtitulo' | transloco }}</p>
+    </div>
+  </section>
+
+  <section class="filters">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'buscar_label' | transloco }}</mat-label>
+      <input matInput [ngModel]="search()" (ngModelChange)="search.set($event)" [placeholder]="'buscar_placeholder' | transloco" />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <button mat-stroked-button class="primary-button clear-button" (click)="clearFilters()">
+      <mat-icon>filter_alt_off</mat-icon>
+      {{ 'limpiar' | transloco }}
+    </button>
+  </section>
+
+  <div class="result-summary">
+    {{ 'encontrados' | transloco: { count: totalCategorias() } }}
+  </div>
+
+  @if (loading()) {
+    <div class="state">
+      <mat-spinner diameter="42"></mat-spinner>
+      <p>{{ 'cargando' | transloco }}</p>
+    </div>
+  } @else if (error()) {
+    <div class="state error">
+      <mat-icon>error</mat-icon>
+      <p>{{ error() }}</p>
+    </div>
+  } @else if (categoriasFiltradas().length === 0) {
+    <div class="state">
+      <mat-icon>search_off</mat-icon>
+      <p>{{ 'sin_resultados' | transloco }}</p>
+    </div>
+  } @else {
+    <section class="categories-grid">
+      @for (categoria of categoriasFiltradas(); track categoria.id) {
+        <mat-card class="category-card">
+          <div class="category-image-container">
+            <img mat-card-image class="category-image" src="http://localhost:3000/images/categoriaBanner.png" [alt]="'imagen_alt' | transloco: { nombre: categoria.nombre }" />
+            <span class="status-badge" [class.inactive-status]="!categoria.estado">
+              {{ categoria.estado ? ('estado_activa' | transloco) : ('estado_inactiva' | transloco) }}
+            </span>
+            <span class="category-label">{{ 'etiqueta_categoria' | transloco }}</span>
+          </div>
+
+          <mat-card-content class="category-content">
+            <h2>{{ categoria.nombre }}</h2>
+            <p class="category-description">
+              {{ categoria.descripcion || ('sin_descripcion' | transloco) }}
+            </p>
+            <div class="category-meta">
+              <span class="meta-icon">
+                <mat-icon>photo_camera</mat-icon>
+              </span>
+              <div>
+                <small>{{ 'servicios_registrados' | transloco }}</small>
+                <strong>{{ categoria.servicios?.length || 0 }}</strong>
+              </div>
+            </div>
+          </mat-card-content>
+
+          <mat-card-actions class="category-actions">
+            <button mat-stroked-button class="status-button" [class.deactivate-button]="categoria.estado" [class.activate-button]="!categoria.estado" (click)="toggleEstado(categoria)">
+              <mat-icon>{{ categoria.estado ? 'toggle_on' : 'toggle_off' }}</mat-icon>
+              {{ categoria.estado ? ('desactivar' | transloco) : ('activar' | transloco) }}
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      }
+    </section>
+  }
+</section>

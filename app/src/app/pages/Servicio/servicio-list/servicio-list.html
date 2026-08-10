@@ -1,0 +1,182 @@
+<section class="page-header">
+  <span class="eyebrow">Catálogo</span>
+  <h1>Servicios de Fotografía</h1>
+  <p>Listado de servicios disponibles para clientes.</p>
+</section>
+
+<section class="filters">
+  <mat-form-field appearance="outline">
+    <mat-label>Buscar servicio</mat-label>
+    <input matInput [ngModel]="search()" 
+           (ngModelChange)="search.set($event)"
+           placeholder="Ejemplo: boda, retrato, familiar" />
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Categoría</mat-label>
+    <mat-select [(ngModel)]="categoriaId">
+      <mat-option [value]="null">Todas</mat-option>
+      @for (categoria of categorias(); track categoria.id) {
+        <mat-option [value]="categoria.id">
+          {{ categoria.nombre }}
+        </mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-stroked-button class="primary-button" (click)="clearFilters()">
+    Limpiar
+  </button>
+</section>
+
+<div class="result-summary">
+  {{ totalServicios() }} servicios encontrados
+</div>
+
+@if(loading()){
+  <div class="state">
+    <mat-spinner diameter="42" />
+    <p>Cargando servicios...</p>
+  </div>
+} @else if (error()) {
+  <div class="state error">
+    <mat-icon>error</mat-icon>
+    <p>{{ error() }}</p>
+  </div>
+} @else if (serviciosFiltrados().length === 0) {
+  <div class="state">
+    <mat-icon>search_off</mat-icon>
+    <p>No hay servicios disponibles con los filtros seleccionados.</p>
+  </div>
+}
+
+<section class="services-panel">
+
+  <div class="services-grid">
+
+    @for (srv of serviciosFiltrados(); track srv.id) {
+
+      <mat-card class="service-card">
+
+        <div class="service-image-container">
+
+          <img
+            mat-card-image
+            class="service-image"
+            src="http://localhost:3000/images/servicioBanner.png"
+            [alt]="'Imagen del servicio ' + srv.nombre"
+          />
+
+          <span
+            class="status-badge"
+            [class.inactive-status]="!srv.estado"
+          >
+            {{ srv.estado ? 'Disponible' : 'Inactivo' }}
+          </span>
+
+          <span class="category-badge">
+            {{ srv.categoria.nombre || 'Sin categoría' }}
+          </span>
+
+        </div>
+
+
+        <mat-card-content class="service-content">
+
+          <div class="service-heading">
+
+            <h2>
+              {{ srv.nombre }}
+            </h2>
+
+            <strong class="service-price">
+              {{ srv.precio | currency:'CRC' }}
+            </strong>
+
+          </div>
+
+
+          <p class="service-description">
+            {{ srv.descripcion }}
+          </p>
+
+
+          <div class="professional-info">
+
+            <span class="professional-avatar">
+
+              <mat-icon>
+                person
+              </mat-icon>
+
+            </span>
+
+            <div>
+
+              <small>
+                Profesional
+              </small>
+
+              <strong>
+                {{ srv.perfil.usuario.nombre || 'Sin asignar' }}
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <div class="service-meta">
+
+            <span>
+
+              <mat-icon>
+                schedule
+              </mat-icon>
+
+              {{ srv.duracionEstimada }} min
+
+            </span>
+
+
+            <span>
+
+              <mat-icon>
+                location_on
+              </mat-icon>
+
+              {{ srv.modalidad.nombre || 'N/A' }}
+
+            </span>
+
+          </div>
+
+        </mat-card-content>
+
+
+        <mat-card-actions class="service-actions">
+
+          <a
+            mat-stroked-button
+            [routerLink]="['/servicios', srv.id]"
+            class="view-icon-button detail-button"
+          >
+
+            <mat-icon>
+              visibility
+            </mat-icon>
+
+            Ver detalle
+
+          </a>
+
+        </mat-card-actions>
+
+      </mat-card>
+
+    }
+
+  </div>
+
+</section>

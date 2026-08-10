@@ -1,0 +1,18 @@
+{
+  "eyebrow": "Administration",
+  "titulo": "User management",
+  "buscar_label": "Search user",
+  "buscar_placeholder": "Name, email or role",
+  "rol_label": "Role",
+  "todos": "All",
+  "cargando": "Loading users...",
+  "error_carga": "Could not load users.",
+  "encontrados": "users found",
+  "nombre_completo": "Full name",
+  "correo": "Email",
+  "rol": "Role",
+  "estado": "Status",
+  "activo": "Active",
+  "inactivo": "Inactive",
+  "limpiar": "Clear filters"
+}

@@ -1,0 +1,22 @@
+{
+    "servicio_form_profesional": "Professional",
+    "servicio_form_seleccionar_profesional": "Select a professional",
+    "servicio_form_error_profesional": "You must select a professional",
+    "servicio_form_categoria": "Category",
+    "servicio_form_seleccionar_categoria": "Select a category",
+    "servicio_form_error_categoria": "You must select a category",
+    "servicio_form_modalidad": "Modality",
+    "servicio_form_seleccionar_modalidad": "Select a modality",
+    "servicio_form_error_modalidad": "You must select a modality",
+    "servicio_form_nombre": "Service name",
+    "servicio_form_descripcion": "Description",
+    "servicio_form_precio": "Price",
+    "servicio_form_duracion": "Estimated duration (min)",
+    "servicio_form_especialidades": "Specialties",
+    "servicio_form_activo": "Active service",
+    "servicio_form_activo_descripcion": "| If active, it will be visible to clients.",
+    "servicio_form_cancelar": "Cancel",
+    "servicio_form_guardando": "Saving...",
+    "servicio_form_actualizar": "Update",
+    "servicio_form_registrar": "Register"
+}

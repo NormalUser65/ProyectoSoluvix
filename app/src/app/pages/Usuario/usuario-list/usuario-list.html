@@ -1,0 +1,86 @@
+<section class="list-layout">
+
+  <!-- Encabezado -->
+  <header class="list-header">
+    <span class="eyebrow">{{ 'eyebrow' | transloco }}</span>
+    <h1>{{ 'titulo' | transloco }}</h1>
+  </header>
+
+  <!-- Filtros -->
+  <div class="filters">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'buscar_label' | transloco }}</mat-label>
+      <input
+        matInput
+        [ngModel]="search()"
+        (ngModelChange)="search.set($event)"
+        [placeholder]="'buscar_placeholder' | transloco"
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'rol_label' | transloco }}</mat-label>
+      <mat-select
+        [ngModel]="rolSeleccionado()"
+        (ngModelChange)="rolSeleccionado.set($event)"
+      >
+        <mat-option [value]="null">{{ 'todos' | transloco }}</mat-option>
+        @for (rol of roles(); track rol.id) {
+          <mat-option [value]="rol.nombre">{{ rol.nombre }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <button
+      mat-button
+      type="button"
+      class="clear-filters"
+      (click)="clearFilters()"
+    >
+      <mat-icon>clear</mat-icon>
+      {{ 'limpiar' | transloco }}
+    </button>
+  </div>
+
+  <!-- Estado de carga / error -->
+  @if (loading()) {
+    <div class="state">
+      <mat-spinner diameter="42" />
+      <p>{{ 'cargando' | transloco }}</p>
+    </div>
+  } @else if (error()) {
+    <div class="state error">
+      <mat-icon>error</mat-icon>
+      <p>{{ 'error_carga' | transloco }}</p>
+    </div>
+  } @else {
+    <!-- Resumen -->
+    <p class="summary">
+      {{ totalUsuarios() }} {{ 'encontrados' | transloco }}
+    </p>
+
+    <!-- Tabla -->
+    <div class="table-wrapper">
+      <table class="usuarios-table">
+        <thead>
+          <tr>
+            <th>{{ 'nombre_completo' | transloco }}</th>
+            <th>{{ 'correo' | transloco }}</th>
+            <th>{{ 'rol' | transloco }}</th>
+            <th>{{ 'estado' | transloco }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (usr of usuariosFiltrados(); track usr.id) {
+            <tr>
+              <td><strong>{{ usr.nombre }} {{ usr.apellidos }}</strong></td>
+              <td>{{ usr.correo }}</td>
+              <td>{{ usr.rol.nombre }}</td>
+              <td>{{ usr.estado ? ('activo' | transloco) : ('inactivo' | transloco) }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>

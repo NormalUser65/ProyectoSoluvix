@@ -1,0 +1,270 @@
+<section class="appointments-panel">
+
+  <section class="page-header">
+
+    <div>
+
+      <span class="eyebrow">
+        {{ 'gestion' | transloco }}
+      </span>
+
+      <h1>
+        {{ 'citas_registradas' | transloco }}
+      </h1>
+
+      <p>
+        {{ 'listado_citas' | transloco }}
+      </p>
+
+    </div>
+
+
+    <a
+      mat-stroked-button
+      routerLink="/citas/create"
+      class="create-icon-button new-appointment-button"
+    >
+
+      <mat-icon>
+        add
+      </mat-icon>
+
+      {{ 'nueva_cita' | transloco }}
+
+    </a>
+
+  </section>
+
+
+  <div class="result-summary">
+
+    {{ citas().length }} {{ 'citas_encontradas' | transloco }}
+
+  </div>
+
+
+  @if(loading()) {
+
+    <div class="state">
+
+      <mat-spinner diameter="42"></mat-spinner>
+
+      <p>
+        {{ 'cargando_citas' | transloco }}
+      </p>
+
+    </div>
+
+  } @else if(error()) {
+
+    <div class="state error">
+
+      <mat-icon>
+        error
+      </mat-icon>
+
+      <p>
+        {{ error() }}
+      </p>
+
+    </div>
+
+  } @else if(citas().length === 0) {
+
+    <div class="state">
+
+      <mat-icon>
+        event_busy
+      </mat-icon>
+
+      <p>
+        {{ 'sin_citas' | transloco }}
+      </p>
+
+    </div>
+
+  } @else {
+
+    <section class="appointments-grid">
+
+      @for (cita of citas(); track cita.id) {
+
+        <mat-card class="appointment-card">
+
+          <div class="appointment-top">
+
+            <span
+              class="status-badge"
+              [class.pending-status]="cita.estado?.nombre === 'Pendiente'"
+              [class.accepted-status]="cita.estado?.nombre === 'Aceptada'"
+              [class.completed-status]="cita.estado?.nombre === 'Completada'"
+              [class.cancelled-status]="
+                cita.estado?.nombre === 'Cancelada' ||
+                cita.estado?.nombre === 'Rechazada'
+              "
+            >
+
+              {{
+                cita.estado?.nombre ||
+                ('sin_estado' | transloco)
+              }}
+
+            </span>
+
+
+            <span class="appointment-icon">
+
+              <mat-icon>
+                event
+              </mat-icon>
+
+            </span>
+
+          </div>
+
+
+          <mat-card-content class="appointment-content">
+
+            <h2>
+
+              {{
+                cita.servicio?.nombre ||
+                ('servicio_no_disponible' | transloco)
+              }}
+
+            </h2>
+
+
+            <div class="appointment-info">
+
+              <div class="info-row">
+
+                <span class="info-icon">
+
+                  <mat-icon>
+                    person
+                  </mat-icon>
+
+                </span>
+
+                <div>
+
+                  <small>
+                    {{ 'cliente' | transloco }}
+                  </small>
+
+                  <strong>
+
+                    {{
+                      cita.cliente?.nombre ||
+                      ('no_disponible' | transloco)
+                    }}
+
+                  </strong>
+
+                </div>
+
+              </div>
+
+
+              <div class="info-row">
+
+                <span class="info-icon">
+
+                  <mat-icon>
+                    badge
+                  </mat-icon>
+
+                </span>
+
+                <div>
+
+                  <small>
+                    {{ 'profesional' | transloco }}
+                  </small>
+
+                  <strong>
+
+                    {{
+                      cita.profesional?.usuario?.nombre ||
+                      cita.profesional?.tituloProfesional ||
+                      ('no_disponible' | transloco)
+                    }}
+
+                  </strong>
+
+                </div>
+
+              </div>
+
+
+              <div class="appointment-date-grid">
+
+                <span>
+
+                  <mat-icon>
+                    calendar_today
+                  </mat-icon>
+
+                  {{
+                    cita.fechaCita |
+                    date:'dd/MM/yyyy'
+                  }}
+
+                </span>
+
+
+                <span>
+
+                  <mat-icon>
+                    schedule
+                  </mat-icon>
+
+                  {{
+                    cita.horaInicio |
+                    date:'HH:mm'
+                  }}
+
+                  -
+
+                  {{
+                    cita.horaFin |
+                    date:'HH:mm'
+                  }}
+
+                </span>
+
+              </div>
+
+            </div>
+
+          </mat-card-content>
+
+
+          <mat-card-actions class="appointment-actions">
+
+            <a
+              mat-stroked-button
+              [routerLink]="['/citas', cita.id]"
+              class="view-icon-button detail-button"
+            >
+
+              <mat-icon>
+                visibility
+              </mat-icon>
+
+              {{ 'ver_detalle' | transloco }}
+
+            </a>
+
+          </mat-card-actions>
+
+        </mat-card>
+
+      }
+
+    </section>
+
+  }
+
+</section>

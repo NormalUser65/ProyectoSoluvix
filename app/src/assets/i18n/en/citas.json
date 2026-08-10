@@ -1,0 +1,15 @@
+{
+    "gestion": "Management",
+    "citas_registradas": "Registered appointments",
+    "listado_citas": "List of scheduled appointments.",
+    "nueva_cita": "New appointment",
+    "citas_encontradas": "appointments found",
+    "cargando_citas": "Loading appointments...",
+    "sin_citas": "No appointments have been registered.",
+    "sin_estado": "No status",
+    "servicio_no_disponible": "Service unavailable",
+    "cliente": "Client",
+    "profesional": "Professional",
+    "no_disponible": "N/A",
+    "ver_detalle": "View details"
+}

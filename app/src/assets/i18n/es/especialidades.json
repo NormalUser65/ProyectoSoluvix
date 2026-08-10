@@ -1,0 +1,18 @@
+{
+  "eyebrow": "Listado de especialidades",
+  "titulo": "Especialidades disponibles",
+  "subtitulo": "Listado de especialidades profesionales.",
+  "encontrados": "{{count}} especialidades encontradas",
+  "cargando": "Cargando especialidades...",
+  "error_carga": "No se pudieron cargar las especialidades",
+  "sin_resultados": "No hay especialidades disponibles.",
+  "estado_activa": "Activa",
+  "estado_inactiva": "Inactiva",
+  "sin_descripcion": "Sin descripción disponible",
+  "servicios": "Servicios: {{count}}",
+  "profesionales": "Profesionales: {{count}}",
+  "desactivar": "Desactivar especialidad",
+  "activar": "Activar especialidad",
+  "detalle": "Detalle",
+  "error_estado": "No se pudo cambiar el estado"
+}

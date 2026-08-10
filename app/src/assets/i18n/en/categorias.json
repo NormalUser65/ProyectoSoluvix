@@ -1,0 +1,21 @@
+{
+  "eyebrow": "Catalog",
+  "titulo": "Available Categories",
+  "subtitulo": "List of service categories.",
+  "buscar_label": "Search category",
+  "buscar_placeholder": "Example: Photography, Portrait...",
+  "limpiar": "Clear",
+  "encontrados": "{{count}} categories found",
+  "cargando": "Loading categories...",
+  "error_carga": "Could not load categories",
+  "sin_resultados": "No categories available.",
+  "imagen_alt": "Category image {{nombre}}",
+  "estado_activa": "Active",
+  "estado_inactiva": "Inactive",
+  "etiqueta_categoria": "Category",
+  "sin_descripcion": "No description available",
+  "servicios_registrados": "Registered services",
+  "desactivar": "Deactivate",
+  "activar": "Activate",
+  "error_estado": "Could not change status"
+}

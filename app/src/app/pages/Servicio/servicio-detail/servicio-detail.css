@@ -1,0 +1,665 @@
+.detail-panel {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 1.5rem;
+
+  border-radius: 28px;
+
+  background: rgba(255, 255, 255, 0.96);
+
+  border:
+    1px solid
+    rgba(2, 48, 71, 0.08);
+
+  box-shadow:
+    0 20px 50px
+    rgba(2, 48, 71, 0.1);
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+
+/*
+ * Botón volver.
+ */
+
+.back-button {
+  margin-bottom: 1rem;
+
+  border-radius: 999px !important;
+
+  color: #023047 !important;
+
+  font-weight: 700;
+}
+
+
+.back-button:hover {
+  background:
+    color-mix(
+      in srgb,
+      #ffb703 16%,
+      transparent
+    ) !important;
+}
+
+
+/*
+ * Distribución principal.
+ */
+
+.detail-layout {
+  display: grid;
+
+  grid-template-columns:
+    minmax(280px, 0.85fr)
+    minmax(0, 1.15fr);
+
+  gap: 2rem;
+
+  align-items: center;
+
+  padding: 0.25rem 0.5rem 0.75rem;
+}
+
+
+/*
+ * Zona visual.
+ */
+
+.service-visual {
+  position: relative;
+
+  min-width: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 1rem;
+}
+
+
+.image-decoration {
+  position: absolute;
+
+  width: 78%;
+  height: 78%;
+
+  left: 0;
+  bottom: 0;
+
+  border-radius: 24px;
+
+  background:
+    color-mix(
+      in srgb,
+      var(--mat-sys-secondary) 20%,
+      white
+    );
+}
+
+
+.service-image-container {
+  position: relative;
+
+  z-index: 2;
+
+  width: 82%;
+  max-width: 360px;
+
+  overflow: hidden;
+
+  border-radius: 22px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 18px 38px
+    rgba(2, 48, 71, 0.16);
+}
+
+
+.service-image {
+  width: 100%;
+  height: auto;
+
+  display: block;
+
+  object-fit: cover;
+}
+
+
+.status-badge {
+  position: absolute;
+
+  z-index: 3;
+
+  top: 0.25rem;
+  right: 0.25rem;
+
+  padding: 0.3rem 0.65rem;
+
+  border-radius: 999px;
+
+  color: #023047;
+
+  background: #ffb703;
+
+  font-size: 0.68rem;
+  font-weight: 800;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.04em;
+
+  box-shadow:
+    0 7px 16px
+    rgba(2, 48, 71, 0.13);
+}
+
+
+.status-badge.inactive-status {
+  color: #ffffff;
+
+  background:
+    var(--mat-sys-error);
+}
+
+
+/*
+ * Información.
+ */
+
+.service-information {
+  min-width: 0;
+}
+
+
+.eyebrow {
+  width: fit-content;
+
+  display: inline-flex;
+  align-items: center;
+
+  gap: 0.35rem;
+
+  padding: 0.3rem 0.65rem;
+
+  border-radius: 999px;
+
+  color: #023047;
+
+  background:
+    color-mix(
+      in srgb,
+      #ffb703 28%,
+      white
+    );
+
+  font-size: 0.68rem;
+  font-weight: 800;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.05em;
+}
+
+
+.eyebrow mat-icon {
+  width: 15px;
+  height: 15px;
+
+  color: #fb8500;
+
+  font-size: 15px;
+}
+
+
+.service-information h1 {
+  max-width: 680px;
+
+  margin: 0.65rem 0 0;
+
+  color: var(--mat-sys-primary);
+
+  font-size:
+    clamp(2rem, 4vw, 3rem);
+
+  font-weight: 900;
+
+  line-height: 1.05;
+
+  letter-spacing: -0.035em;
+}
+
+
+.description {
+  max-width: 680px;
+
+  margin: 0.85rem 0;
+
+  color:
+    color-mix(
+      in srgb,
+      var(--mat-sys-primary) 70%,
+      transparent
+    );
+
+  font-size: 0.92rem;
+
+  line-height: 1.5;
+}
+
+
+/*
+ * Precio.
+ */
+
+.price-section {
+  display: flex;
+  flex-direction: column;
+
+  margin: 0.85rem 0;
+}
+
+
+.price-section small {
+  color:
+    color-mix(
+      in srgb,
+      var(--mat-sys-primary) 58%,
+      transparent
+    );
+
+  font-size: 0.66rem;
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.06em;
+}
+
+
+.price-section strong {
+  margin-top: 0.1rem;
+
+  color: #fb8500;
+
+  font-size: 1.45rem;
+  font-weight: 900;
+}
+
+
+/*
+ * Características.
+ */
+
+.service-features {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 0.55rem;
+
+  margin: 1rem 0;
+}
+
+
+.feature-item {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 0.55rem;
+
+  padding: 0.6rem;
+
+  border-radius: 14px;
+
+  background:
+    color-mix(
+      in srgb,
+      var(--mat-sys-primary) 5%,
+      white
+    );
+
+  border:
+    1px solid
+    rgba(2, 48, 71, 0.08);
+}
+
+
+.feature-icon {
+  width: 36px;
+  height: 36px;
+
+  display: grid;
+  place-items: center;
+
+  flex-shrink: 0;
+
+  border-radius: 12px;
+
+  color: #023047;
+
+  background:
+    color-mix(
+      in srgb,
+      #ffb703 30%,
+      white
+    );
+}
+
+
+.feature-icon mat-icon {
+  width: 19px;
+  height: 19px;
+
+  font-size: 19px;
+}
+
+
+.feature-item div {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+}
+
+
+.feature-item small {
+  color:
+    color-mix(
+      in srgb,
+      var(--mat-sys-primary) 55%,
+      transparent
+    );
+
+  font-size: 0.62rem;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.04em;
+}
+
+
+.feature-item strong {
+  overflow: hidden;
+
+  color: var(--mat-sys-primary);
+
+  font-size: 0.76rem;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+}
+
+
+/*
+ * Profesional.
+ */
+
+.professional-section {
+  display: flex;
+  align-items: center;
+
+  gap: 0.65rem;
+
+  margin-top: 0.85rem;
+
+  padding: 0.75rem;
+
+  border-left:
+    4px solid
+    var(--mat-sys-tertiary);
+
+  border-radius: 0 14px 14px 0;
+
+  background:
+    color-mix(
+      in srgb,
+      var(--mat-sys-secondary) 10%,
+      white
+    );
+}
+
+
+.professional-icon {
+  width: 38px;
+  height: 38px;
+
+  display: grid;
+  place-items: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--mat-sys-primary),
+      var(--mat-sys-tertiary)
+    );
+}
+
+
+.professional-icon mat-icon {
+  width: 20px;
+  height: 20px;
+
+  font-size: 20px;
+}
+
+
+.professional-section div {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.professional-section small {
+  color:
+    color-mix(
+      in srgb,
+      var(--mat-sys-primary) 58%,
+      transparent
+    );
+
+  font-size: 0.64rem;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.05em;
+}
+
+
+.professional-section strong {
+  color: var(--mat-sys-primary);
+
+  font-size: 0.9rem;
+}
+
+
+/*
+ * Especialidades.
+ */
+
+.specialties-section {
+  margin-top: 1rem;
+}
+
+
+.specialties-section h2 {
+  margin: 0 0 0.5rem;
+
+  color: var(--mat-sys-primary);
+
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+
+
+.specialties-section mat-chip {
+  min-height: 28px;
+
+  color: #023047 !important;
+
+  background: #fff0c2 !important;
+
+  border:
+    1px solid
+    rgba(2, 48, 71, 0.3);
+
+  font-size: 0.74rem;
+  font-weight: 800;
+
+  --mdc-chip-label-text-color: #023047;
+  --mdc-chip-selected-label-text-color: #023047;
+  --mat-chip-label-text-color: #023047;
+}
+
+
+::ng-deep .specialties-section .mat-mdc-chip {
+  color: #023047 !important;
+
+  --mdc-chip-label-text-color: #023047;
+  --mdc-chip-selected-label-text-color: #023047;
+  --mat-chip-label-text-color: #023047;
+}
+
+
+::ng-deep .specialties-section .mat-mdc-chip .mdc-evolution-chip__text-label {
+  color: #023047 !important;
+
+  opacity: 1 !important;
+
+  font-weight: 800 !important;
+}
+
+
+::ng-deep .specialties-section .mat-mdc-chip-action-label {
+  color: #023047 !important;
+
+  opacity: 1 !important;
+}
+
+
+::ng-deep .specialties-section .mdc-evolution-chip__action--primary::before {
+  opacity: 0 !important;
+}
+
+
+.muted {
+  margin: 0;
+
+  color:
+    color-mix(
+      in srgb,
+      var(--mat-sys-primary) 70%,
+      transparent
+    );
+
+  font-size: 0.82rem;
+}
+
+
+/*
+ * Estados de carga y error.
+ */
+
+.state {
+  min-height: 260px;
+
+  display: grid;
+  place-items: center;
+
+  text-align: center;
+
+  opacity: 0.8;
+}
+
+
+.state mat-icon {
+  width: 3rem;
+  height: 3rem;
+
+  font-size: 3rem;
+}
+
+
+.error {
+  color: var(--mat-sys-error);
+}
+
+
+/*
+ * Responsive.
+ */
+
+@media (max-width: 820px) {
+
+  .detail-layout {
+    grid-template-columns: 1fr;
+
+    gap: 1.5rem;
+
+    padding-inline: 0;
+  }
+
+
+  .service-visual {
+    max-width: 520px;
+
+    margin: 0 auto;
+  }
+
+
+  .service-information h1 {
+    font-size:
+      clamp(2rem, 8vw, 3rem);
+  }
+
+}
+
+
+@media (max-width: 680px) {
+
+  .detail-panel {
+    padding: 1.25rem;
+
+    border-radius: 24px;
+  }
+
+
+  .service-visual {
+    padding: 0.75rem;
+  }
+
+
+  .service-image-container {
+    width: 92%;
+
+    border-radius: 20px;
+  }
+
+
+  .image-decoration {
+    width: 86%;
+    height: 80%;
+  }
+
+
+  .service-features {
+    grid-template-columns: 1fr;
+  }
+
+}

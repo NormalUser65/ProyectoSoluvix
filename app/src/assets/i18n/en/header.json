@@ -1,0 +1,18 @@
+{
+  "subtitle": "Visual Solutions",
+  "language": "Language",
+  "adminSubtitle": "Soluvix Administration",
+  "home": "Home",
+  "listados": "Listings",
+  "logout": "Logout",
+  "client": "Client",
+  "admin": "Admin",
+  "clientLogin": "Login as Client",
+  "adminLogin": "Login as Admin",
+  "Usuarios": "Users",
+  "Categorías": "Categories",
+  "Especialidades": "Specialties",
+  "Profesionales": "Professionals",
+  "Servicios": "Services",
+  "Citas": "Appointments"
+}

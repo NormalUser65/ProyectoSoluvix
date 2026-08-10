@@ -1,0 +1,51 @@
+<section class="detail-layout">
+  @if(loading()){
+    <div class="state">
+      <mat-spinner diameter="42" />
+      <p>{{ 'cargando_perfil' | transloco }}</p>
+    </div>
+  } @else if(error()){
+    <div class="state error">
+      <mat-icon>error</mat-icon>
+      <p>{{ error() }}</p>
+    </div>
+  } @else if(perfil()){
+    <mat-card class="perfil-card">
+      <mat-card-header>
+        <div mat-card-avatar class="perfil-avatar">
+          <img
+            *ngIf="perfil()?.imagenPerfil"
+            [src]="getImageUrl(perfil()?.imagenPerfil!)"
+            [alt]="'foto_perfil' | transloco"
+          />
+        </div>
+        <mat-card-title>
+          {{ perfil()?.usuario?.nombre }} {{ perfil()?.usuario?.apellidos }}
+        </mat-card-title>
+        <mat-card-subtitle>
+          {{ perfil()?.tituloProfesional }}
+        </mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <p><strong>{{ 'modalidad' | transloco }}:</strong> {{ perfil()?.modalidad?.nombre }}</p>
+        <p><strong>{{ 'experiencia' | transloco: { anos: perfil()?.annosExperiencia } }}</strong></p>
+        <p><strong>{{ 'provincia' | transloco }}:</strong> {{ perfil()?.provincia }}</p>
+        <p><strong>{{ 'canton' | transloco }}:</strong> {{ perfil()?.canton }}</p>
+        <p><strong>{{ 'distrito' | transloco }}:</strong> {{ perfil()?.distrito }}</p>
+        <p><strong>{{ 'tarifa_base' | transloco }}:</strong> {{ perfil()?.tarifaBase }}</p>
+        <p><strong>{{ 'disponibilidad' | transloco }}:</strong> {{ perfil()?.disponible ? ('activo' | transloco) : ('inactivo' | transloco) }}</p>
+        <p><strong>{{ 'descripcion' | transloco }}:</strong> {{ perfil()?.descripcion }}</p>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-raised-button color="primary" [routerLink]="['/citas', perfil()?.id]">
+          {{ 'solicitar_cita' | transloco }}
+        </button>
+        <button mat-button [routerLink]="['/admin/profesionales']">
+          {{ 'volver_listado' | transloco }}
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  }
+</section>

@@ -1,0 +1,63 @@
+<section class="page-header">
+  <span class="eyebrow">{{ 'eyebrow' | transloco }}</span>
+  <h1>{{ 'titulo' | transloco }}</h1>
+  <p>{{ 'subtitulo' | transloco }}</p>
+</section>
+
+<div class="result-summary">
+  {{ 'encontrados' | transloco: { count: especialidades().length } }}
+</div>
+
+@if(loading()) {
+  <div class="state">
+    <mat-spinner diameter="42"></mat-spinner>
+    <p>{{ 'cargando' | transloco }}</p>
+  </div>
+} @else if(error()) {
+  <div class="state error">
+    <mat-icon>error</mat-icon>
+    <p>{{ error() }}</p>
+  </div>
+} @else if(especialidades().length === 0) {
+  <div class="state">
+    <mat-icon>search_off</mat-icon>
+    <p>{{ 'sin_resultados' | transloco }}</p>
+  </div>
+}
+
+<section class="specialties-grid">
+  @for (especialidad of especialidades(); track especialidad.id) {
+    <mat-card class="specialty-card">
+      <mat-card-content>
+        <span class="status" [class.inactive]="!especialidad.estado">
+          {{ especialidad.estado ? ('estado_activa' | transloco) : ('estado_inactiva' | transloco) }}
+        </span>
+        <h2>{{ especialidad.nombre }}</h2>
+        <p>{{ especialidad.descripcion || ('sin_descripcion' | transloco) }}</p>
+        <div class="specialty-meta">
+          <span>{{ 'servicios' | transloco: { count: especialidad.servicios?.length || 0 } }}</span>
+          <span>{{ 'profesionales' | transloco: { count: especialidad.profesionales?.length || 0 } }}</span>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions align="end">
+        <button
+          mat-icon-button
+          [color]="especialidad.estado ? 'warn' : 'primary'"
+          (click)="toggleEstado(especialidad)"
+          [matTooltip]="especialidad.estado ? ('desactivar' | transloco) : ('activar' | transloco)">
+          <mat-icon>{{ especialidad.estado ? 'toggle_on' : 'toggle_off' }}</mat-icon>
+        </button>
+
+        <a
+          mat-stroked-button
+          color="primary"
+          [routerLink]="['/especialidades', especialidad.id]"
+          class="view-icon-button">
+          {{ 'detalle' | transloco }}
+          <mat-icon>more_horiz</mat-icon>
+        </a>
+      </mat-card-actions>
+    </mat-card>
+  }
+</section>

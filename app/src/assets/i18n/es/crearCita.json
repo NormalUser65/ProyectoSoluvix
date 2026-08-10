@@ -1,0 +1,17 @@
+{
+    "gestion_citas_crear": "Gestión de citas",
+    "agendar_cita_titulo": "Formulario para agendar una cita",
+    "agendar_cita_descripcion": "En Soluvix facilitamos la conexión entre clientes y profesionales, permitiendo contratar servicios de fotografía de una manera rápida, clara y accesible.",
+    "programar_servicio": "Programe su servicio fácilmente",
+    "programar_servicio_descripcion": "Seleccione al cliente, profesional, servicio, fecha, horario y modalidad de la nueva cita.",
+    "seleccionar_servicio_paso": "Seleccione el servicio",
+    "seleccionar_servicio_descripcion": "Elija al profesional y el servicio requerido.",
+    "definir_fecha": "Defina la fecha",
+    "definir_fecha_descripcion": "Indique la fecha y el horario de la cita.",
+    "confirmar_informacion": "Confirme la información",
+    "confirmar_informacion_descripcion": "Revise los datos antes de registrar la cita.",
+    "formulario_cita": "Formulario",
+    "informacion_cita": "Información de la cita",
+    "completar_datos_cita": "Complete los datos necesarios para programar una nueva cita.",
+    "cargando_informacion_cita": "Cargando información..."
+}

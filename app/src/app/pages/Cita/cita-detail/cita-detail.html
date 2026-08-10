@@ -1,0 +1,520 @@
+<section class="detail-panel">
+
+  <a
+    mat-button
+    routerLink="/citas"
+    class="back-button"
+  >
+    <mat-icon>
+      arrow_back
+    </mat-icon>
+
+    {{ 'volver_citas' | transloco }}
+  </a>
+
+
+  @if (loading()) {
+
+    <div class="state">
+
+      <mat-spinner diameter="42"></mat-spinner>
+
+      <p>
+        {{ 'cargando_detalle_cita' | transloco }}
+      </p>
+
+    </div>
+
+  } @else if (error()) {
+
+    <div class="state error">
+
+      <mat-icon>
+        error
+      </mat-icon>
+
+      <p>
+        {{ error() }}
+      </p>
+
+    </div>
+
+  } @else if (cita(); as cita) {
+
+    <section class="detail-layout">
+
+
+      <!-- ENCABEZADO PRINCIPAL -->
+
+      <mat-card class="header-card">
+
+        <div class="header-content">
+
+          <div class="header-information">
+
+            <span class="eyebrow">
+              {{ 'gestion_citas' | transloco }}
+            </span>
+
+            <span
+              class="status-badge"
+              [class.pending-status]="cita.estado?.nombre === 'Pendiente'"
+              [class.accepted-status]="cita.estado?.nombre === 'Aceptada'"
+              [class.completed-status]="cita.estado?.nombre === 'Completada'"
+              [class.cancelled-status]="
+                cita.estado?.nombre === 'Cancelada' ||
+                cita.estado?.nombre === 'Rechazada'
+              "
+            >
+              {{ cita.estado?.nombre || ('sin_estado_cita' | transloco) }}
+            </span>
+
+            <h1>
+              {{ 'cita_numero' | transloco }} #{{ cita.id }}
+            </h1>
+
+            <p class="subtitle">
+              {{ 'detalle_cita_descripcion' | transloco }}
+            </p>
+
+          </div>
+
+
+          <div class="date-box">
+
+            <span class="date-icon">
+
+              <mat-icon>
+                event
+              </mat-icon>
+
+            </span>
+
+            <div>
+
+              <small>
+                {{ 'fecha_horario' | transloco }}
+              </small>
+
+              <strong>
+                {{ cita.fechaCita | date:'dd/MM/yyyy' }}
+              </strong>
+
+              <span>
+                {{ cita.horaInicio | date:'HH:mm' }}
+                -
+                {{ cita.horaFin | date:'HH:mm' }}
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </mat-card>
+
+
+      <!-- TARJETAS DE INFORMACIÓN -->
+
+      <section class="info-grid">
+
+
+        <!-- INFORMACIÓN GENERAL -->
+
+        <mat-card class="info-card">
+
+          <div class="card-heading">
+
+            <span class="card-icon">
+
+              <mat-icon>
+                event_note
+              </mat-icon>
+
+            </span>
+
+            <div>
+
+              <small>
+                {{ 'datos_principales' | transloco }}
+              </small>
+
+              <h2>
+                {{ 'informacion_general' | transloco }}
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          <div class="info-list">
+
+            <div class="info-row">
+
+              <strong>
+                {{ 'identificador' | transloco }}
+              </strong>
+
+              <span>
+                #{{ cita.id }}
+              </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+              <strong>
+                {{ 'fecha' | transloco }}
+              </strong>
+
+              <span>
+                {{ cita.fechaCita | date:'dd/MM/yyyy' }}
+              </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+              <strong>
+                {{ 'hora' | transloco }}
+              </strong>
+
+              <span>
+                {{ cita.horaInicio | date:'HH:mm' }}
+                -
+                {{ cita.horaFin | date:'HH:mm' }}
+              </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+              <strong>
+                {{ 'estado_cita' | transloco }}
+              </strong>
+
+              <span>
+                {{ cita.estado?.nombre || ('sin_estado_cita' | transloco) }}
+              </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+              <strong>
+                {{ 'modalidad_cita' | transloco }}
+              </strong>
+
+              <span>
+                {{ cita.modalidad?.nombre || ('no_disponible_cita' | transloco) }}
+              </span>
+
+            </div>
+
+          </div>
+
+        </mat-card>
+
+
+
+        <!-- CLIENTE -->
+
+        <mat-card class="info-card">
+
+          <div class="card-heading">
+
+            <span class="card-icon">
+
+              <mat-icon>
+                person
+              </mat-icon>
+
+            </span>
+
+            <div>
+
+              <small>
+                {{ 'persona_solicitante' | transloco }}
+              </small>
+
+              <h2>
+                {{ 'cliente_cita' | transloco }}
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          <div class="info-list">
+
+            <div class="info-row">
+
+              <strong>
+                {{ 'nombre_cita' | transloco }}
+              </strong>
+
+              <span>
+                {{ cita.cliente?.nombre || ('no_disponible_cita' | transloco) }}
+              </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+              <strong>
+                {{ 'correo_cita' | transloco }}
+              </strong>
+
+              <span>
+                {{ cita.cliente?.correo || ('no_disponible_cita' | transloco) }}
+              </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+              <strong>
+                {{ 'telefono_cita' | transloco }}
+              </strong>
+
+              <span>
+                {{ cita.cliente?.telefono || ('no_registrado' | transloco) }}
+              </span>
+
+            </div>
+
+          </div>
+
+        </mat-card>
+
+
+
+        <!-- PROFESIONAL -->
+
+        <mat-card class="info-card">
+
+          <div class="card-heading">
+
+            <span class="card-icon">
+
+              <mat-icon>
+                badge
+              </mat-icon>
+
+            </span>
+
+            <div>
+
+              <small>
+                {{ 'encargado_servicio' | transloco }}
+              </small>
+
+              <h2>
+                {{ 'profesional_cita' | transloco }}
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          <div class="info-list">
+
+            <div class="info-row">
+
+              <strong>
+                {{ 'nombre_cita' | transloco }}
+              </strong>
+
+              <span>
+                {{
+                  cita.profesional?.usuario?.nombre ||
+                  cita.profesional?.tituloProfesional ||
+                  ('no_disponible_cita' | transloco)
+                }}
+              </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+              <strong>
+                {{ 'correo_cita' | transloco }}
+              </strong>
+
+              <span>
+                {{ cita.profesional?.usuario?.correo || ('no_disponible_cita' | transloco) }}
+              </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+              <strong>
+                {{ 'especialidad_cita' | transloco }}
+              </strong>
+
+              <span>
+                {{
+                  cita.profesional
+                    ?.especialidades?.[0]
+                    ?.especialidad
+                    ?.nombre || ('no_disponible_cita' | transloco)
+                }}
+              </span>
+
+            </div>
+
+          </div>
+
+        </mat-card>
+
+
+
+        <!-- SERVICIO -->
+
+        <mat-card class="info-card">
+
+          <div class="card-heading">
+
+            <span class="card-icon">
+
+              <mat-icon>
+                photo_camera
+              </mat-icon>
+
+            </span>
+
+            <div>
+
+              <small>
+                {{ 'servicio_contratado' | transloco }}
+              </small>
+
+              <h2>
+                {{ 'servicio_cita' | transloco }}
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          <div class="info-list">
+
+            <div class="info-row">
+
+              <strong>
+                {{ 'nombre_cita' | transloco }}
+              </strong>
+
+              <span>
+                {{ cita.servicio?.nombre || ('no_disponible_cita' | transloco) }}
+              </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+              <strong>
+                {{ 'categoria_cita' | transloco }}
+              </strong>
+
+              <span>
+                {{ cita.servicio?.categoria?.nombre || ('no_disponible_cita' | transloco) }}
+              </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+              <strong>
+                {{ 'precio_cita' | transloco }}
+              </strong>
+
+              <span class="price">
+                ₡{{ cita.servicio?.precio }}
+              </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+              <strong>
+                {{ 'duracion_cita' | transloco }}
+              </strong>
+
+              <span>
+                {{ cita.servicio?.duracionEstimada }} {{ 'minutos_cita' | transloco }}
+              </span>
+
+            </div>
+
+          </div>
+
+        </mat-card>
+
+
+
+        <!-- OBSERVACIONES -->
+
+        <mat-card class="info-card observations-card full-width">
+
+          <div class="card-heading">
+
+            <span class="card-icon">
+
+              <mat-icon>
+                notes
+              </mat-icon>
+
+            </span>
+
+            <div>
+
+              <small>
+                {{ 'informacion_adicional' | transloco }}
+              </small>
+
+              <h2>
+                {{ 'observaciones' | transloco }}
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          <p class="description">
+
+            {{
+              cita.comentarioCliente ||
+              cita.comentarioProfesional ||
+              ('sin_observaciones' | transloco)
+            }}
+
+          </p>
+
+        </mat-card>
+
+      </section>
+
+    </section>
+
+  }
+
+</section>

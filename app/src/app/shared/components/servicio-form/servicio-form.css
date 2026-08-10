@@ -1,0 +1,117 @@
+.servicio-form-card {
+  max-width: 1180px;
+  margin: 24px auto;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.servicio-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 12px 8px 8px;
+}
+
+.form-section {
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: 20px;
+  padding: 24px;
+  background: color-mix(in srgb, var(--mat-sys-surface-container-low) 82%, transparent);
+}
+
+.section-title {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.section-title h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.section-title p {
+  margin: 4px 0 0;
+  color: var(--mat-sys-on-surface-variant);
+  font-size: 0.9rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-grid.three-columns {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+.publish-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: var(--mat-sys-surface-container);
+  color: var(--mat-sys-on-surface-variant);
+  font-size: 0.9rem;
+}
+
+.publish-box small {
+  color: var(--mat-sys-on-surface-variant);
+  font-style: italic;
+}
+
+.form-actions {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 18px 0 6px;
+  background: color-mix(in srgb, var(--mat-sys-surface) 88%, transparent);
+  backdrop-filter: blur(8px);
+}
+
+.form-actions button mat-icon {
+  margin-right: 6px;
+}
+
+.section-error {
+  margin: 12px 0 0;
+  color: var(--mat-sys-error);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+@media (max-width: 900px) {
+  .three-columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .servicio-form-card {
+    margin: 12px;
+    border-radius: 18px;
+  }
+
+  .form-section {
+    padding: 18px;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .form-actions button {
+    width: 100%;
+  }
+}
