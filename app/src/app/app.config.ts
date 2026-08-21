@@ -1,30 +1,23 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { ApplicationConfig, inject, provideAppInitializer, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
+
+import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { httpErrorInterceptor } from './core/interceptors/http-error.interceptor';
-import { routes } from './app.routes';
-
-// Transloco
-import { provideTransloco, translocoConfig } from '@jsverse/transloco';
-import { TranslocoHttpLoader } from './transloco-loader';
+import { authInterceptor } from './core/interceptors/auth.interceptor';
+import { AuthService } from './core/services/auth.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideHttpClient(
-      withInterceptors([httpErrorInterceptor])
+      withInterceptors([httpErrorInterceptor, httpErrorInterceptor])
     ),
-
-    // Transloco
-    provideTransloco({
-      config: translocoConfig({
-        availableLangs: ['en', 'es'],
-        defaultLang: localStorage.getItem('lang') || 'es',
-        reRenderOnLangChange: true,
-        prodMode: true,
-      }),
-      loader: TranslocoHttpLoader
+    provideAppInitializer(() => {
+      const authService =
+        inject(AuthService);
+      return authService.inicializarSesion();
     }),
   ]
 };

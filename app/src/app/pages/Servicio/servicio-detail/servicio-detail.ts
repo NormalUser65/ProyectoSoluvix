@@ -11,8 +11,6 @@ import { Servicio } from '../../../core/models/servicio.model';
 import { CurrencyPipe } from '@angular/common';
 import { MatChipsModule } from '@angular/material/chips';
 
-import { TranslocoModule } from '@jsverse/transloco';
-
 @Component({
   selector: 'app-servicio-detail',
   imports: [
@@ -23,7 +21,6 @@ import { TranslocoModule } from '@jsverse/transloco';
     MatProgressSpinnerModule,
     CurrencyPipe,
     MatChipsModule,
-    TranslocoModule
   ],
   templateUrl: './servicio-detail.html',
   styleUrls: ['./servicio-detail.css'],

@@ -13,8 +13,6 @@ import { Servicio } from '../../../core/models/servicio.model';
 import { ServicioService } from '../../../core/services/servicio.service';
 import { CurrencyPipe } from '@angular/common';
 
-import { TranslocoModule } from '@jsverse/transloco';
-
 @Component({
   selector: 'app-servicio-admin-list',
   imports: [
@@ -27,7 +25,6 @@ import { TranslocoModule } from '@jsverse/transloco';
     MatFormFieldModule,
     MatInputModule,
     CurrencyPipe,
-    TranslocoModule
   ],
   templateUrl: './servicio-admin-list.html',
   styleUrls: ['./servicio-admin-list.css'],

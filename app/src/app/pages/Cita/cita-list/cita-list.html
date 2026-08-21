@@ -5,15 +5,15 @@
     <div>
 
       <span class="eyebrow">
-        {{ 'gestion' | transloco }}
+        Gestión
       </span>
 
       <h1>
-        {{ 'citas_registradas' | transloco }}
+        Citas registradas
       </h1>
 
       <p>
-        {{ 'listado_citas' | transloco }}
+        Listado de citas agendadas.
       </p>
 
     </div>
@@ -29,7 +29,7 @@
         add
       </mat-icon>
 
-      {{ 'nueva_cita' | transloco }}
+      Nueva cita
 
     </a>
 
@@ -38,7 +38,7 @@
 
   <div class="result-summary">
 
-    {{ citas().length }} {{ 'citas_encontradas' | transloco }}
+    {{ citas().length }} citas encontradas
 
   </div>
 
@@ -50,7 +50,7 @@
       <mat-spinner diameter="42"></mat-spinner>
 
       <p>
-        {{ 'cargando_citas' | transloco }}
+        Cargando citas...
       </p>
 
     </div>
@@ -78,7 +78,7 @@
       </mat-icon>
 
       <p>
-        {{ 'sin_citas' | transloco }}
+        No hay citas registradas.
       </p>
 
     </div>
@@ -106,7 +106,7 @@
 
               {{
                 cita.estado?.nombre ||
-                ('sin_estado' | transloco)
+                'Sin estado'
               }}
 
             </span>
@@ -129,7 +129,7 @@
 
               {{
                 cita.servicio?.nombre ||
-                ('servicio_no_disponible' | transloco)
+                'Servicio no disponible'
               }}
 
             </h2>
@@ -150,14 +150,14 @@
                 <div>
 
                   <small>
-                    {{ 'cliente' | transloco }}
+                    Cliente
                   </small>
 
                   <strong>
 
                     {{
                       cita.cliente?.nombre ||
-                      ('no_disponible' | transloco)
+                      'N/A'
                     }}
 
                   </strong>
@@ -180,7 +180,7 @@
                 <div>
 
                   <small>
-                    {{ 'profesional' | transloco }}
+                    Profesional
                   </small>
 
                   <strong>
@@ -188,7 +188,7 @@
                     {{
                       cita.profesional?.usuario?.nombre ||
                       cita.profesional?.tituloProfesional ||
-                      ('no_disponible' | transloco)
+                      'N/A'
                     }}
 
                   </strong>
@@ -253,7 +253,7 @@
                 visibility
               </mat-icon>
 
-              {{ 'ver_detalle' | transloco }}
+              Ver detalle
 
             </a>
 

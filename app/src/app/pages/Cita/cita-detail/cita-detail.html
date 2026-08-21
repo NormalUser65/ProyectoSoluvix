@@ -9,7 +9,7 @@
       arrow_back
     </mat-icon>
 
-    {{ 'volver_citas' | transloco }}
+    Volver a las citas
   </a>
 
 
@@ -20,7 +20,7 @@
       <mat-spinner diameter="42"></mat-spinner>
 
       <p>
-        {{ 'cargando_detalle_cita' | transloco }}
+        Cargando detalle...
       </p>
 
     </div>
@@ -53,7 +53,7 @@
           <div class="header-information">
 
             <span class="eyebrow">
-              {{ 'gestion_citas' | transloco }}
+              Gestión de citas
             </span>
 
             <span
@@ -66,15 +66,15 @@
                 cita.estado?.nombre === 'Rechazada'
               "
             >
-              {{ cita.estado?.nombre || ('sin_estado_cita' | transloco) }}
+              {{ cita.estado?.nombre || 'Sin estado' }}
             </span>
 
             <h1>
-              {{ 'cita_numero' | transloco }} #{{ cita.id }}
+              Cita #{{ cita.id }}
             </h1>
 
             <p class="subtitle">
-              {{ 'detalle_cita_descripcion' | transloco }}
+              Información completa de la cita seleccionada.
             </p>
 
           </div>
@@ -93,7 +93,7 @@
             <div>
 
               <small>
-                {{ 'fecha_horario' | transloco }}
+                Fecha y horario
               </small>
 
               <strong>
@@ -137,11 +137,11 @@
             <div>
 
               <small>
-                {{ 'datos_principales' | transloco }}
+                Datos principales
               </small>
 
               <h2>
-                {{ 'informacion_general' | transloco }}
+                Información general
               </h2>
 
             </div>
@@ -154,7 +154,7 @@
             <div class="info-row">
 
               <strong>
-                {{ 'identificador' | transloco }}
+                Identificador
               </strong>
 
               <span>
@@ -167,7 +167,7 @@
             <div class="info-row">
 
               <strong>
-                {{ 'fecha' | transloco }}
+                Fecha
               </strong>
 
               <span>
@@ -180,7 +180,7 @@
             <div class="info-row">
 
               <strong>
-                {{ 'hora' | transloco }}
+                Hora
               </strong>
 
               <span>
@@ -195,11 +195,11 @@
             <div class="info-row">
 
               <strong>
-                {{ 'estado_cita' | transloco }}
+                Estado
               </strong>
 
               <span>
-                {{ cita.estado?.nombre || ('sin_estado_cita' | transloco) }}
+                {{ cita.estado?.nombre || 'Sin estado' }}
               </span>
 
             </div>
@@ -208,11 +208,11 @@
             <div class="info-row">
 
               <strong>
-                {{ 'modalidad_cita' | transloco }}
+                Modalidad
               </strong>
 
               <span>
-                {{ cita.modalidad?.nombre || ('no_disponible_cita' | transloco) }}
+                {{ cita.modalidad?.nombre || 'N/A' }}
               </span>
 
             </div>
@@ -240,11 +240,11 @@
             <div>
 
               <small>
-                {{ 'persona_solicitante' | transloco }}
+                Persona solicitante
               </small>
 
               <h2>
-                {{ 'cliente_cita' | transloco }}
+                Cliente
               </h2>
 
             </div>
@@ -257,11 +257,11 @@
             <div class="info-row">
 
               <strong>
-                {{ 'nombre_cita' | transloco }}
+                Nombre
               </strong>
 
               <span>
-                {{ cita.cliente?.nombre || ('no_disponible_cita' | transloco) }}
+                {{ cita.cliente?.nombre || 'N/A' }}
               </span>
 
             </div>
@@ -270,11 +270,11 @@
             <div class="info-row">
 
               <strong>
-                {{ 'correo_cita' | transloco }}
+                Correo
               </strong>
 
               <span>
-                {{ cita.cliente?.correo || ('no_disponible_cita' | transloco) }}
+                {{ cita.cliente?.correo || 'N/A' }}
               </span>
 
             </div>
@@ -283,11 +283,11 @@
             <div class="info-row">
 
               <strong>
-                {{ 'telefono_cita' | transloco }}
+                Teléfono
               </strong>
 
               <span>
-                {{ cita.cliente?.telefono || ('no_registrado' | transloco) }}
+                {{ cita.cliente?.telefono || 'No registrado' }}
               </span>
 
             </div>
@@ -315,11 +315,11 @@
             <div>
 
               <small>
-                {{ 'encargado_servicio' | transloco }}
+                Encargado del servicio
               </small>
 
               <h2>
-                {{ 'profesional_cita' | transloco }}
+                Profesional
               </h2>
 
             </div>
@@ -332,14 +332,14 @@
             <div class="info-row">
 
               <strong>
-                {{ 'nombre_cita' | transloco }}
+                Nombre
               </strong>
 
               <span>
                 {{
                   cita.profesional?.usuario?.nombre ||
                   cita.profesional?.tituloProfesional ||
-                  ('no_disponible_cita' | transloco)
+                  'N/A'
                 }}
               </span>
 
@@ -349,11 +349,11 @@
             <div class="info-row">
 
               <strong>
-                {{ 'correo_cita' | transloco }}
+                Correo
               </strong>
 
               <span>
-                {{ cita.profesional?.usuario?.correo || ('no_disponible_cita' | transloco) }}
+                {{ cita.profesional?.usuario?.correo || 'N/A' }}
               </span>
 
             </div>
@@ -362,7 +362,7 @@
             <div class="info-row">
 
               <strong>
-                {{ 'especialidad_cita' | transloco }}
+                Especialidad
               </strong>
 
               <span>
@@ -370,7 +370,7 @@
                   cita.profesional
                     ?.especialidades?.[0]
                     ?.especialidad
-                    ?.nombre || ('no_disponible_cita' | transloco)
+                    ?.nombre || 'N/A'
                 }}
               </span>
 
@@ -399,11 +399,11 @@
             <div>
 
               <small>
-                {{ 'servicio_contratado' | transloco }}
+                Servicio contratado
               </small>
 
               <h2>
-                {{ 'servicio_cita' | transloco }}
+                Servicio
               </h2>
 
             </div>
@@ -416,11 +416,11 @@
             <div class="info-row">
 
               <strong>
-                {{ 'nombre_cita' | transloco }}
+                Nombre
               </strong>
 
               <span>
-                {{ cita.servicio?.nombre || ('no_disponible_cita' | transloco) }}
+                {{ cita.servicio?.nombre || 'N/A' }}
               </span>
 
             </div>
@@ -429,11 +429,11 @@
             <div class="info-row">
 
               <strong>
-                {{ 'categoria_cita' | transloco }}
+                Categoría
               </strong>
 
               <span>
-                {{ cita.servicio?.categoria?.nombre || ('no_disponible_cita' | transloco) }}
+                {{ cita.servicio?.categoria?.nombre || 'N/A' }}
               </span>
 
             </div>
@@ -442,7 +442,7 @@
             <div class="info-row">
 
               <strong>
-                {{ 'precio_cita' | transloco }}
+                Precio
               </strong>
 
               <span class="price">
@@ -455,11 +455,11 @@
             <div class="info-row">
 
               <strong>
-                {{ 'duracion_cita' | transloco }}
+                Duración
               </strong>
 
               <span>
-                {{ cita.servicio?.duracionEstimada }} {{ 'minutos_cita' | transloco }}
+                {{ cita.servicio?.duracionEstimada }} min
               </span>
 
             </div>
@@ -487,11 +487,11 @@
             <div>
 
               <small>
-                {{ 'informacion_adicional' | transloco }}
+                Información adicional
               </small>
 
               <h2>
-                {{ 'observaciones' | transloco }}
+                Observaciones
               </h2>
 
             </div>
@@ -504,7 +504,7 @@
             {{
               cita.comentarioCliente ||
               cita.comentarioProfesional ||
-              ('sin_observaciones' | transloco)
+              'No hay observaciones registradas.'
             }}
 
           </p>

@@ -10,8 +10,6 @@ import { CitaService } from '../../../core/services/Cita.Service';
 import { Cita } from '../../../core/models/cita.model';
 import { MatChipsModule } from '@angular/material/chips';
 import { DatePipe } from '@angular/common';
-import { TranslocoModule } from '@jsverse/transloco';
-
 
 @Component({
   selector: 'app-servicio-detail',
@@ -23,7 +21,6 @@ import { TranslocoModule } from '@jsverse/transloco';
     MatChipsModule,
     DatePipe,
     RouterLink,
-    TranslocoModule
   ],
   templateUrl: './cita-detail.html',
   styleUrls: ['./cita-detail.css'],

@@ -14,12 +14,10 @@ import { Modalidad } from '../../../core/models/modalidad.model';
 import { Especialidad } from '../../../core/models/especialidad.model';
 import { ServicioCreateDto, ServicioUpdateDto } from '../../../core/models/servicio.model';
 
-import { TranslocoModule } from '@jsverse/transloco';
-
 @Component({
   selector: 'app-servicio-create-page',
   standalone: true,
-  imports: [ServicioForm, TranslocoModule],
+  imports: [ServicioForm],
   templateUrl: './servicio-create-page.html',
   styleUrl: './servicio-create-page.css',
 })

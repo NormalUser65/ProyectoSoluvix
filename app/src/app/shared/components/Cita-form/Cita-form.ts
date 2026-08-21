@@ -38,8 +38,6 @@ import {
 import { Servicio } from '../../../core/models/servicio.model';
 import { Modalidad } from '../../../core/models/modalidad.model';
 
-import { TranslocoModule } from '@jsverse/transloco';
-
 @Component({
   selector: 'app-cita-form',
   standalone: true,
@@ -52,8 +50,7 @@ import { TranslocoModule } from '@jsverse/transloco';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    MatSelectModule,
-    TranslocoModule
+    MatSelectModule
   ],
 
   templateUrl: './cita-form.html',

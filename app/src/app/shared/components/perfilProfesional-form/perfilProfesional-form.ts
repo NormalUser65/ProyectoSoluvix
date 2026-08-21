@@ -24,7 +24,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 import {
   PerfilProfesional,
@@ -43,7 +42,6 @@ import { Usuario } from '../../../core/models/usuario.model';
   imports: [
     CommonModule,
     FormField,
-    TranslocoModule,
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
@@ -56,8 +54,6 @@ import { Usuario } from '../../../core/models/usuario.model';
   styleUrl: './perfilProfesional-form.css'
 })
 export class PerfilProfesionalForm {
-  private readonly translocoService = inject(TranslocoService);
-
   perfil = input<PerfilProfesional | null>(null);
   saving = input<boolean>(false);
 
@@ -90,21 +86,21 @@ export class PerfilProfesionalForm {
   });
 
   perfilForm = form(this.perfilModel, (path) => {
-    required(path.tituloProfesional, { message: this.translocoService.translate('titulo_profesional_required') });
-    minLength(path.tituloProfesional, 3, { message: this.translocoService.translate('titulo_profesional_min') });
-    maxLength(path.tituloProfesional, 150, { message: this.translocoService.translate('titulo_profesional_max') });
+    required(path.tituloProfesional, { message: 'El título profesional es obligatorio' });
+    minLength(path.tituloProfesional, 3, { message: 'Mínimo 3 caracteres' });
+    maxLength(path.tituloProfesional, 150, { message: 'Máximo 150 caracteres' });
 
-    required(path.descripcion, { message: this.translocoService.translate('descripcion_required') });
-    minLength(path.descripcion, 20, { message: this.translocoService.translate('descripcion_min') });
-    maxLength(path.descripcion, 500, { message: this.translocoService.translate('descripcion_max') });
+    required(path.descripcion, { message: 'La descripción es obligatoria' });
+    minLength(path.descripcion, 20, { message: 'Debe tener mínimo 20 caracteres' });
+    maxLength(path.descripcion, 500, { message: 'Máximo 500 caracteres' });
 
-    required(path.annosExperiencia, { message: this.translocoService.translate('experiencia_required') });
-    min(path.annosExperiencia, 0, { message: this.translocoService.translate('experiencia_min') });
+    required(path.annosExperiencia, { message: 'Los años de experiencia son obligatorios' });
+    min(path.annosExperiencia, 0, { message: 'No puede ser negativo' });
 
-    required(path.tarifaBase, { message: this.translocoService.translate('tarifa_required') });
-    min(path.tarifaBase, 1, { message: this.translocoService.translate('tarifa_min') });
+    required(path.tarifaBase, { message: 'La tarifa base es obligatoria' });
+    min(path.tarifaBase, 1, { message: 'Debe ser mayor a 0' });
 
-    required(path.idModalidad, { message: this.translocoService.translate('modalidad_required') });
+    required(path.idModalidad, { message: 'Seleccione una modalidad' });
   });
 
   isEdit = computed(() => this.perfil() !== null);
@@ -195,7 +191,7 @@ export class PerfilProfesionalForm {
         this.emitirGuardar();
       },
       error: () => {
-        alert(this.translocoService.translate('error_subir_imagen'));
+        alert('No se pudo subir la imagen');
       },
       complete: () => {
         this.uploadingImage.set(false);
@@ -210,22 +206,23 @@ export class PerfilProfesionalForm {
   }
 
   private buildDto(): PerfilProfesionalCreateDto | PerfilProfesionalUpdateDto {
-    const value = this.perfilModel();
-    return {
-      idUsuario: value.idUsuario!, 
-      tituloProfesional: value.tituloProfesional.trim(),
-      descripcion: value.descripcion.trim(),
-      annosExperiencia: Number(value.annosExperiencia),
-      idModalidad: value.idModalidad!,
-      provincia: value.provincia.trim(),
-      canton: value.canton.trim(),
-      distrito: value.distrito.trim(),
-      tarifaBase: Number(value.tarifaBase),
-      disponible: value.disponible,
-      imagenPerfil: value.imagenPerfil?.trim() ?? '',
-      especialidadIds: value.especialidadIds
-    };
-  }
+  const value = this.perfilModel();
+  return {
+    idUsuario: value.idUsuario!, 
+    tituloProfesional: value.tituloProfesional.trim(),
+    descripcion: value.descripcion.trim(),
+    annosExperiencia: Number(value.annosExperiencia),
+    idModalidad: value.idModalidad!,
+    provincia: value.provincia.trim(),
+    canton: value.canton.trim(),
+    distrito: value.distrito.trim(),
+    tarifaBase: Number(value.tarifaBase),
+    disponible: value.disponible,
+    imagenPerfil: value.imagenPerfil?.trim() ?? '',
+    especialidadIds: value.especialidadIds
+  };
+}
+
 
   submit() {
     this.marcarCamposComoTocados();

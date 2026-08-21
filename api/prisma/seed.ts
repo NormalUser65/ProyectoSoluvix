@@ -1,4 +1,5 @@
 import { prisma } from "../src/config/prisma";
+import bcrypt from "bcryptjs";
 
 async function main() {
 console.log("Iniciando seed...");
@@ -86,6 +87,7 @@ await prisma.especialidad.createMany({
     ]
 });
 
+const micontrasenna = await bcrypt.hash("123456", 10);
   // 3. USUARIOS
 await prisma.usuario.createMany({
     data: [
@@ -93,7 +95,7 @@ await prisma.usuario.createMany({
             nombre: "Ana",
             apellidos: "Lopez",
             correo: "ana@email.com",
-            contrasenna: "123456",
+            contrasenna: "micontrasenna",
             telefono: "8888-1001",
             idRol: rolMap["CLIENTE"]
         },
@@ -101,7 +103,7 @@ await prisma.usuario.createMany({
             nombre: "Carlos",
             apellidos: "Ramirez",
             correo: "carlos@email.com",
-            contrasenna: "123456",
+            contrasenna: "micontrasenna",
             telefono: "8888-1002",
             idRol: rolMap["PROFESIONAL"]
         },
@@ -109,7 +111,7 @@ await prisma.usuario.createMany({
             nombre: "Laura",
             apellidos: "Soto",
             correo: "laura@email.com",
-            contrasenna: "123456",
+            contrasenna: "micontrasenna",
             telefono: "8888-1003",
             idRol: rolMap["PROFESIONAL"]
         },
@@ -117,7 +119,7 @@ await prisma.usuario.createMany({
             nombre: "Daniel",
             apellidos: "Mora",
             correo: "daniel@email.com",
-            contrasenna: "123456",
+            contrasenna: "micontrasenna",
             telefono: "8888-1004",
             idRol: rolMap["PROFESIONAL"]
         },
@@ -125,7 +127,7 @@ await prisma.usuario.createMany({
             nombre: "Sofia",
             apellidos: "Castro",
             correo: "sofia@email.com",
-            contrasenna: "123456",
+            contrasenna: "micontrasenna",
             telefono: "8888-1005",
             idRol: rolMap["PROFESIONAL"]
         },
@@ -133,7 +135,7 @@ await prisma.usuario.createMany({
             nombre: "Andres",
             apellidos: "Vargas",
             correo: "andres@email.com",
-            contrasenna: "123456",
+            contrasenna: "micontrasenna",
             telefono: "8888-1006",
             idRol: rolMap["PROFESIONAL"]
         },
@@ -141,7 +143,7 @@ await prisma.usuario.createMany({
             nombre: "Mariana",
             apellidos: "Jimenez",
             correo: "mariana@email.com",
-            contrasenna: "123456",
+            contrasenna: "micontrasenna",
             telefono: "8888-1007",
             idRol: rolMap["CLIENTE"]
         },
@@ -149,7 +151,7 @@ await prisma.usuario.createMany({
             nombre: "Administrador",
             apellidos: "Soluvix",
             correo: "admin@soluvix.com",
-            contrasenna: "123456",
+            contrasenna: "micontrasenna",
             telefono: "8888-1008",
             idRol: rolMap["ADMIN"]
         }

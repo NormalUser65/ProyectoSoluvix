@@ -36,3 +36,21 @@ export interface UsuarioUpdateDto {
   estado?: boolean;
   idRol?: number;
 }
+
+export interface LoginRequest {
+  correo: string;
+  contrasenna: string;
+}
+
+export interface LoginResult {
+  token: string;
+}
+
+export interface RegisterRequest {
+  nombre: string;
+  apellidos: string;
+  correo: string;
+  contrasenna: string;
+  telefono?: string | null;
+  idRol: number;
+}

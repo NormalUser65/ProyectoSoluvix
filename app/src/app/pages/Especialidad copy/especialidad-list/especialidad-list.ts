@@ -1,7 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,7 +16,6 @@ import { Especialidad } from '../../../core/models/especialidad.model';
   imports: [
     RouterLink,
     FormsModule,
-    TranslocoModule,
     MatCardModule,
     MatButtonModule,
     MatIconModule,
@@ -29,8 +27,8 @@ import { Especialidad } from '../../../core/models/especialidad.model';
 })
 export class EspecialidadList {
   private readonly especialidadService = inject(EspecialidadService);
-  private readonly translocoService = inject(TranslocoService);
 
+  // 👇 nombre corregido: especialidades
   especialidades = signal<Especialidad[]>([]);
   loading = signal(false);
   error = signal<string | null>(null);
@@ -39,6 +37,7 @@ export class EspecialidadList {
     this.loadEspecialidades();
   }
 
+  // Cargar especialidades
   loadEspecialidades(): void {
     this.loading.set(true);
     this.error.set(null);
@@ -49,12 +48,13 @@ export class EspecialidadList {
         this.loading.set(false);
       },
       error: () => {
-        this.error.set(this.translocoService.translate('error_carga'));
+        this.error.set('No se pudieron cargar las especialidades');
         this.loading.set(false);
       },
     });
   }
 
+  // Cambiar estado
   toggleEstado(especialidad: Especialidad): void {
     const nuevoEstado = !especialidad.estado;
 
@@ -63,7 +63,7 @@ export class EspecialidadList {
         this.loadEspecialidades();
       },
       error: () => {
-        this.error.set(this.translocoService.translate('error_estado'));
+        this.error.set('No se pudo cambiar el estado');
       },
     });
   }

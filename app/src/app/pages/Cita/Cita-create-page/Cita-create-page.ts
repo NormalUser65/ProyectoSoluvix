@@ -26,8 +26,6 @@ import { Modalidad } from '../../../core/models/modalidad.model';
 
 import { CitaCreateDto } from '../../../core/models/cita.model';
 
-import { TranslocoModule } from '@jsverse/transloco';
-
 @Component({
   selector: 'app-cita-create-page',
   standalone: true,
@@ -36,8 +34,7 @@ import { TranslocoModule } from '@jsverse/transloco';
     CitaForm,
     MatCardModule,
     MatIconModule,
-    MatProgressSpinnerModule,
-    TranslocoModule
+    MatProgressSpinnerModule
   ],
 
   templateUrl: './Cita-create-page.html',

@@ -4,7 +4,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 import { PerfilProfesionalService } from '../../../core/services/perfilProfesionalService';
 import { PerfilProfesional } from '../../../core/models/perfilProfesional.model';
@@ -19,7 +18,6 @@ import { CommonModule } from '@angular/common';
     MatIconModule,
     MatProgressSpinnerModule,
     CommonModule,
-    TranslocoModule,
   ],
   templateUrl: './perfil-profesional-detail.html',
   styleUrls: ['./perfil-profesional-detail.css'],
@@ -27,7 +25,6 @@ import { CommonModule } from '@angular/common';
 export class PerfilProfesionalDetail {
   private readonly perfilService = inject(PerfilProfesionalService);
   private readonly route = inject(ActivatedRoute);
-  private readonly translocoService = inject(TranslocoService);
 
   perfil = signal<PerfilProfesional | null>(null);
   loading = signal(false);
@@ -51,7 +48,7 @@ export class PerfilProfesionalDetail {
         console.log('Perfil cargado:', response.data);
       },
       error: () => {
-        this.error.set(this.translocoService.translate('error_carga_perfil'));
+        this.error.set('No se pudo cargar el perfil profesional.');
         this.loading.set(false);
       },
     });

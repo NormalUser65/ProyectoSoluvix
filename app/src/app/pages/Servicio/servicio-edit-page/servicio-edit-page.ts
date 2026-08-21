@@ -14,14 +14,10 @@ import { Categoria } from '../../../core/models/categoria.model';
 import { Modalidad } from '../../../core/models/modalidad.model';
 import { Especialidad } from '../../../core/models/especialidad.model';
 
-import { TranslocoModule } from '@jsverse/transloco';
-
 @Component({
   selector: 'app-servicio-edit-page',
   standalone: true,
-  imports: [ServicioForm,
-    TranslocoModule
-  ],
+  imports: [ServicioForm],
   templateUrl: './servicio-edit-page.html',
   styleUrl: './servicio-edit-page.css',
 })

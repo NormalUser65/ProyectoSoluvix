@@ -13,13 +13,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { UsuarioService } from '../../../core/services/usuario.service';
 import { Usuario } from '../../../core/models/usuario.model';
 
-import { TranslocoModule } from '@jsverse/transloco'; 
-
 @Component({
   selector: 'app-usuario-list',
   imports: [
     FormsModule,
-    RouterLink,
     MatCardModule,
     MatButtonModule,
     MatIconModule,
@@ -27,7 +24,6 @@ import { TranslocoModule } from '@jsverse/transloco';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    TranslocoModule 
   ],
   templateUrl: './usuario-list.html',
   styleUrls: ['./usuario-list.css'],
@@ -41,6 +37,7 @@ export class UsuarioList {
   loading = signal(false);
   error = signal<string | null>(null);
 
+  // Computed para obtener roles únicos de los usuarios cargados
   roles = computed(() => {
     const map = new Map<number, string>();
     this.usuarios().forEach((usr) => {

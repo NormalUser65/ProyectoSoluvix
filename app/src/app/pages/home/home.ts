@@ -1,8 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router'; 
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-home',
@@ -10,11 +9,9 @@ import { TranslocoModule } from '@jsverse/transloco';
   imports: [
     RouterModule,   
     MatIconModule,
-    MatButtonModule,
-    TranslocoModule
+    MatButtonModule
   ],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
-export class Home {
-}
+export class Home {}

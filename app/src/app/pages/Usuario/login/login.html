@@ -1,0 +1,152 @@
+<div class="login-page">
+
+    <mat-card class="login-card">
+
+    <mat-card-content>
+
+        <div class="logo-container">
+            <img
+            src="http://localhost:3000/uploads/soluvix-logo.png"
+            alt="Soluvix"
+            class="login-logo"
+            />
+        </div>
+
+        <div class="login-header">
+            <h1>¡Bienvenido de nuevo!</h1>
+            <p>Inicia sesión para continuar</p>
+        </div>
+
+        <form
+            (submit)="$event.preventDefault(); submit()"
+            class="login-form"
+        >
+
+        <div class="field-group">
+            <label>Correo electrónico</label>
+
+            <mat-form-field appearance="outline">
+                <mat-icon matPrefix>mail_outline</mat-icon>
+
+            <input
+                matInput
+                type="email"
+                placeholder="tu@email.com"
+                autocomplete="email"
+                [formField]="loginForm.correo"
+            />
+
+            @if (
+                loginForm.correo().touched() &&
+                loginForm.correo().invalid()
+            ) {
+                <mat-error>
+                {{ loginForm.correo().errors()[0].message }}
+                </mat-error>
+            }
+            </mat-form-field>
+        </div>
+
+
+        <div class="field-group">
+            <label>Contraseña</label>
+
+            <mat-form-field appearance="outline">
+            <mat-icon matPrefix>lock_outline</mat-icon>
+
+            <input
+                matInput
+                [type]="ocultarPassword() ? 'password' : 'text'"
+                placeholder="••••••••"
+                autocomplete="current-password"
+                [formField]="loginForm.contrasenna"
+            />
+
+            <button
+                mat-icon-button
+                matSuffix
+                type="button"
+                (click)="ocultarPassword.update(v => !v)"
+                aria-label="Mostrar u ocultar contraseña"
+            >
+                <mat-icon>
+                {{ ocultarPassword() ? 'visibility' : 'visibility_off' }}
+                </mat-icon>
+            </button>
+
+            @if (
+                loginForm.contrasenna().touched() &&
+                loginForm.contrasenna().invalid()
+            ) {
+                <mat-error>
+                {{ loginForm.contrasenna().errors()[0].message }}
+                </mat-error>
+            }
+            </mat-form-field>
+        </div>
+
+
+        <div class="forgot-password">
+            <a routerLink="/recuperar-contrasenna">
+            ¿Olvidaste tu contraseña?
+            </a>
+        </div>
+
+
+        @if (errorServidor()) {
+            <div class="server-error" role="alert">
+            <mat-icon>error_outline</mat-icon>
+            <span>{{ errorServidor() }}</span>
+            </div>
+        }
+
+
+        <button
+            mat-flat-button
+            class="login-button"
+            type="submit"
+            [disabled]="enviando() || loginForm().invalid()"
+        >
+
+            @if (enviando()) {
+
+            <mat-spinner diameter="20" />
+            <span>Ingresando...</span>
+
+            } @else {
+
+            <span>Iniciar sesión</span>
+            <mat-icon>arrow_forward</mat-icon>
+
+            }
+
+        </button>
+
+
+        <div class="register-separator">
+
+            <span></span>
+
+            <p>¿No tienes cuenta?</p>
+
+            <span></span>
+
+        </div>
+
+
+        <a
+            mat-stroked-button
+            routerLink="/register"
+            class="register-button"
+        >
+            <mat-icon>person_add</mat-icon>
+            Crear una cuenta
+        </a>
+
+        </form>
+
+    </mat-card-content>
+
+    </mat-card>
+
+</div>

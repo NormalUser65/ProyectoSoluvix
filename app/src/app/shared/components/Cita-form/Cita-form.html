@@ -3,15 +3,15 @@
   <!-- Personas involucradas -->
   <section class="form-section">
     <div class="section-header">
-      <h3>{{ 'personas_involucradas' | transloco }}</h3>
-      <p>{{ 'seleccionar_cliente_profesional' | transloco }}</p>
+      <h3>Personas involucradas</h3>
+      <p>Seleccione el cliente y el profesional.</p>
     </div>
 
     <div class="form-grid two-columns">
       <mat-form-field appearance="outline">
-        <mat-label>{{ 'cliente_form' | transloco }}</mat-label>
+        <mat-label>Cliente</mat-label>
         <mat-select [formField]="citaForm.idCliente">
-          <mat-option [value]="null">{{ 'seleccionar_cliente' | transloco }}</mat-option>
+          <mat-option [value]="null">Seleccione un cliente</mat-option>
           @for (cliente of clientes(); track cliente.id) {
             <mat-option [value]="cliente.id">{{ getNombreCliente(cliente) }}</mat-option>
           }
@@ -22,9 +22,9 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>{{ 'profesional_form' | transloco }}</mat-label>
+        <mat-label>Profesional</mat-label>
         <mat-select [formField]="citaForm.idProfesional">
-          <mat-option [value]="null">{{ 'seleccionar_profesional_cita' | transloco }}</mat-option>
+          <mat-option [value]="null">Seleccione un profesional</mat-option>
           @for (profesional of profesionales(); track profesional.id) {
             <mat-option [value]="profesional.id">{{ getNombreProfesional(profesional) }}</mat-option>
           }
@@ -39,15 +39,15 @@
   <!-- Información del servicio -->
   <section class="form-section">
     <div class="section-header">
-      <h3>{{ 'informacion_servicio_cita' | transloco }}</h3>
-      <p>{{ 'seleccionar_servicio_modalidad' | transloco }}</p>
+      <h3>Información del servicio</h3>
+      <p>Seleccione el servicio y la modalidad.</p>
     </div>
 
     <div class="form-grid two-columns">
       <mat-form-field appearance="outline">
-        <mat-label>{{ 'servicio_form' | transloco }}</mat-label>
+        <mat-label>Servicio</mat-label>
         <mat-select [formField]="citaForm.idServicio">
-          <mat-option [value]="null">{{ 'seleccionar_servicio' | transloco }}</mat-option>
+          <mat-option [value]="null">Seleccione un servicio</mat-option>
           @for (servicio of servicios(); track servicio.id) {
             <mat-option [value]="servicio.id">{{ getNombreServicio(servicio) }}</mat-option>
           }
@@ -58,9 +58,9 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>{{ 'modalidad_form' | transloco }}</mat-label>
+        <mat-label>Modalidad</mat-label>
         <mat-select [formField]="citaForm.idModalidad">
-          <mat-option [value]="null">{{ 'seleccionar_modalidad_cita' | transloco }}</mat-option>
+          <mat-option [value]="null">Seleccione una modalidad</mat-option>
           @for (modalidad of modalidades(); track modalidad.id) {
             <mat-option [value]="modalidad.id">{{ getNombreModalidad(modalidad) }}</mat-option>
           }
@@ -75,13 +75,13 @@
   <!-- Fecha y horario -->
   <section class="form-section">
     <div class="section-header">
-      <h3>{{ 'fecha_horario_cita' | transloco }}</h3>
-      <p>{{ 'indicar_fecha_horario' | transloco }}</p>
+      <h3>Fecha y horario</h3>
+      <p>Indique cuándo se realizará la cita.</p>
     </div>
 
     <div class="form-grid three-columns">
       <mat-form-field appearance="outline">
-        <mat-label>{{ 'fecha_form' | transloco }}</mat-label>
+        <mat-label>Fecha</mat-label>
         <input matInput type="date" [formField]="citaForm.fechaCita" />
         @if (citaForm.fechaCita().touched() && citaForm.fechaCita().invalid()) {
           <mat-error>{{ citaForm.fechaCita().errors()[0].message }}</mat-error>
@@ -89,7 +89,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>{{ 'hora_inicio' | transloco }}</mat-label>
+        <mat-label>Hora de inicio</mat-label>
         <input matInput type="time" [formField]="citaForm.horaInicio" />
         @if (citaForm.horaInicio().touched() && citaForm.horaInicio().invalid()) {
           <mat-error>{{ citaForm.horaInicio().errors()[0].message }}</mat-error>
@@ -97,7 +97,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>{{ 'hora_final' | transloco }}</mat-label>
+        <mat-label>Hora final</mat-label>
         <input matInput type="time" [formField]="citaForm.horaFin" />
         @if (citaForm.horaFin().touched() && citaForm.horaFin().invalid()) {
           <mat-error>{{ citaForm.horaFin().errors()[0].message }}</mat-error>
@@ -109,20 +109,20 @@
   <!-- Detalles -->
   <section class="form-section">
     <div class="section-header">
-      <h3>{{ 'detalles_cita' | transloco }}</h3>
-      <p>{{ 'explicar_necesidad' | transloco }}</p>
+      <h3>Detalles de la cita</h3>
+      <p>Explique brevemente qué necesita.</p>
     </div>
 
     <mat-form-field appearance="outline" class="full-width">
-      <mat-label>{{ 'descripcion_comentario' | transloco }}</mat-label>
-      <textarea matInput rows="5" [placeholder]="'descripcion_placeholder' | transloco" [formField]="citaForm.comentarioCliente"></textarea>
+      <mat-label>Descripción o comentario</mat-label>
+      <textarea matInput rows="5" placeholder="Describa el servicio que necesita" [formField]="citaForm.comentarioCliente"></textarea>
       @if (citaForm.comentarioCliente().touched() && citaForm.comentarioCliente().invalid()) {
         <mat-error>{{ citaForm.comentarioCliente().errors()[0].message }}</mat-error>
       }
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-  <mat-label>{{ 'monto_estimado' | transloco }}</mat-label>
+  <mat-label>Monto estimado</mat-label>
   <span matTextPrefix>₡&nbsp;</span>
   <input matInput type="number" [formField]="citaForm.montoEstimado" />
   @if (citaForm.montoEstimado().touched() && citaForm.montoEstimado().invalid()) {
@@ -137,14 +137,14 @@
   <!-- Acciones -->
   <div class="form-actions">
     <button mat-stroked-button type="button" (click)="cancelar.emit()">
-      <mat-icon>close</mat-icon> {{ 'cancelar_cita' | transloco }}
+      <mat-icon>close</mat-icon> Cancelar
     </button>
 
     <button mat-flat-button type="submit" [disabled]="isSubmitting()">
       @if (isSubmitting()) {
-        <ng-container><mat-icon>hourglass_top</mat-icon> {{ 'guardando_cita' | transloco }}</ng-container>
+        <ng-container><mat-icon>hourglass_top</mat-icon> Guardando...</ng-container>
       } @else {
-        <ng-container><mat-icon>event_available</mat-icon> {{ 'agendar_cita' | transloco }}</ng-container>
+        <ng-container><mat-icon>event_available</mat-icon> Agendar cita</ng-container>
       }
     </button>
   </div>

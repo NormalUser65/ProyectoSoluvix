@@ -6,39 +6,23 @@
       </span>
       <span class="brand-text">
         <strong>Soluvix</strong>
-        <small>{{ 'subtitle' | transloco }}</small>
+        <small>Soluciones visuales</small>
       </span>
     </a>
 
     <nav class="desktop-nav">
       <a mat-button routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
         <mat-icon>home</mat-icon>
-        {{ 'home' | transloco }}
+        Inicio
       </a>
       <button mat-button class="menu-trigger" [matMenuTriggerFor]="listadosDropdown">
         <mat-icon>grid_view</mat-icon>
-        {{ 'listados' | transloco }}
+        Listados
         <mat-icon class="expand-icon">keyboard_arrow_down</mat-icon>
       </button>
     </nav>
 
     <span class="spacer"></span>
-
-    <button mat-button class="lang-button" [matMenuTriggerFor]="langMenu">
-      <mat-icon>language</mat-icon>
-      {{ 'language' | transloco }}
-    </button>
-
-    <mat-menu #langMenu="matMenu" class="lang-menu">
-      <button mat-menu-item (click)="changeLang('es')">
-        <mat-icon>flag</mat-icon>
-        Español
-      </button>
-      <button mat-menu-item (click)="changeLang('en')">
-        <mat-icon>flag</mat-icon>
-        English
-      </button>
-    </mat-menu>
 
     @if (currentUser(); as user) {
       <div class="user-chip">
@@ -48,16 +32,16 @@
       </div>
       <button mat-flat-button class="logout-button" type="button" (click)="logoutUser.emit()">
         <mat-icon>logout</mat-icon>
-        {{ 'logout' | transloco }} 
+        Salir
       </button>
     } @else {
       <button mat-stroked-button class="login-button" type="button" (click)="loginClient.emit()">
         <mat-icon>person</mat-icon>
-        {{ 'client' | transloco }}
+        Cliente
       </button>
       <button mat-flat-button class="admin-button" type="button" (click)="loginAdmin.emit()">
         <mat-icon>admin_panel_settings</mat-icon>
-        {{ 'admin' | transloco }}
+        Administrador
       </button>
     }
 
@@ -74,7 +58,7 @@
     </span>
     <div>
       <strong>Listados</strong>
-      <small>{{ 'adminSubtitle' | transloco }}</small>
+      <small>Administración de Soluvix</small>
     </div>
   </div>
 
@@ -83,7 +67,7 @@
   @for (item of listadosMenu; track item.path) {
     <a mat-menu-item [routerLink]="item.path" routerLinkActive="menu-item-active">
       <mat-icon>{{ item.icon }}</mat-icon>
-      <span>{{ item.label | transloco }}</span>
+      <span>{{ item.label }}</span>
     </a>
   }
 </mat-menu>
@@ -91,29 +75,29 @@
 <mat-menu #mobileMenu="matMenu">
   <a mat-menu-item routerLink="/">
     <mat-icon>home</mat-icon>
-    <span>{{ 'home' | transloco }}</span> 
+    <span>Inicio</span>
   </a>
 
   @for (item of listadosMenu; track item.path) {
     <a mat-menu-item [routerLink]="item.path">
       <mat-icon>{{ item.icon }}</mat-icon>
-      <span>{{ item.label | transloco }}</span> 
+      <span>{{ item.label }}</span>
     </a>
   }
 
   @if (currentUser()) {
     <button mat-menu-item type="button" (click)="logoutUser.emit()">
       <mat-icon>logout</mat-icon>
-      <span>{{ 'logout' | transloco }}</span> 
+      <span>Salir</span>
     </button>
   } @else {
     <button mat-menu-item type="button" (click)="loginClient.emit()">
       <mat-icon>person</mat-icon>
-      <span>{{ 'clientLogin' | transloco }}</span>
+      <span>Ingresar como cliente</span>
     </button>
     <button mat-menu-item type="button" (click)="loginAdmin.emit()">
       <mat-icon>admin_panel_settings</mat-icon>
-      <span>{{ 'adminLogin' | transloco }}</span>
+      <span>Ingresar como administrador</span>
     </button>
   }
 </mat-menu>

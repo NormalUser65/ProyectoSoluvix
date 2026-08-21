@@ -10,7 +10,7 @@
       arrow_back
     </mat-icon>
 
-    {{ 'volver_catalogo' | transloco }}
+    Volver al catálogo
 
   </a>
 
@@ -22,7 +22,7 @@
       <mat-spinner diameter="42"></mat-spinner>
 
       <p>
-        {{ 'cargando_detalle' | transloco }}
+        Cargando detalle...
       </p>
 
     </div>
@@ -57,7 +57,7 @@
           <img
             class="service-image"
             src="http://localhost:3000/images/ImagenDetalleServicio.jpg"
-            [alt]="('detalle_servicio_alt' | transloco) + ' ' + srv.nombre"
+            [alt]="'Detalle del servicio ' + srv.nombre"
           />
 
         </div>
@@ -67,7 +67,7 @@
           [class.inactive-status]="!srv.estado"
         >
 
-          {{ (srv.estado ? 'activo' : 'inactivo') | transloco }}
+          {{ srv.estado ? 'Activo' : 'Inactivo' }}
 
         </span>
 
@@ -85,7 +85,7 @@
             photo_camera
           </mat-icon>
 
-          {{ srv.categoria.nombre || ('sin_categoria' | transloco) }}
+          {{ srv.categoria.nombre || 'Sin categoría' }}
 
         </span>
 
@@ -106,7 +106,7 @@
         <div class="price-section">
 
           <small>
-            {{ 'precio_servicio' | transloco }}
+            Precio del servicio
           </small>
 
           <strong>
@@ -136,11 +136,11 @@
             <div>
 
               <small>
-                {{ 'duracion' | transloco }}
+                Duración
               </small>
 
               <strong>
-                {{ srv.duracionEstimada }} {{ 'minutos_abreviado' | transloco }}
+                {{ srv.duracionEstimada }} min
               </strong>
 
             </div>
@@ -163,11 +163,11 @@
             <div>
 
               <small>
-                {{ 'modalidad' | transloco }}
+                Modalidad
               </small>
 
               <strong>
-                {{ srv.modalidad.nombre || ('no_disponible' | transloco) }}
+                {{ srv.modalidad.nombre || 'N/A' }}
               </strong>
 
             </div>
@@ -190,11 +190,11 @@
             <div>
 
               <small>
-                {{ 'estado' | transloco }}
+                Estado
               </small>
 
               <strong>
-                {{ (srv.estado ? 'activo' : 'inactivo') | transloco }}
+                {{ srv.estado ? 'Activo' : 'Inactivo' }}
               </strong>
 
             </div>
@@ -221,11 +221,11 @@
           <div>
 
             <small>
-              {{ 'profesional_encargado' | transloco }}
+              Profesional encargado
             </small>
 
             <strong>
-              {{ srv.perfil.usuario.nombre || ('sin_asignar' | transloco) }}
+              {{ srv.perfil.usuario.nombre || 'Sin asignar' }}
             </strong>
 
           </div>
@@ -239,7 +239,7 @@
         <section class="specialties-section">
 
           <h2>
-            {{ 'especialidades' | transloco }}
+            Especialidades
           </h2>
 
 
@@ -265,7 +265,7 @@
           } @else {
 
             <p class="muted">
-              {{ 'sin_especialidades' | transloco }}
+              No hay especialidades registradas.
             </p>
 
           }

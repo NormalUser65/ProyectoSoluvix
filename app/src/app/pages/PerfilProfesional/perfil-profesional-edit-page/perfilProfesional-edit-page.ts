@@ -1,7 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { PerfilProfesionalForm } from '../../../shared/components/perfilProfesional-form/perfilProfesional-form';
 import { PerfilProfesionalService } from '../../../core/services/perfilProfesionalService';
 import { ModalidadService } from '../../../core/services/modalidad.service';
@@ -13,7 +12,7 @@ import { Especialidad } from '../../../core/models/especialidad.model';
 @Component({
   selector: 'app-perfil-profesional-edit-page',
   standalone: true,
-  imports: [PerfilProfesionalForm, TranslocoModule],
+  imports: [PerfilProfesionalForm],
   templateUrl: './perfilProfesional-edit-page.html',
   styleUrls: ['./perfilProfesional-edit-page.css'],
 })
@@ -23,7 +22,6 @@ export class PerfilProfesionalEditPage {
   private readonly perfilService = inject(PerfilProfesionalService);
   private readonly modalidadService = inject(ModalidadService);
   private readonly especialidadService = inject(EspecialidadService);
-  private readonly translocoService = inject(TranslocoService);
 
   perfil = signal<PerfilProfesional | null>(null);
   modalidades = signal<Modalidad[]>([]);
@@ -40,7 +38,7 @@ export class PerfilProfesionalEditPage {
 
   cargarDatosFormulario() {
     if (!this.id) {
-      this.error.set(this.translocoService.translate('id_invalido'));
+      this.error.set('El identificador del perfil profesional no es válido');
       this.loading.set(false);
       return;
     }
@@ -54,14 +52,14 @@ export class PerfilProfesionalEditPage {
       especialidades: this.especialidadService.listar(),
     }).subscribe({
       next: ({ perfil, modalidades, especialidades }) => {
-        console.log('Perfil recibido desde API:', perfil.data); 
+        console.log('Perfil recibido desde API:', perfil.data); // 👈 Verifica que trae usuario y campos
         this.perfil.set(perfil.data);
         this.modalidades.set(modalidades.data ?? []);
         this.especialidades.set(especialidades.data ?? []);
       },
       error: (err) => {
         console.error('Error al cargar perfil:', err);
-        this.error.set(this.translocoService.translate('error_carga_perfil_detalle'));
+        this.error.set('No se pudo cargar la información del perfil profesional');
       },
       complete: () => {
         this.loading.set(false);
@@ -84,7 +82,7 @@ export class PerfilProfesionalEditPage {
       },
       error: (err) => {
         console.error('Error al actualizar perfil:', err);
-        this.error.set(err?.error?.message ?? this.translocoService.translate('error_actualizar_perfil'));
+        this.error.set(err?.error?.message ?? 'No se pudo actualizar el perfil profesional');
       },
       complete: () => {
         this.saving.set(false);

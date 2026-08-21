@@ -10,8 +10,6 @@ import { CitaService } from '../../../core/services/Cita.Service';
 import { Cita } from '../../../core/models/cita.model';
 import { DatePipe } from '@angular/common';
 
-import { TranslocoModule } from '@jsverse/transloco';
-
 @Component({
   selector: 'app-cita-list',
   imports: [
@@ -21,7 +19,6 @@ import { TranslocoModule } from '@jsverse/transloco';
     MatIconModule,
     MatProgressSpinnerModule,
     DatePipe,
-    TranslocoModule
   ],
   templateUrl: './cita-list.html',
   styleUrls: ['./cita-list.css'],

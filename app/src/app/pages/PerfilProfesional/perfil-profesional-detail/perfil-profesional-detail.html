@@ -2,7 +2,7 @@
   @if(loading()){
     <div class="state">
       <mat-spinner diameter="42" />
-      <p>{{ 'cargando_perfil' | transloco }}</p>
+      <p>Cargando perfil...</p>
     </div>
   } @else if(error()){
     <div class="state error">
@@ -16,7 +16,7 @@
           <img
             *ngIf="perfil()?.imagenPerfil"
             [src]="getImageUrl(perfil()?.imagenPerfil!)"
-            [alt]="'foto_perfil' | transloco"
+            alt="Foto de perfil"
           />
         </div>
         <mat-card-title>
@@ -28,22 +28,22 @@
       </mat-card-header>
 
       <mat-card-content>
-        <p><strong>{{ 'modalidad' | transloco }}:</strong> {{ perfil()?.modalidad?.nombre }}</p>
-        <p><strong>{{ 'experiencia' | transloco: { anos: perfil()?.annosExperiencia } }}</strong></p>
-        <p><strong>{{ 'provincia' | transloco }}:</strong> {{ perfil()?.provincia }}</p>
-        <p><strong>{{ 'canton' | transloco }}:</strong> {{ perfil()?.canton }}</p>
-        <p><strong>{{ 'distrito' | transloco }}:</strong> {{ perfil()?.distrito }}</p>
-        <p><strong>{{ 'tarifa_base' | transloco }}:</strong> {{ perfil()?.tarifaBase }}</p>
-        <p><strong>{{ 'disponibilidad' | transloco }}:</strong> {{ perfil()?.disponible ? ('activo' | transloco) : ('inactivo' | transloco) }}</p>
-        <p><strong>{{ 'descripcion' | transloco }}:</strong> {{ perfil()?.descripcion }}</p>
+        <p><strong>Modalidad:</strong> {{ perfil()?.modalidad?.nombre }}</p>
+        <p><strong>Experiencia:</strong> {{ perfil()?.annosExperiencia }} años</p>
+        <p><strong>Provincia:</strong> {{ perfil()?.provincia }}</p>
+        <p><strong>Cantón:</strong> {{ perfil()?.canton }}</p>
+        <p><strong>Distrito:</strong> {{ perfil()?.distrito }}</p>
+        <p><strong>Tarifa base:</strong> {{ perfil()?.tarifaBase }}</p>
+        <p><strong>Disponibilidad:</strong> {{ perfil()?.disponible ? 'Activo' : 'Inactivo' }}</p>
+        <p><strong>Descripción:</strong> {{ perfil()?.descripcion }}</p>
       </mat-card-content>
 
       <mat-card-actions>
         <button mat-raised-button color="primary" [routerLink]="['/citas', perfil()?.id]">
-          {{ 'solicitar_cita' | transloco }}
+          Solicitar cita
         </button>
         <button mat-button [routerLink]="['/admin/profesionales']">
-          {{ 'volver_listado' | transloco }}
+          Volver al listado
         </button>
       </mat-card-actions>
     </mat-card>

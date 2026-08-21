@@ -1,17 +1,17 @@
 <section class="page-header">
-  <span class="eyebrow">{{ 'eyebrow' | transloco }}</span>
-  <h1>{{ 'titulo' | transloco }}</h1>
-  <p>{{ 'subtitulo' | transloco }}</p>
+  <span class="eyebrow">Listado de especialidades</span>
+  <h1>Especialidades disponibles</h1>
+  <p>Listado de especialidades profesionales.</p>
 </section>
 
 <div class="result-summary">
-  {{ 'encontrados' | transloco: { count: especialidades().length } }}
+  {{ especialidades().length }} especialidades encontradas
 </div>
 
 @if(loading()) {
   <div class="state">
     <mat-spinner diameter="42"></mat-spinner>
-    <p>{{ 'cargando' | transloco }}</p>
+    <p>Cargando especialidades...</p>
   </div>
 } @else if(error()) {
   <div class="state error">
@@ -21,7 +21,7 @@
 } @else if(especialidades().length === 0) {
   <div class="state">
     <mat-icon>search_off</mat-icon>
-    <p>{{ 'sin_resultados' | transloco }}</p>
+    <p>No hay especialidades disponibles.</p>
   </div>
 }
 
@@ -30,13 +30,13 @@
     <mat-card class="specialty-card">
       <mat-card-content>
         <span class="status" [class.inactive]="!especialidad.estado">
-          {{ especialidad.estado ? ('estado_activa' | transloco) : ('estado_inactiva' | transloco) }}
+          {{ especialidad.estado ? 'Activa' : 'Inactiva' }}
         </span>
         <h2>{{ especialidad.nombre }}</h2>
-        <p>{{ especialidad.descripcion || ('sin_descripcion' | transloco) }}</p>
+        <p>{{ especialidad.descripcion || 'Sin descripción disponible' }}</p>
         <div class="specialty-meta">
-          <span>{{ 'servicios' | transloco: { count: especialidad.servicios?.length || 0 } }}</span>
-          <span>{{ 'profesionales' | transloco: { count: especialidad.profesionales?.length || 0 } }}</span>
+          <span>Servicios: {{ especialidad.servicios?.length || 0 }}</span>
+          <span>Profesionales: {{ especialidad.profesionales?.length || 0 }}</span>
         </div>
       </mat-card-content>
 
@@ -45,7 +45,7 @@
           mat-icon-button
           [color]="especialidad.estado ? 'warn' : 'primary'"
           (click)="toggleEstado(especialidad)"
-          [matTooltip]="especialidad.estado ? ('desactivar' | transloco) : ('activar' | transloco)">
+          [matTooltip]="especialidad.estado ? 'Desactivar especialidad' : 'Activar especialidad'">
           <mat-icon>{{ especialidad.estado ? 'toggle_on' : 'toggle_off' }}</mat-icon>
         </button>
 
@@ -54,7 +54,7 @@
           color="primary"
           [routerLink]="['/especialidades', especialidad.id]"
           class="view-icon-button">
-          {{ 'detalle' | transloco }}
+          Detalle
           <mat-icon>more_horiz</mat-icon>
         </a>
       </mat-card-actions>

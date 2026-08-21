@@ -34,7 +34,6 @@ import { PerfilProfesional } from '../../../core/models/perfilProfesional.model'
 import { Categoria } from '../../../core/models/categoria.model';
 import { Modalidad } from '../../../core/models/modalidad.model';
 import { Especialidad } from '../../../core/models/especialidad.model';
-import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-servicio-form',
@@ -48,8 +47,7 @@ import { TranslocoModule } from '@jsverse/transloco';
     MatButtonModule,
     MatIconModule,
     MatSelectModule,
-    MatSlideToggleModule,
-    TranslocoModule
+    MatSlideToggleModule
   ],
   templateUrl: './servicio-form.html',
   styleUrl: './servicio-form.css'

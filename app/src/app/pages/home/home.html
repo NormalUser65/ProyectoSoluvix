@@ -7,7 +7,7 @@
       [routerLink]="'/servicios'"
     >
       <mat-icon>search</mat-icon>
-      <span>{{ 'buscar_servicio' | transloco }}</span>
+      <span>Buscar un servicio</span>
     </button>
 
     <button
@@ -17,7 +17,7 @@
       [routerLink]="'/admin/profesionales/create'"
     >
       <mat-icon>photo_camera</mat-icon>
-      <span>{{ 'convertirse_profesional' | transloco }}</span>
+      <span>Convertirse en profesional</span>
     </button>
 
     <button
@@ -27,7 +27,7 @@
       [routerLink]="'/login'"
     >
       <mat-icon>login</mat-icon>
-      <span>{{ 'iniciar_sesion' | transloco }}</span>
+      <span>Iniciar sesión</span>
     </button>
   </div>
 
@@ -37,22 +37,24 @@
     <img
       class="photographer-image"
       src="http://localhost:3000/images/Fotografo-Home.png"
-      [alt]="'imagen_alt' | transloco"
+      alt="Fotógrafo profesional sosteniendo una cámara"
     />
   </div>
 
   <div class="hero-content">
-    <span class="eyebrow">{{ 'eyebrow' | transloco }}</span>
-    <h1>{{ 'titulo' | transloco }}</h1>
+    <span class="eyebrow">Servicios profesionales de fotografía</span>
+    <h1>Captura tus momentos</h1>
     <p>
-      {{ 'descripcion' | transloco }}
+      Conecta con profesionales de la fotografía,
+      explora sus servicios y agenda una cita de
+      acuerdo a lo que necesites.
     </p>
 
     <div class="hero-highlight">
       <span class="highlight-line"></span>
       <div>
-        <strong>{{ 'highlight_titulo' | transloco }}</strong>
-        <small>{{ 'highlight_descripcion' | transloco }}</small>
+        <strong>Soluciones visuales a tu alcance</strong>
+        <small>Profesionales, servicios y citas en un solo lugar.</small>
       </div>
     </div>
   </div>

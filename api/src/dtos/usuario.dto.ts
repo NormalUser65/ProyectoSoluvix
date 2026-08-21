@@ -36,6 +36,49 @@ export const createUsuarioSchema = z.object({
         .optional() 
 });
 
+export const registerUserSchema = z.object({
+    correo: z
+        .string()
+        .email()
+        .max(150),
+
+    contrasenna: z
+        .string()
+        .min(6)
+        .max(255),
+
+    nombre: z
+        .string()
+        .trim()
+        .min(2)
+        .max(100),
+
+    apellidos: z
+        .string()
+        .trim()
+        .min(2)
+        .max(100),
+
+    telefono: z
+        .string()
+        .max(20)
+        .optional(),
+
+    idRol: z
+        .number()
+        .int()
+        .positive(),
+});
+
+export const loginUserSchema = z.object({
+    correo: z
+        .string()
+        .email(),
+
+    contrasenna: z
+        .string()
+        .min(6),
+});
 export const updateUsuarioSchema =
 createUsuarioSchema.partial();
 
@@ -44,3 +87,9 @@ z.infer<typeof createUsuarioSchema>;
 
 export type UpdateUsuarioDto =
 z.infer<typeof updateUsuarioSchema>;
+
+export type RegisterUserDto =
+z.infer<typeof registerUserSchema>;
+
+export type LoginUserDto =
+z.infer<typeof loginUserSchema>;

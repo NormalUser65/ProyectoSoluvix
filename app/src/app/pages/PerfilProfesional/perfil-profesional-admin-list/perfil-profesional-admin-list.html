@@ -1,58 +1,84 @@
 <section class="admin-panel">
   <section class="admin-header">
     <div>
-      <span class="eyebrow">{{ 'eyebrow' | transloco }}</span>
-      <h1>{{ 'titulo' | transloco }}</h1>
+      <span class="eyebrow">Administración</span>
+      <h1>Gestión de profesionales</h1>
     </div>
   </section>
 
   <p class="summary">
-    {{ 'encontrados' | transloco: { count: perfiles().length } }}
+    {{ perfiles().length }} profesionales encontrados
   </p>
 
   <div class="table-wrapper">
     <table mat-table [dataSource]="perfiles()" class="admin-table">
+      <!-- Nombre -->
       <ng-container matColumnDef="nombre">
-        <th mat-header-cell *matHeaderCellDef>{{ 'nombre_completo' | transloco }}</th>
+        <th mat-header-cell *matHeaderCellDef>Nombre completo</th>
         <td mat-cell *matCellDef="let p">
           <strong>{{ p.usuario.nombre }} {{ p.usuario.apellidos }}</strong>
         </td>
       </ng-container>
 
+      <!-- Título -->
       <ng-container matColumnDef="titulo">
-        <th mat-header-cell *matHeaderCellDef>{{ 'titulo_profesional' | transloco }}</th>
+        <th mat-header-cell *matHeaderCellDef>Título profesional</th>
         <td mat-cell *matCellDef="let p">{{ p.tituloProfesional }}</td>
       </ng-container>
 
+      <!-- Modalidad -->
       <ng-container matColumnDef="modalidad">
-        <th mat-header-cell *matHeaderCellDef>{{ 'modalidad' | transloco }}</th>
+        <th mat-header-cell *matHeaderCellDef>Modalidad</th>
         <td mat-cell *matCellDef="let p">{{ p.modalidad?.nombre }}</td>
       </ng-container>
 
+      <!-- Tarifa -->
       <ng-container matColumnDef="tarifa">
-        <th mat-header-cell *matHeaderCellDef>{{ 'tarifa_base' | transloco }}</th>
+        <th mat-header-cell *matHeaderCellDef>Tarifa base</th>
         <td mat-cell *matCellDef="let p">{{ p.tarifaBase }}</td>
       </ng-container>
 
+      <!-- Disponibilidad -->
       <ng-container matColumnDef="disponible">
-        <th mat-header-cell *matHeaderCellDef>{{ 'disponibilidad' | transloco }}</th>
+        <th mat-header-cell *matHeaderCellDef>Disponibilidad</th>
         <td mat-cell *matCellDef="let p">
           <mat-slide-toggle [checked]="p.disponible" (change)="toggleDisponibilidad(p)">
-            {{ p.disponible ? ('activo' | transloco) : ('inactivo' | transloco) }}
+            {{ p.disponible ? 'Activo' : 'Inactivo' }}
           </mat-slide-toggle>
         </td>
       </ng-container>
 
+      <!-- Acciones -->
       <ng-container matColumnDef="acciones">
-        <th mat-header-cell *matHeaderCellDef>{{ 'acciones' | transloco }}</th>
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
         <td mat-cell *matCellDef="let p">
-          <button mat-icon-button color="primary" class="view-icon-button" [routerLink]="['/profesionales', p.id]" [matTooltip]="'ver_detalle' | transloco">
+          <!-- Ver detalle -->
+          <button
+            mat-icon-button
+            color="primary"
+            class="view-icon-button"
+            [routerLink]="['/profesionales', p.id]"
+          >
             <mat-icon>visibility</mat-icon>
           </button>
-          <button mat-icon-button color="accent" class="edit-icon-button" [routerLink]="['/admin/profesionales/edit', p.id]" [matTooltip]="'editar' | transloco">
+
+          <!-- Editar -->
+          <button
+            mat-icon-button
+            color="accent"
+            class="edit-icon-button"
+            [routerLink]="['/admin/profesionales/edit', p.id]"
+          >
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button color="warn" class="delete-icon-button" (click)="eliminar(p)" [matTooltip]="'eliminar' | transloco">
+
+          <!-- Eliminar -->
+          <button
+            mat-icon-button
+            color="warn"
+            class="delete-icon-button"
+            (click)="eliminar(p)"
+          >
             <mat-icon>delete</mat-icon>
           </button>
         </td>
