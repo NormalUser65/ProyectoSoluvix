@@ -1,0 +1,205 @@
+<div class="login-page">
+
+    <mat-card class="login-card">
+
+        <a
+        mat-icon-button
+        routerLink="/"
+        class="close-button"
+        aria-label="Volver al inicio"
+        >
+        <mat-icon class="close-icon">close</mat-icon>
+        </a>
+
+        <mat-card-content>
+
+        <div class="logo-container">
+            <img
+            src="http://localhost:3000/images/soluvix-logo.png"
+            alt="Soluvix"
+            class="login-logo"
+            />
+        </div>
+
+        <div class="login-header">
+            <h1>Crear una cuenta</h1>
+            <p>Regístrate para comenzar</p>
+        </div>
+
+        <form
+            (submit)="$event.preventDefault(); submit()"
+            class="login-form"
+        >
+
+            <div class="field-group">
+            <label>Nombre</label>
+
+            <mat-form-field appearance="outline">
+                <mat-icon matPrefix>person_outline</mat-icon>
+
+                <input
+                matInput
+                type="text"
+                placeholder="Tu nombre"
+                autocomplete="given-name"
+                [formField]="registerForm.nombre"
+                />
+
+                @if (
+                registerForm.nombre().touched() &&
+                registerForm.nombre().invalid()
+                ) {
+                <mat-error>
+                    {{ registerForm.nombre().errors()[0].message }}
+                </mat-error>
+                }
+            </mat-form-field>
+            </div>
+
+            <div class="field-group">
+            <label>Apellidos</label>
+
+            <mat-form-field appearance="outline">
+                <mat-icon matPrefix>badge</mat-icon>
+
+                <input
+                matInput
+                type="text"
+                placeholder="Tus apellidos"
+                autocomplete="family-name"
+                [formField]="registerForm.apellidos"
+                />
+
+                @if (
+                registerForm.apellidos().touched() &&
+                registerForm.apellidos().invalid()
+                ) {
+                <mat-error>
+                    {{ registerForm.apellidos().errors()[0].message }}
+                </mat-error>
+                }
+            </mat-form-field>
+            </div>
+
+            <div class="field-group">
+            <label>Correo electrónico</label>
+
+            <mat-form-field appearance="outline">
+                <mat-icon matPrefix>mail_outline</mat-icon>
+
+                <input
+                matInput
+                type="email"
+                placeholder="tu@email.com"
+                autocomplete="email"
+                [formField]="registerForm.correo"
+                />
+
+                @if (
+                registerForm.correo().touched() &&
+                registerForm.correo().invalid()
+                ) {
+                <mat-error>
+                    {{ registerForm.correo().errors()[0].message }}
+                </mat-error>
+                }
+            </mat-form-field>
+            </div>
+
+            <div class="field-group">
+            <label>Teléfono</label>
+
+            <mat-form-field appearance="outline">
+                <mat-icon matPrefix>phone</mat-icon>
+
+                <input
+                matInput
+                type="tel"
+                placeholder="8888-8888"
+                autocomplete="tel"
+                [formField]="registerForm.telefono"
+                />
+            </mat-form-field>
+            </div>
+
+            <div class="field-group">
+            <label>Contraseña</label>
+
+            <mat-form-field appearance="outline">
+                <mat-icon matPrefix>lock_outline</mat-icon>
+
+                <input
+                matInput
+                [type]="ocultarPassword() ? 'password' : 'text'"
+                placeholder="••••••••"
+                autocomplete="new-password"
+                [formField]="registerForm.contrasenna"
+                />
+
+                <button
+                mat-icon-button
+                matSuffix
+                type="button"
+                (click)="ocultarPassword.update(v => !v)"
+                aria-label="Mostrar u ocultar contraseña"
+                >
+                <mat-icon>
+                    {{ ocultarPassword() ? 'visibility' : 'visibility_off' }}
+                </mat-icon>
+                </button>
+
+                @if (
+                registerForm.contrasenna().touched() &&
+                registerForm.contrasenna().invalid()
+                ) {
+                <mat-error>
+                    {{ registerForm.contrasenna().errors()[0].message }}
+                </mat-error>
+                }
+            </mat-form-field>
+            </div>
+
+            @if (errorServidor()) {
+            <div class="server-error" role="alert">
+                <mat-icon>error_outline</mat-icon>
+                <span>{{ errorServidor() }}</span>
+            </div>
+            }
+
+            <button
+            mat-flat-button
+            class="login-button"
+            type="submit"
+            [disabled]="enviando() || registerForm().invalid()"
+            >
+            @if (enviando()) {
+                <mat-spinner diameter="20" />
+                <span>Creando cuenta...</span>
+            } @else {
+                <span>Crear cuenta</span>
+                <mat-icon>arrow_forward</mat-icon>
+            }
+            </button>
+
+            <div class="register-separator">
+            <span></span>
+            <p>¿Ya tienes cuenta?</p>
+            <span></span>
+            </div>
+
+            <a
+            mat-stroked-button
+            routerLink="/login"
+            class="register-button"
+            >
+            <mat-icon>login</mat-icon>
+            Iniciar sesión
+            </a>
+
+        </form>
+
+        </mat-card-content>
+
+    </mat-card>
+
+</div>

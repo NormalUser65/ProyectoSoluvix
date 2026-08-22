@@ -9,6 +9,7 @@ import { roleGuard } from './core/guards/role.guard';
 
 //login
 import { Login } from './pages/Usuario/login/login';
+import { Register } from './pages/Usuario/register/register';
 
 // Sin autorización
 import { SinAutorizacion } from './pages/auth/sin-autorizacion/sin-autorizacion';
@@ -70,6 +71,13 @@ export const routes: Routes = [
         path: 'login',
         component: Login,
         title: 'Iniciar sesión'
+      },
+
+      // REGISTER
+      {
+        path: 'register',
+        component: Register,
+        title: 'Crear una cuenta'
       },
 
       //SIN AUTORIZACIÓN

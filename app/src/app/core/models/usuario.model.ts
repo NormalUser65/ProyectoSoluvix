@@ -51,6 +51,6 @@ export interface RegisterRequest {
   apellidos: string;
   correo: string;
   contrasenna: string;
-  telefono?: string | null;
+  telefono: string;
   idRol: number;
 }

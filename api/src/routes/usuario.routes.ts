@@ -33,6 +33,13 @@ export class UsuarioRoutes {
       asyncHandler(controller.crear)
     );
 
+    // POST /usuario/register
+    router.post(
+      "/register",
+      validateRequest(registerUserSchema),
+      asyncHandler(controller.registrar)
+    );
+
     // POST /usuario/login
     router.post(
       "/login",
@@ -67,6 +74,7 @@ export class UsuarioRoutes {
       asyncHandler(controller.cambiarEstado)
     );
 
+    console.log("UsuarioRoutes cargadas - /register disponible");
     return router;
   }
 }
