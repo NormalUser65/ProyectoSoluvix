@@ -1,8 +1,4 @@
-import {
-  Component,
-  inject,
-  signal
-} from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
@@ -30,40 +26,27 @@ import { CitaCreateDto } from '../../../core/models/cita.model';
   selector: 'app-cita-create-page',
   standalone: true,
 
-  imports: [
-    CitaForm,
-    MatCardModule,
-    MatIconModule,
-    MatProgressSpinnerModule
-  ],
+  imports: [CitaForm, MatCardModule, MatIconModule, MatProgressSpinnerModule],
 
   templateUrl: './Cita-create-page.html',
-  styleUrl: './Cita-create-page.css'
+  styleUrl: './Cita-create-page.css',
 })
 export class CitaCreatePage {
+  private readonly router = inject(Router);
 
-  private readonly router =
-    inject(Router);
+  private readonly citaService = inject(CitaService);
 
-  private readonly citaService =
-    inject(CitaService);
+  private readonly usuarioService = inject(UsuarioService);
 
-  private readonly usuarioService =
-    inject(UsuarioService);
+  private readonly perfilProfesionalService = inject(PerfilProfesionalService);
 
-  private readonly perfilProfesionalService =
-    inject(PerfilProfesionalService);
+  private readonly servicioService = inject(ServicioService);
 
-  private readonly servicioService =
-    inject(ServicioService);
-
-  private readonly modalidadService =
-    inject(ModalidadService);
+  private readonly modalidadService = inject(ModalidadService);
 
   clientes = signal<Usuario[]>([]);
 
-  profesionales =
-    signal<PerfilProfesional[]>([]);
+  profesionales = signal<PerfilProfesional[]>([]);
 
   servicios = signal<Servicio[]>([]);
 
@@ -80,128 +63,76 @@ export class CitaCreatePage {
   }
 
   cargarDatosFormulario() {
-
     this.loading.set(true);
 
     this.error.set(null);
 
     forkJoin({
-      clientes:
-        this.usuarioService.listar(),
+      clientes: this.usuarioService.listar(),
 
-      profesionales:
-        this.perfilProfesionalService.listar(),
+      profesionales: this.perfilProfesionalService.listar(),
 
-      servicios:
-        this.servicioService.listar(),
+      servicios: this.servicioService.listar(),
 
-      modalidades:
-        this.modalidadService.listar()
+      modalidades: this.modalidadService.listar(),
     }).subscribe({
-
-      next: ({
-        clientes,
-        profesionales,
-        servicios,
-        modalidades
-      }) => {
-
-        /*
-         * Conservamos solamente usuarios
-         * cuyo rol sea CLIENTE.
-         *
-         * Si el ID del rol CLIENTE no es 3,
-         * cambia ese número.
-         */
+      next: ({ clientes, profesionales, servicios, modalidades }) => {
         this.clientes.set(
           (clientes.data ?? []).filter(
-            usuario =>
-              usuario.rol?.nombre === 'CLIENTE' ||
-              usuario.rol?.nombre === 'Cliente'
-          )
+            (usuario) => usuario.rol?.nombre === 'CLIENTE' || usuario.rol?.nombre === 'Cliente',
+          ),
         );
 
         this.profesionales.set(
-          profesionales.data ?? []
+          (profesionales.data ?? []).filter((profesional) => profesional.disponible === true),
         );
 
-        this.servicios.set(
-          servicios.data ?? []
-        );
+        this.servicios.set((servicios.data ?? []).filter((servicio) => servicio.estado === true));
 
-        this.modalidades.set(
-          modalidades.data ?? []
-        );
+        this.modalidades.set(modalidades.data ?? []);
       },
 
       error: (err) => {
+        console.error('Error al cargar datos de la cita:', err);
 
-        console.error(
-          'Error al cargar datos de la cita:',
-          err
-        );
-
-        this.error.set(
-          'No se pudieron cargar los datos del formulario'
-        );
+        this.error.set('No se pudieron cargar los datos del formulario');
 
         this.loading.set(false);
       },
 
       complete: () => {
-
         this.loading.set(false);
-      }
+      },
     });
   }
 
   guardar(data: CitaCreateDto) {
-
     this.saving.set(true);
 
     this.error.set(null);
 
-    console.log(
-      'Cita enviada al API:',
-      JSON.stringify(data, null, 2)
-    );
+    console.log('Cita enviada al API:', JSON.stringify(data, null, 2));
 
-    this.citaService.crear(data)
-      .subscribe({
+    this.citaService.crear(data).subscribe({
+      next: () => {
+        this.router.navigate(['/admin/citas']);
+      },
 
-        next: () => {
+      error: (err) => {
+        console.error('Error al registrar la cita:', err);
 
-          this.router.navigate([
-            '/admin/citas'
-          ]);
-        },
+        this.error.set(err?.error?.message ?? 'No se pudo registrar la cita');
 
-        error: (err) => {
+        this.saving.set(false);
+      },
 
-          console.error(
-            'Error al registrar la cita:',
-            err
-          );
-
-          this.error.set(
-            err?.error?.message ??
-            'No se pudo registrar la cita'
-          );
-
-          this.saving.set(false);
-        },
-
-        complete: () => {
-
-          this.saving.set(false);
-        }
-      });
+      complete: () => {
+        this.saving.set(false);
+      },
+    });
   }
 
   cancelar() {
-
-    this.router.navigate([
-      '/admin/citas'
-    ]);
+    this.router.navigate(['/admin/citas']);
   }
 }

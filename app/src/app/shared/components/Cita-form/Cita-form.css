@@ -57,4 +57,10 @@
   .form-actions button {
     width: 100%;
   }
+
+  .cita-form input[disabled] {
+    background-color: #f5f5f5;
+    color: #555;
+    cursor: not-allowed;
+  }
 }

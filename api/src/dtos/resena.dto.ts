@@ -1,20 +1,9 @@
 import { z } from "zod";
 
 export const createResenaSchema = z.object({
-  idCita: z
-    .number()
-    .int()
-    .positive("La cita es obligatoria"),
+  idCita: z.number().int().positive("La cita es obligatoria"),
 
-  idCliente: z
-    .number()
-    .int()
-    .positive("El cliente es obligatorio"),
-
-  idProfesional: z
-    .number()
-    .int()
-    .positive("El profesional es obligatorio"),
+  idCliente: z.number().int().positive("El cliente es obligatorio"),
 
   puntuacion: z
     .number()
