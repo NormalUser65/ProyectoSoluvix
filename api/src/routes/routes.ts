@@ -7,7 +7,7 @@ import { HistorialEstadoRoutes } from './historialEstado.routes';
 import { ModalidadRoutes } from './modalidad.routes';
 import { PerfilProfesionalRoutes } from './perfilProfesional.routes';
 import { ProfesionalEspecialidadRoutes } from './ProfesionalEspecialidad.routes';
-import { ResennaRoutes } from './resena.routes';
+import { ResenaRoutes } from './resena.routes';
 import { RolRouts } from './rol.routes';
 import { ServicioRoutes } from './Servicio.routes';
 import { ServicioEspecialidadRoutes } from './ServicioEspecialidad.routes';
@@ -17,7 +17,6 @@ import { ImageRoutes } from './image.routes';
 export class AppRoutes {
     static get routes(): Router {
         const router = Router();
-        // ----Agregar las rutas----
         router.use('/categoria', CategoriaRoutes.routes)
         router.use('/cita', CitaRoutes.routes)   
         router.use('/especialidad', EspecialidadRoutes.routes) 
@@ -27,7 +26,7 @@ export class AppRoutes {
         router.use('/modalidad', ModalidadRoutes.routes) 
         router.use('/profesionales', PerfilProfesionalRoutes.routes)  
         router.use('/profesionalEspecialidad', ProfesionalEspecialidadRoutes.routes)       
-        router.use('/resena', ResennaRoutes.routes) 
+        router.use('/resena', ResenaRoutes.routes) 
         router.use('/rol', RolRouts.routes)         
         router.use('/servicio', ServicioRoutes.routes)  
         router.use('/servicioEspecialidad', ServicioEspecialidadRoutes.routes)  

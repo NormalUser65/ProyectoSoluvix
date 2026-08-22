@@ -1,5 +1,4 @@
 <form class="cita-form" (submit)="$event.preventDefault(); submit()">
-
   <!-- Personas involucradas -->
   <section class="form-section">
     <div class="section-header">
@@ -23,10 +22,15 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Profesional</mat-label>
-        <mat-select [formField]="citaForm.idProfesional">
+        <mat-select
+          [formField]="citaForm.idProfesional"
+          (selectionChange)="onProfesionalChange($event.value)"
+        >
           <mat-option [value]="null">Seleccione un profesional</mat-option>
           @for (profesional of profesionales(); track profesional.id) {
-            <mat-option [value]="profesional.id">{{ getNombreProfesional(profesional) }}</mat-option>
+            <mat-option [value]="profesional.id">{{
+              getNombreProfesional(profesional)
+            }}</mat-option>
           }
         </mat-select>
         @if (citaForm.idProfesional().touched() && citaForm.idProfesional().invalid()) {
@@ -46,7 +50,10 @@
     <div class="form-grid two-columns">
       <mat-form-field appearance="outline">
         <mat-label>Servicio</mat-label>
-        <mat-select [formField]="citaForm.idServicio">
+        <mat-select
+          [formField]="citaForm.idServicio"
+          (selectionChange)="onServicioChange($event.value)"
+        >
           <mat-option [value]="null">Seleccione un servicio</mat-option>
           @for (servicio of servicios(); track servicio.id) {
             <mat-option [value]="servicio.id">{{ getNombreServicio(servicio) }}</mat-option>
@@ -90,7 +97,12 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Hora de inicio</mat-label>
-        <input matInput type="time" [formField]="citaForm.horaInicio" />
+        <input
+          matInput
+          type="time"
+          [formField]="citaForm.horaInicio"
+          (change)="onHoraInicioChange($event.target.value)"
+        />
         @if (citaForm.horaInicio().touched() && citaForm.horaInicio().invalid()) {
           <mat-error>{{ citaForm.horaInicio().errors()[0].message }}</mat-error>
         }
@@ -98,10 +110,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Hora final</mat-label>
-        <input matInput type="time" [formField]="citaForm.horaFin" />
-        @if (citaForm.horaFin().touched() && citaForm.horaFin().invalid()) {
-          <mat-error>{{ citaForm.horaFin().errors()[0].message }}</mat-error>
-        }
+        <input matInput type="time" [value]="citaModel().horaFin" disabled />
       </mat-form-field>
     </div>
   </section>
@@ -115,23 +124,22 @@
 
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Descripción o comentario</mat-label>
-      <textarea matInput rows="5" placeholder="Describa el servicio que necesita" [formField]="citaForm.comentarioCliente"></textarea>
+      <textarea
+        matInput
+        rows="5"
+        placeholder="Describa el servicio que necesita"
+        [formField]="citaForm.comentarioCliente"
+      ></textarea>
       @if (citaForm.comentarioCliente().touched() && citaForm.comentarioCliente().invalid()) {
         <mat-error>{{ citaForm.comentarioCliente().errors()[0].message }}</mat-error>
       }
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-  <mat-label>Monto estimado</mat-label>
-  <span matTextPrefix>₡&nbsp;</span>
-  <input matInput type="number" [formField]="citaForm.montoEstimado" />
-  @if (citaForm.montoEstimado().touched() && citaForm.montoEstimado().invalid()) {
-    <mat-error>
-      {{ citaForm.montoEstimado().errors()[0].message }}
-    </mat-error>
-  }
-</mat-form-field>
-
+      <mat-label>Monto estimado</mat-label>
+      <span matTextPrefix>₡&nbsp;</span>
+      <input matInput type="number" [value]="citaModel().montoEstimado" disabled />
+    </mat-form-field>
   </section>
 
   <!-- Acciones -->

@@ -2,7 +2,14 @@ import { Router } from "express";
 import { CitaController } from "../controllers/cita.controller";
 import { asyncHandler } from "../middlewares/async-handler.middleware";
 import { validateRequest } from "../middlewares/validate-request.middleware";
-import { createCitaSchema, updateCitaSchema } from "../dtos/cita.dto";
+import {
+  createCitaSchema,
+  updateCitaSchema,
+  aceptarCitaSchema,
+  rechazarCitaSchema,
+  cancelarCitaSchema,
+  completarCitaSchema,
+} from "../dtos/cita.dto";
 
 export class CitaRoutes {
   static get routes(): Router {
@@ -10,46 +17,27 @@ export class CitaRoutes {
     const controller = new CitaController();
 
     // Listar citas
-    router.get(
-      "/",
-      asyncHandler(controller.listar)
-    );
+    router.get("/", asyncHandler(controller.listar));
 
     // Filtros
-    router.get(
-      "/filtrar/estado",
-      asyncHandler(controller.filtrarPorEstado)
-    );
-
-    router.get(
-      "/filtrar/profesional",
-      asyncHandler(controller.filtrarPorProfesional)
-    );
-
-    router.get(
-      "/filtrar/rango-fechas",
-      asyncHandler(controller.filtrarPorRangoFechas)
-    );
+    router.get("/filtrar/estado", asyncHandler(controller.filtrarPorEstado));
+    router.get("/filtrar/profesional", asyncHandler(controller.filtrarPorProfesional));
+    router.get("/filtrar/rango-fechas", asyncHandler(controller.filtrarPorRangoFechas));
 
     // Obtener una cita por ID
-    router.get(
-      "/:id",
-      asyncHandler(controller.obtenerPorId)
-    );
+    router.get("/:id", asyncHandler(controller.obtenerPorId));
 
     // Crear cita
-    router.post(
-      "/",
-      validateRequest(createCitaSchema),
-      asyncHandler(controller.crear)
-    );
+    router.post("/", validateRequest(createCitaSchema), asyncHandler(controller.crear));
 
     // Actualizar cita
-    router.put(
-      "/:id",
-      validateRequest(updateCitaSchema),
-      asyncHandler(controller.actualizar)
-    );
+    router.put("/:id", validateRequest(updateCitaSchema), asyncHandler(controller.actualizar));
+
+    // Nuevas rutas para cambios de estado
+    router.post("/:id/aceptar", validateRequest(aceptarCitaSchema), asyncHandler(controller.aceptar));
+    router.post("/:id/rechazar", validateRequest(rechazarCitaSchema), asyncHandler(controller.rechazar));
+    router.post("/:id/cancelar", validateRequest(cancelarCitaSchema), asyncHandler(controller.cancelar));
+    router.post("/:id/completar", validateRequest(completarCitaSchema), asyncHandler(controller.completar));
 
     return router;
   }
