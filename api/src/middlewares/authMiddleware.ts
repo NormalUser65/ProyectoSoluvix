@@ -1,41 +1,106 @@
-import { NextFunction, Request, Response } from "express"
-import { StatusCodes } from "http-status-codes"
-import jwt, { JwtPayload, Secret } from "jsonwebtoken"
+import { NextFunction, Request, Response } from "express";
+import { StatusCodes } from "http-status-codes";
+import jwt, { JwtPayload, Secret } from "jsonwebtoken";
+
 export interface AuthTokenPayload extends JwtPayload {
-    id: number
-    email: string
-    role: string
+  id: number;
+  email: string;
+  role: string;
 }
-export interface AuthRequest extends Request { user?: AuthTokenPayload }
-export function authenticateToken(request: AuthRequest, response: Response, next: NextFunction) {
-    const authorizationHeader = request.headers.authorization
-    if (!authorizationHeader) {
-        return response.status(StatusCodes.UNAUTHORIZED)
-            .json({ success: false, message: "Token no proporcionado" })
+
+export interface AuthRequest extends Request {
+  user?: AuthTokenPayload;
+}
+
+export function authenticateToken(
+  request: AuthRequest,
+  response: Response,
+  next: NextFunction
+) {
+  const authorizationHeader = request.headers.authorization;
+
+  console.log(
+    "AUTHORIZATION HEADER:",
+    authorizationHeader
+  );
+
+  if (!authorizationHeader) {
+    return response
+      .status(StatusCodes.UNAUTHORIZED)
+      .json({
+        success: false,
+        message: "Token no proporcionado",
+      });
+  }
+
+  const [scheme, token] =
+    authorizationHeader.split(" ");
+
+  console.log("SCHEME:", scheme);
+  console.log("TOKEN:", token);
+
+  if (scheme !== "Bearer" || !token) {
+    return response
+      .status(StatusCodes.UNAUTHORIZED)
+      .json({
+        success: false,
+        message: "Formato de token inválido",
+      });
+  }
+
+  try {
+    const secret: Secret =
+      process.env.JWT_SECRET || "vj_utn_2026";
+
+    const decodedToken = jwt.verify(
+      token,
+      secret
+    );
+
+    console.log(
+      "TOKEN DECODIFICADO:",
+      decodedToken
+    );
+
+    if (
+      typeof decodedToken === "string" ||
+      !decodedToken.id ||
+      !decodedToken.email ||
+      !decodedToken.role
+    ) {
+      return response
+        .status(StatusCodes.UNAUTHORIZED)
+        .json({
+          success: false,
+          message: "Token inválido",
+        });
     }
-    const [scheme, token] = authorizationHeader.split(" ")
-    if (scheme !== "Bearer" || !token) {
-        return response
-            .status(StatusCodes.UNAUTHORIZED)
-            .json({ success: false, message: "Formato de token inválido" })
-    }
-    try {
-        const secret: Secret = process.env.JWT_SECRET || "vj_utn_2026"
-        const decodedToken = jwt.verify(token, secret)
-        if (typeof decodedToken === "string" || !decodedToken.id || !decodedToken.email || !decodedToken.role) {
-            return response
-                .status(StatusCodes.UNAUTHORIZED)
-                .json({ success: false, message: "Token inválido" })
-        }
-        request.user = {
-            id: Number(decodedToken.id),
-            email: String(decodedToken.email),
-            role: String(decodedToken.role)
-        }
-        next()
-    } catch {
-        return response
-            .status(StatusCodes.UNAUTHORIZED)
-            .json({ success: false, message: "Token inválido o expirado" })
-    }
+
+    request.user = {
+      id: Number(decodedToken.id),
+      email: String(decodedToken.email),
+      role: String(decodedToken.role),
+    };
+
+    console.log(
+      "USUARIO AUTENTICADO:",
+      request.user
+    );
+
+    next();
+
+  } catch (error) {
+
+    console.log(
+      "ERROR JWT:",
+      error
+    );
+
+    return response
+      .status(StatusCodes.UNAUTHORIZED)
+      .json({
+        success: false,
+        message: "Token inválido o expirado",
+      });
+  }
 }
