@@ -296,3 +296,24 @@ mat-form-field {
         font-size: 0.86rem;
     }
 }
+
+.close-button {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    z-index: 10;
+    color: #646cff;
+}
+
+.close-button .close-icon {
+    display: block;
+    color: #646cff;
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+}
+
+.close-button:hover {
+    background: rgba(100, 108, 255, 0.08);
+}
