@@ -3,7 +3,8 @@ import {
   CreateUsuarioDto,
   UpdateUsuarioDto,
   RegisterUserDto,
-  LoginUserDto
+  LoginUserDto,
+  UpdatePerfilDto
 } from "../dtos/usuario.dto";
 import { AppError } from "../utils/app-error";
 import bcrypt from "bcryptjs";
@@ -157,48 +158,58 @@ export const usuarioService = {
   },
 
   // REGISTRAR USUARIO
-  async registrar(data: RegisterUserDto) {
+async registrar(data: RegisterUserDto) {
 
-    const usuarioExists = await prisma.usuario.findUnique({
-      where: {
-        correo: data.correo
-      }
-    });
-
-    if (usuarioExists) {
-      throw new Error(
-        "El correo ya está registrado"
-      );
+  const usuarioExists = await prisma.usuario.findUnique({
+    where: {
+      correo: data.correo
     }
+  });
 
-    await this.validateRol(data.idRol);
-
-    const hashedPassword = await bcrypt.hash(
-      data.contrasenna,
-      10
+  if (usuarioExists) {
+    throw new Error(
+      "El correo ya está registrado"
     );
+  }
 
-    const usuario = await prisma.usuario.create({
-      data: {
-        correo: data.correo,
-        contrasenna: hashedPassword,
-        nombre: data.nombre,
-        apellidos: data.apellidos,
-        telefono: data.telefono,
-        idRol: data.idRol
-      },
-      include: {
-        rol: true
-      }
-    });
+  const rolCliente = await prisma.rol.findFirst({
+    where: {
+      nombre: "CLIENTE"
+    }
+  });
 
-    const {
-      contrasenna,
-      ...usuarioWithoutPassword
-    } = usuario;
+  if (!rolCliente) {
+    throw new Error(
+      "No se encontró el rol CLIENTE"
+    );
+  }
 
-    return usuarioWithoutPassword;
-  },
+  const hashedPassword = await bcrypt.hash(
+    data.contrasenna,
+    10
+  );
+
+  const usuario = await prisma.usuario.create({
+    data: {
+      correo: data.correo,
+      contrasenna: hashedPassword,
+      nombre: data.nombre,
+      apellidos: data.apellidos,
+      telefono: data.telefono,
+      idRol: rolCliente.id
+    },
+    include: {
+      rol: true
+    }
+  });
+
+  const {
+    contrasenna,
+    ...usuarioWithoutPassword
+  } = usuario;
+
+  return usuarioWithoutPassword;
+},
 
   // LOGIN
   async login(data: LoginUserDto) {
@@ -298,4 +309,68 @@ export const usuarioService = {
 
     return usuarioSinPassword;
   },
+
+  // Actualizar perfil
+  async actualizarPerfil(idUsuario: number, data: UpdatePerfilDto) {
+
+  const usuario = await prisma.usuario.findUnique({
+    where: {
+      id: idUsuario
+    }
+  });
+
+  if (!usuario) {
+    throw new Error("Usuario no encontrado");
+  }
+
+  const correoExistente = await prisma.usuario.findFirst({
+    where: {
+      correo: data.correo,
+      NOT: {
+        id: idUsuario
+      }
+    }
+  });
+
+  if (correoExistente) {
+    throw new Error("El correo ya está registrado");
+  }
+
+  let hashedPassword: string | undefined;
+
+  if (data.contrasenna) {
+    hashedPassword = await bcrypt.hash(
+      data.contrasenna,
+      10
+    );
+  }
+
+  const usuarioActualizado = await prisma.usuario.update({
+    where: {
+      id: idUsuario
+    },
+
+    data: {
+      nombre: data.nombre,
+      apellidos: data.apellidos,
+      correo: data.correo,
+      telefono: data.telefono,
+
+      ...(hashedPassword && {
+        contrasenna: hashedPassword
+      })
+    },
+
+    include: {
+      rol: true
+    }
+  });
+
+  const {
+    contrasenna,
+    ...usuarioWithoutPassword
+  } = usuarioActualizado;
+
+  return usuarioWithoutPassword;
+}
 };

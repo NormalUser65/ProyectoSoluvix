@@ -1,0 +1,137 @@
+:host {
+    display: block;
+}
+
+.edit-profile-page {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 48px 24px;
+}
+
+.page-header {
+    margin-bottom: 28px;
+}
+
+.back-button {
+    margin-bottom: 24px;
+}
+
+.eyebrow {
+    display: block;
+    margin-bottom: 8px;
+    color: #635bff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.page-header h1 {
+    margin: 0;
+    color: #171d33;
+    font-size: 2rem;
+}
+
+.page-header p {
+    margin: 8px 0 0;
+    color: #747b8d;
+}
+
+.form-card {
+    padding: 32px;
+    border-radius: 24px;
+}
+
+.error-message {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: #fff1f1;
+    color: #b42318;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.form-grid mat-form-field {
+    width: 100%;
+}
+
+.password-section {
+    margin-top: 20px;
+    padding-top: 28px;
+    border-top: 1px solid #e8eaf0;
+}
+
+.section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.section-header > mat-icon {
+    color: #635bff;
+}
+
+.section-header h2 {
+    margin: 0;
+    color: #171d33;
+    font-size: 1.1rem;
+}
+
+.section-header p {
+    margin: 5px 0 0;
+    color: #747b8d;
+    font-size: 0.9rem;
+}
+
+.password-field {
+    width: 100%;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    margin-top: 32px;
+}
+
+.form-actions button {
+    min-width: 160px;
+}
+
+.form-actions mat-spinner {
+    display: inline-block;
+    margin-right: 8px;
+}
+
+@media (max-width: 700px) {
+    .edit-profile-page {
+        padding: 32px 16px;
+    }
+
+    .form-card {
+        padding: 22px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .form-actions a,
+    .form-actions button {
+        width: 100%;
+    }
+}

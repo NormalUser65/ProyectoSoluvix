@@ -10,10 +10,11 @@ import { roleGuard } from './core/guards/role.guard';
 //login
 import { Login } from './pages/Usuario/login/login';
 import { Register } from './pages/Usuario/register/register';
+import { Perfil } from './pages/Usuario/perfil/perfil';
+import { EditarPerfil } from './pages/Usuario/editarPerfil/editarPerfil';
 
 // Sin autorización
 import { SinAutorizacion } from './pages/auth/sin-autorizacion/sin-autorizacion';
-
 
 // Servicios
 import { ServicioList } from './pages/Servicio/servicio-list/servicio-list';
@@ -22,22 +23,18 @@ import { ServicioAdminList } from './pages/Servicio/servicio-admin-list/servicio
 import { ServicioCreatePage } from './pages/Servicio/servicio-create-page/servicio-create-page';
 import { ServicioEditPage } from './pages/Servicio/servicio-edit-page/servicio-edit-page';
 
-
 // Usuarios
 import { UsuarioList } from './pages/Usuario/usuario-list/usuario-list';
 import { UsuarioDetail } from './pages/Usuario/usuario-detail/usuario-detail';
 import { UsuarioAdminList } from './pages/Usuario/usuario-admin-list/usuario-admin-list';
-
 
 // Citas
 import { CitaList } from './pages/Cita/cita-list/cita-list';
 import { CitaDetail } from './pages/Cita/cita-detail/cita-detail';
 import { CitaCreatePage } from './pages/Cita/Cita-create-page/Cita-create-page';
 
-
 // Categorías
 import { CategoriaList } from './pages/Categoria/categoria-list/categoria-list';
-
 
 // Profesionales
 import { PerfilProfesionalList } from './pages/PerfilProfesional/perfil-profesional-list/perfil-profesional-list';
@@ -46,10 +43,8 @@ import { PerfilProfesionalAdminList } from './pages/PerfilProfesional/perfil-pro
 import { PerfilProfesionalCreatePage } from './pages/PerfilProfesional/perfil-profesional-create-page/perfilProfesional-create-page';
 import { PerfilProfesionalEditPage } from './pages/PerfilProfesional/perfil-profesional-edit-page/perfilProfesional-edit-page';
 
-
 // Especialidades
 import { EspecialidadList } from './pages/Especialidad copy/especialidad-list/especialidad-list';
-
 
 export const routes: Routes = [
 
@@ -80,6 +75,28 @@ export const routes: Routes = [
         title: 'Crear una cuenta'
       },
 
+      // PERFIL USUARIO
+      {
+        path: 'perfil',
+        component: Perfil,
+        title: 'Mi perfil',
+
+        canActivate: [
+          authGuard
+        ]
+      },
+
+      // EDITAR PERFIL
+      {
+        path: 'perfil/editar',
+        component: EditarPerfil,
+        title: 'Editar mi perfil',
+
+        canActivate: [
+          authGuard
+        ]
+      },
+
       //SIN AUTORIZACIÓN
       {
         path: 'sin-autorizacion',
@@ -88,7 +105,6 @@ export const routes: Routes = [
       },
 
       // SERVICIOS
-
       {
         path: 'servicios',
         component: ServicioList,
@@ -269,7 +285,16 @@ export const routes: Routes = [
       {
         path: 'citas/create',
         component: CitaCreatePage,
-        title: 'Registrar cita'
+        title: 'Registrar cita',
+
+        canActivate: [
+          authGuard,
+          roleGuard
+        ],
+
+        data: {
+          roles: ['CLIENTE']
+        }
       },
 
       {
@@ -307,7 +332,16 @@ export const routes: Routes = [
       {
         path: 'especialidades',
         component: EspecialidadList,
-        title: 'Catálogo especialidades'
+        title: 'Catálogo especialidades',
+
+        canActivate: [
+          authGuard,
+          roleGuard
+        ],
+
+        data: {
+          roles: ['ADMIN']
+        }
       },
 
     ],

@@ -1,0 +1,235 @@
+<section class="edit-profile-page">
+
+    <div class="page-header">
+
+        <a
+        mat-button
+        routerLink="/perfil"
+        class="back-button"
+        >
+        <mat-icon>arrow_back</mat-icon>
+        Volver a mi perfil
+        </a>
+
+        <span class="eyebrow">
+        Mi cuenta
+        </span>
+
+        <h1>
+        Editar perfil
+        </h1>
+
+        <p>
+        Actualiza la información asociada a tu cuenta.
+        </p>
+
+    </div>
+
+    <mat-card class="form-card">
+
+        @if (errorServidor()) {
+
+        <div class="error-message">
+            <mat-icon>error</mat-icon>
+
+            <span>
+            {{ errorServidor() }}
+            </span>
+        </div>
+
+        }
+
+        <form (submit)="$event.preventDefault(); submit()">
+
+        <div class="form-grid">
+
+            <mat-form-field appearance="outline">
+            <mat-label>Nombre</mat-label>
+
+            <mat-icon matPrefix>
+                person
+            </mat-icon>
+
+            <input
+                matInput
+                type="text"
+                [formField]="perfilForm.nombre"
+            />
+
+            @if (
+                submitted() &&
+                perfilForm.nombre().invalid()
+            ) {
+                <mat-error>
+                {{ perfilForm.nombre().errors()[0]?.message }}
+                </mat-error>
+            }
+            </mat-form-field>
+
+
+            <mat-form-field appearance="outline">
+            <mat-label>Apellidos</mat-label>
+
+            <mat-icon matPrefix>
+                badge
+            </mat-icon>
+
+            <input
+                matInput
+                type="text"
+                [formField]="perfilForm.apellidos"
+            />
+
+            @if (
+                submitted() &&
+                perfilForm.apellidos().invalid()
+            ) {
+                <mat-error>
+                {{ perfilForm.apellidos().errors()[0]?.message }}
+                </mat-error>
+            }
+            </mat-form-field>
+
+
+            <mat-form-field appearance="outline">
+            <mat-label>Correo electrónico</mat-label>
+
+            <mat-icon matPrefix>
+                mail
+            </mat-icon>
+
+            <input
+                matInput
+                type="email"
+                [formField]="perfilForm.correo"
+            />
+
+            @if (
+                submitted() &&
+                perfilForm.correo().invalid()
+            ) {
+                <mat-error>
+                {{ perfilForm.correo().errors()[0]?.message }}
+                </mat-error>
+            }
+            </mat-form-field>
+
+
+            <mat-form-field appearance="outline">
+            <mat-label>Teléfono</mat-label>
+
+            <mat-icon matPrefix>
+                phone
+            </mat-icon>
+
+            <input
+                matInput
+                type="tel"
+                [formField]="perfilForm.telefono"
+            />
+
+            @if (
+                submitted() &&
+                perfilForm.telefono().invalid()
+            ) {
+                <mat-error>
+                {{ perfilForm.telefono().errors()[0]?.message }}
+                </mat-error>
+            }
+            </mat-form-field>
+
+        </div>
+
+
+        <div class="password-section">
+
+            <div class="section-header">
+            <mat-icon>lock</mat-icon>
+
+            <div>
+                <h2>
+                Cambiar contraseña
+                </h2>
+
+                <p>
+                Déjala vacía si deseas conservar tu contraseña actual.
+                </p>
+            </div>
+            </div>
+
+
+            <mat-form-field
+            appearance="outline"
+            class="password-field"
+            >
+            <mat-label>
+                Nueva contraseña
+            </mat-label>
+
+            <mat-icon matPrefix>
+                key
+            </mat-icon>
+
+            <input
+                matInput
+                [type]="ocultarPassword() ? 'password' : 'text'"
+                [formField]="perfilForm.contrasenna"
+            />
+
+            <button
+                mat-icon-button
+                matSuffix
+                type="button"
+                (click)="ocultarPassword.set(!ocultarPassword())"
+                aria-label="Mostrar u ocultar contraseña"
+            >
+                <mat-icon>
+                {{ ocultarPassword() ? 'visibility' : 'visibility_off' }}
+                </mat-icon>
+            </button>
+
+            <mat-hint>
+                Mínimo 6 caracteres si deseas cambiarla.
+            </mat-hint>
+
+            </mat-form-field>
+
+        </div>
+
+
+        <div class="form-actions">
+
+            <a
+            mat-stroked-button
+            routerLink="/perfil"
+            >
+            Cancelar
+            </a>
+
+            <button
+            mat-flat-button
+            type="submit"
+            [disabled]="enviando()"
+            >
+
+            @if (enviando()) {
+
+                <mat-spinner diameter="20"></mat-spinner>
+                Guardando...
+
+            } @else {
+
+                <mat-icon>save</mat-icon>
+                Guardar cambios
+
+            }
+
+            </button>
+
+        </div>
+
+        </form>
+
+    </mat-card>
+
+</section>

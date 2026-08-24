@@ -1,25 +1,19 @@
 import { Component, input, output } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import {  MatMenuModule } from '@angular/material/menu';
-import { MatBadgeModule } from '@angular/material/badge';
+import { MatMenuModule } from '@angular/material/menu';
 
-type Role = 'CLIENTE' | 'ADMIN';
+import { Usuario } from '../../core/models/usuario.model';
 
 interface MenuItem {
   label: string;
   path: string;
   icon: string;
-  roles?: Role[];
+  roles?: string[];
 }
-
-interface User {
-  nombre: string;
-  role: Role;
-}
-
 
 @Component({
   selector: 'app-header',
@@ -31,69 +25,75 @@ interface User {
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
-    MatMenuModule,
-    MatBadgeModule
+    MatMenuModule
   ],
 
   templateUrl: './header.html',
   styleUrl: './header.css'
 })
 export class Header {
-
-  publicMenu = input.required<MenuItem[]>();
-
-  adminMaintenanceMenu =
-    input.required<MenuItem[]>();
-
-  adminManagementMenu =
-    input.required<MenuItem[]>();
-
-  currentUser =
-    input<User | null>(null);
-
-  cartCount = input(0);
-
-  isAdmin = input(false);
-
-  canShowItem =
-    input.required<(item: MenuItem) => boolean>();
-
-  loginClient = output<void>();
-
-  loginAdmin = output<void>();
+  usuario = input<Usuario | null>(null);
+  rol = input<string | null>(null);
+  autenticado = input(false);
 
   logoutUser = output<void>();
 
-  readonly listadosMenu: MenuItem[] = [
-  {
-    label: 'Usuarios',
-    path: '/usuarios',
-    icon: 'group'
-  },
-  {
-    label: 'Categorías',
-    path: '/categorias',
-    icon: 'category'
-  },
-  {
-    label: 'Especialidades',
-    path: '/especialidades',
-    icon: 'event'
-  },
-  {
-    label: 'Profesionales',
-    path: '/admin/profesionales',
-    icon: 'person'
-  },
-  {
-    label: 'Servicios',
-    path: '/admin/servicios',
-    icon: 'photo_camera'
-  },
-  {
-    label: 'Citas',
-    path: '/citas',
-    icon: 'event'
+  readonly publicMenu: MenuItem[] = [
+    {
+      label: 'Servicios',
+      path: '/servicios',
+      icon: 'photo_camera'
+    },
+    {
+      label: 'Profesionales',
+      path: '/profesionales',
+      icon: 'person'
+    }
+  ];
+
+  readonly adminMenu: MenuItem[] = [
+    {
+      label: 'Usuarios',
+      path: '/usuarios',
+      icon: 'group'
+    },
+    {
+      label: 'Categorías',
+      path: '/categorias',
+      icon: 'category'
+    },
+    {
+      label: 'Especialidades',
+      path: '/especialidades',
+      icon: 'school'
+    },
+    {
+      label: 'Profesionales',
+      path: '/admin/profesionales',
+      icon: 'person'
+    },
+    {
+      label: 'Servicios',
+      path: '/admin/servicios',
+      icon: 'photo_camera'
+    },
+    {
+      label: 'Citas',
+      path: '/citas',
+      icon: 'event'
+    }
+  ];
+
+  puedeMostrar(item: MenuItem): boolean {
+    if (!item.roles?.length) {
+      return true;
+    }
+
+    const rolActual = this.rol();
+
+    return (
+      rolActual !== null &&
+      item.roles.includes(rolActual)
+    );
   }
-];
 }

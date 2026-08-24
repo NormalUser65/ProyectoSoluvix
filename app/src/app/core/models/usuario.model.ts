@@ -52,5 +52,20 @@ export interface RegisterRequest {
   correo: string;
   contrasenna: string;
   telefono: string;
-  idRol: number;
+}
+
+export interface UpdatePerfilRequest {
+  nombre: string;
+  apellidos: string;
+  correo: string;
+  telefono: string;
+  contrasenna?: string;
+}
+
+export interface EditarPerfilFormModel {
+  nombre: string;
+  apellidos: string;
+  correo: string;
+  telefono: string;
+  contrasenna: string;
 }

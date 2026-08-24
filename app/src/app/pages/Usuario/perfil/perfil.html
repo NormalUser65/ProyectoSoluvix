@@ -1,0 +1,77 @@
+<section class="profile-page">
+
+    @if (usuario(); as user) {
+
+        <div class="profile-header">
+        <div>
+            <span class="eyebrow">Mi cuenta</span>
+            <h1>Mi perfil</h1>
+            <p>Consulta la información asociada a tu cuenta.</p>
+        </div>
+
+        <a
+            mat-flat-button
+            routerLink="/perfil/editar"
+            class="edit-button"
+        >
+            <mat-icon>edit</mat-icon>
+            Editar perfil
+        </a>
+        </div>
+
+        <mat-card class="profile-card">
+
+        <div class="profile-identity">
+            <div class="profile-avatar">
+            <mat-icon>person</mat-icon>
+            </div>
+
+            <div>
+            <h2>{{ user.nombre }} {{ user.apellidos }}</h2>
+            <span class="role-badge">{{ rol() }}</span>
+            </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="profile-grid">
+
+            <div class="profile-field">
+            <mat-icon>mail</mat-icon>
+            <div>
+                <span>Correo electrónico</span>
+                <strong>{{ user.correo }}</strong>
+            </div>
+            </div>
+
+            <div class="profile-field">
+            <mat-icon>phone</mat-icon>
+            <div>
+                <span>Teléfono</span>
+                <strong>{{ user.telefono || 'No registrado' }}</strong>
+            </div>
+            </div>
+
+            <div class="profile-field">
+            <mat-icon>badge</mat-icon>
+            <div>
+                <span>Rol</span>
+                <strong>{{ rol() }}</strong>
+            </div>
+            </div>
+
+            <div class="profile-field">
+            <mat-icon>calendar_today</mat-icon>
+            <div>
+                <span>Fecha de registro</span>
+                <strong>{{ user.fechaRegistro }}</strong>
+            </div>
+            </div>
+
+        </div>
+
+        </mat-card>
+
+    }
+
+</section>

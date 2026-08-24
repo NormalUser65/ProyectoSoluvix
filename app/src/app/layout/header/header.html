@@ -1,103 +1,261 @@
 <header class="site-header">
   <mat-toolbar class="toolbar">
+
     <a class="brand" routerLink="/" aria-label="Ir al inicio de Soluvix">
       <span class="brand-logo">
-        <img src="http://localhost:3000/images/soluvix-logo.png" alt="Logo de Soluvix" />
+        <img
+          src="http://localhost:3000/images/soluvix-logo.png"
+          alt="Logo de Soluvix"
+        />
       </span>
+
       <span class="brand-text">
         <strong>Soluvix</strong>
         <small>Soluciones visuales</small>
       </span>
     </a>
 
+
     <nav class="desktop-nav">
-      <a mat-button routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+
+      <a
+        mat-button
+        routerLink="/"
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
         <mat-icon>home</mat-icon>
         Inicio
       </a>
-      <button mat-button class="menu-trigger" [matMenuTriggerFor]="listadosDropdown">
-        <mat-icon>grid_view</mat-icon>
-        Listados
-        <mat-icon class="expand-icon">keyboard_arrow_down</mat-icon>
-      </button>
+
+
+      @for (item of publicMenu; track item.path) {
+        <a
+          mat-button
+          [routerLink]="item.path"
+          routerLinkActive="active-link"
+        >
+          <mat-icon>{{ item.icon }}</mat-icon>
+          {{ item.label }}
+        </a>
+      }
+
+
+      @if (rol() === 'CLIENTE') {
+        <a
+          mat-button
+          routerLink="/citas/create"
+          routerLinkActive="active-link"
+        >
+          <mat-icon>event_available</mat-icon>
+          Solicitar cita
+        </a>
+      }
+
+
+      @if (rol() === 'ADMIN') {
+        <button
+          mat-button
+          class="menu-trigger"
+          [matMenuTriggerFor]="adminDropdown"
+        >
+          <mat-icon>admin_panel_settings</mat-icon>
+          Administración
+          <mat-icon class="expand-icon">
+            keyboard_arrow_down
+          </mat-icon>
+        </button>
+      }
+
     </nav>
+
 
     <span class="spacer"></span>
 
-    @if (currentUser(); as user) {
+
+    @if (autenticado() && usuario(); as user) {
+
       <div class="user-chip">
         <mat-icon>person</mat-icon>
-        <span>{{ user.nombre }}</span>
-        <strong>{{ user.role }}</strong>
+
+        <span>
+          {{ user.nombre }}
+        </span>
+
+        <strong>
+          {{ rol() }}
+        </strong>
       </div>
-      <button mat-flat-button class="logout-button" type="button" (click)="logoutUser.emit()">
+
+
+      <a
+        mat-stroked-button
+        routerLink="/perfil"
+      >
+        <mat-icon>account_circle</mat-icon>
+        Mi perfil
+      </a>
+
+      <button
+        mat-flat-button
+        class="logout-button"
+        type="button"
+        (click)="logoutUser.emit()"
+      >
         <mat-icon>logout</mat-icon>
         Salir
       </button>
+
     } @else {
-      <button mat-stroked-button class="login-button" type="button" (click)="loginClient.emit()">
-        <mat-icon>person</mat-icon>
-        Cliente
-      </button>
-      <button mat-flat-button class="admin-button" type="button" (click)="loginAdmin.emit()">
-        <mat-icon>admin_panel_settings</mat-icon>
-        Administrador
-      </button>
+
+      <a
+        mat-stroked-button
+        class="login-button"
+        routerLink="/login"
+      >
+        <mat-icon>login</mat-icon>
+        Iniciar sesión
+      </a>
+
     }
 
-    <button class="mobile-menu-button" mat-icon-button type="button" [matMenuTriggerFor]="mobileMenu" aria-label="Abrir menú principal">
+
+    <button
+      class="mobile-menu-button"
+      mat-icon-button
+      type="button"
+      [matMenuTriggerFor]="mobileMenu"
+      aria-label="Abrir menú principal"
+    >
       <mat-icon>menu</mat-icon>
     </button>
+
   </mat-toolbar>
 </header>
 
-<mat-menu #listadosDropdown="matMenu" class="listados-menu">
+
+<!-- MENÚ ADMINISTRATIVO -->
+<mat-menu
+  #adminDropdown="matMenu"
+  class="listados-menu"
+>
+
   <div class="dropdown-header">
+
     <span class="dropdown-icon">
       <mat-icon>dashboard</mat-icon>
     </span>
+
     <div>
-      <strong>Listados</strong>
-      <small>Administración de Soluvix</small>
+      <strong>Administración</strong>
+      <small>Gestión de Soluvix</small>
     </div>
+
   </div>
 
   <div class="dropdown-divider"></div>
 
-  @for (item of listadosMenu; track item.path) {
-    <a mat-menu-item [routerLink]="item.path" routerLinkActive="menu-item-active">
+
+  @for (item of adminMenu; track item.path) {
+
+    <a
+      mat-menu-item
+      [routerLink]="item.path"
+      routerLinkActive="menu-item-active"
+    >
       <mat-icon>{{ item.icon }}</mat-icon>
       <span>{{ item.label }}</span>
     </a>
+
   }
+
 </mat-menu>
 
+
+<!-- MENÚ MÓVIL -->
 <mat-menu #mobileMenu="matMenu">
-  <a mat-menu-item routerLink="/">
+
+  <a
+    mat-menu-item
+    routerLink="/"
+  >
     <mat-icon>home</mat-icon>
     <span>Inicio</span>
   </a>
 
-  @for (item of listadosMenu; track item.path) {
-    <a mat-menu-item [routerLink]="item.path">
+
+  @for (item of publicMenu; track item.path) {
+
+    <a
+      mat-menu-item
+      [routerLink]="item.path"
+    >
       <mat-icon>{{ item.icon }}</mat-icon>
       <span>{{ item.label }}</span>
     </a>
+
   }
 
-  @if (currentUser()) {
-    <button mat-menu-item type="button" (click)="logoutUser.emit()">
-      <mat-icon>logout</mat-icon>
-      <span>Salir</span>
-    </button>
-  } @else {
-    <button mat-menu-item type="button" (click)="loginClient.emit()">
-      <mat-icon>person</mat-icon>
-      <span>Ingresar como cliente</span>
-    </button>
-    <button mat-menu-item type="button" (click)="loginAdmin.emit()">
-      <mat-icon>admin_panel_settings</mat-icon>
-      <span>Ingresar como administrador</span>
-    </button>
+
+  @if (rol() === 'CLIENTE') {
+
+    <a
+      mat-menu-item
+      routerLink="/citas/create"
+    >
+      <mat-icon>event_available</mat-icon>
+      <span>Solicitar cita</span>
+    </a>
+
   }
+
+
+  @if (rol() === 'ADMIN') {
+
+    @for (item of adminMenu; track item.path) {
+
+      <a
+        mat-menu-item
+        [routerLink]="item.path"
+      >
+        <mat-icon>{{ item.icon }}</mat-icon>
+        <span>{{ item.label }}</span>
+      </a>
+
+    }
+
+  }
+
+
+  @if (autenticado()) {
+
+    <a
+      mat-menu-item
+      routerLink="/perfil"
+    >
+      <mat-icon>account_circle</mat-icon>
+      <span>Mi perfil</span>
+    </a>
+
+    <button
+      mat-menu-item
+      type="button"
+      (click)="logoutUser.emit()"
+    >
+      <mat-icon>logout</mat-icon>
+      <span>Cerrar sesión</span>
+    </button>
+
+  } @else {
+
+    <a
+      mat-menu-item
+      routerLink="/login"
+    >
+      <mat-icon>login</mat-icon>
+      <span>Iniciar sesión</span>
+    </a>
+
+  }
+
 </mat-menu>

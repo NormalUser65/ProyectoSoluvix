@@ -5,9 +5,11 @@ import {
 } from '@angular/common/http'
 import { catchError, throwError } from 'rxjs'
 import { NotificationService } from '../services/notification.service'
+import { AuthService } from '../services/auth.service'
 
 export const httpErrorInterceptor: HttpInterceptorFn = (request, next) => {
     const noti = inject(NotificationService)
+    const authService = inject(AuthService)
 
     console.log('Request URL:', request.url)
 
@@ -22,30 +24,47 @@ export const httpErrorInterceptor: HttpInterceptorFn = (request, next) => {
                     case 0:
                         message = 'No se pudo conectar con el servidor'
                         break
+
                     case 400:
-                        message = 'Solicitud incorrecta'
+                        message = error.error?.message ?? 'Solicitud incorrecta'
                         break
+
                     case 401:
-                        message = 'No autorizado'
+                        if (
+                            authService.obtenerToken() &&
+                            !request.url.includes('/usuario/login')
+                        ) {
+                            message = 'La sesión ha expirado. Inicie sesión nuevamente.'
+                            authService.logout()
+                        } else {
+                            message = error.error?.message ?? 'No autorizado'
+                        }
                         break
+
                     case 403:
                         message = 'Acceso denegado'
                         break
+
                     case 404:
                         message = 'Recurso no encontrado'
                         break
+
                     case 422:
                         message = 'Los datos enviados no son válidos'
                         break
+
                     case 500:
                         message = 'Error interno del servidor'
                         break
+
                     case 503:
                         message = 'Servicio no disponible'
                         break
                 }
             }
+
             noti.error(message, `Error ${error.status}`, 5000)
+
             return throwError(() => error)
         })
     )

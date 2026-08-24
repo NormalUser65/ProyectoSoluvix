@@ -11,7 +11,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AuthService } from '../../../core/services/auth.service';
-import { RolService } from '../../../core/services/rol.service';
 import { RegisterRequest } from '../../../core/models/usuario.model';
 
 @Component({
@@ -32,23 +31,19 @@ import { RegisterRequest } from '../../../core/models/usuario.model';
 export class Register {
     private readonly authService = inject(AuthService);
     private readonly router = inject(Router);
-    private readonly rolService = inject(RolService);
 
     readonly submitted = signal(false);
     readonly ocultarPassword = signal(true);
     readonly enviando = signal(false);
     readonly errorServidor = signal<string | null>(null);
 
-    // Guarda el ID real del rol CLIENTE
-    readonly idRolCliente = signal<number | null>(null);
 
     readonly model = signal<RegisterRequest>({
-        nombre: '',
-        apellidos: '',
-        correo: '',
-        contrasenna: '',
-        telefono: '',
-        idRol: 0,
+    nombre: '',
+    apellidos: '',
+    correo: '',
+    contrasenna: '',
+    telefono: '',
     });
 
     readonly registerForm = form(this.model, (path) => {
@@ -69,44 +64,17 @@ export class Register {
         minLength(path.contrasenna, 6, {
         message: 'La contraseña debe tener al menos 6 caracteres.',
         });
+
+        required(path.telefono, {
+        message: 'El teléfono es obligatorio.'
+        });
     });
 
-    constructor() {
-        this.rolService.listar()
-        .subscribe({
-            next: (roles) => {
-            const rolCliente = roles.find(
-                (rol) => rol.nombre.toUpperCase() === 'CLIENTE'
-            );
-
-            if (rolCliente) {
-                this.idRolCliente.set(rolCliente.id);
-
-                this.model.update((model) => ({
-                ...model,
-                idRol: rolCliente.id,
-                }));
-            }
-            },
-            error: () => {
-            this.errorServidor.set(
-                'No fue posible cargar el rol de cliente.'
-            );
-            },
-        });
-    }
 
     submit(): void {
         this.submitted.set(true);
 
         if (this.registerForm().invalid()) {
-        return;
-        }
-
-        if (this.idRolCliente() === null) {
-        this.errorServidor.set(
-            'No fue posible identificar el rol de cliente.'
-        );
         return;
         }
 

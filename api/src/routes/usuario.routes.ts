@@ -8,7 +8,8 @@ import {
   createUsuarioSchema,
   updateUsuarioSchema,
   registerUserSchema,
-  loginUserSchema
+  loginUserSchema,
+  updatePerfilSchema
 } from "../dtos/usuario.dto";
 
 export class UsuarioRoutes {
@@ -48,11 +49,18 @@ export class UsuarioRoutes {
     );
 
     // GET /usuario/perfil
-    // Requiere JWT
     router.get(
       "/perfil",
       authenticateToken,
       asyncHandler(controller.perfil)
+    );
+
+    // PUT /usuario/perfil
+    router.put(
+      "/perfil",
+      authenticateToken,
+      validateRequest(updatePerfilSchema),
+      asyncHandler(controller.actualizarPerfil)
     );
 
     // GET /usuario/:id

@@ -37,6 +37,7 @@ import {
     LoginResult,
     RegisterRequest,
     Usuario,
+    UpdatePerfilRequest
 } from '../models/usuario.model'
 
 
@@ -549,6 +550,46 @@ export class AuthService {
             null
 
     }
+
+    actualizarPerfil(
+    data: UpdatePerfilRequest
+): Observable<Usuario> {
+
+    return this.http
+        .put<ApiResponse<Usuario>>(
+            `${this.apiUrl}/perfil`,
+            data
+        )
+        .pipe(
+
+            map((response) => {
+
+                const usuario =
+                    response.data
+
+                if (!usuario) {
+
+                    throw new Error(
+                        'El API no devolvió el perfil actualizado'
+                    )
+
+                }
+
+                return usuario
+
+            }),
+
+            tap((usuario) => {
+
+                this._usuario.set(
+                    usuario
+                )
+
+            })
+
+        )
+
+}
 
 
     /**
