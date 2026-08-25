@@ -3,89 +3,146 @@
     <div>
       <span class="eyebrow">Administración</span>
       <h1>Gestión de profesionales</h1>
+      <p>Listado de perfiles de profesionales disponibles.</p>
     </div>
   </section>
 
-  <p class="summary">
-    {{ perfiles().length }} profesionales encontrados
-  </p>
+  <!-- Filtros -->
+  <div class="filters">
+    <mat-form-field appearance="outline">
+      <mat-label>Buscar profesional</mat-label>
+      <input
+        matInput
+        [ngModel]="search()"
+        (ngModelChange)="search.set($event)"
+        placeholder="Nombre o título"
+      />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
 
-  <div class="table-wrapper">
-    <table mat-table [dataSource]="perfiles()" class="admin-table">
-      <!-- Nombre -->
-      <ng-container matColumnDef="nombre">
-        <th mat-header-cell *matHeaderCellDef>Nombre completo</th>
-        <td mat-cell *matCellDef="let p">
-          <strong>{{ p.usuario.nombre }} {{ p.usuario.apellidos }}</strong>
-        </td>
-      </ng-container>
+    <mat-form-field appearance="outline">
+      <mat-label>Modalidad</mat-label>
+      <mat-select
+        [ngModel]="modalidadSeleccionada()"
+        (ngModelChange)="modalidadSeleccionada.set($event)"
+      >
+        <mat-option [value]="null">Todas</mat-option>
+        @for (mod of modalidades(); track mod) {
+          <mat-option [value]="mod">{{ mod }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
 
-      <!-- Título -->
-      <ng-container matColumnDef="titulo">
-        <th mat-header-cell *matHeaderCellDef>Título profesional</th>
-        <td mat-cell *matCellDef="let p">{{ p.tituloProfesional }}</td>
-      </ng-container>
+    <mat-form-field appearance="outline">
+      <mat-label>Disponibilidad</mat-label>
+      <mat-select
+        [ngModel]="disponibilidadSeleccionada()"
+        (ngModelChange)="disponibilidadSeleccionada.set($event)"
+      >
+        <mat-option [value]="null">Todas</mat-option>
+        <mat-option [value]="true">Disponible</mat-option>
+        <mat-option [value]="false">No disponible</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-      <!-- Modalidad -->
-      <ng-container matColumnDef="modalidad">
-        <th mat-header-cell *matHeaderCellDef>Modalidad</th>
-        <td mat-cell *matCellDef="let p">{{ p.modalidad?.nombre }}</td>
-      </ng-container>
-
-      <!-- Tarifa -->
-      <ng-container matColumnDef="tarifa">
-        <th mat-header-cell *matHeaderCellDef>Tarifa base</th>
-        <td mat-cell *matCellDef="let p">{{ p.tarifaBase }}</td>
-      </ng-container>
-
-      <!-- Disponibilidad -->
-      <ng-container matColumnDef="disponible">
-        <th mat-header-cell *matHeaderCellDef>Disponibilidad</th>
-        <td mat-cell *matCellDef="let p">
-          <mat-slide-toggle [checked]="p.disponible" (change)="toggleDisponibilidad(p)">
-            {{ p.disponible ? 'Activo' : 'Inactivo' }}
-          </mat-slide-toggle>
-        </td>
-      </ng-container>
-
-      <!-- Acciones -->
-      <ng-container matColumnDef="acciones">
-        <th mat-header-cell *matHeaderCellDef>Acciones</th>
-        <td mat-cell *matCellDef="let p">
-          <!-- Ver detalle -->
-          <button
-            mat-icon-button
-            color="primary"
-            class="view-icon-button"
-            [routerLink]="['/profesionales', p.id]"
-          >
-            <mat-icon>visibility</mat-icon>
-          </button>
-
-          <!-- Editar -->
-          <button
-            mat-icon-button
-            color="accent"
-            class="edit-icon-button"
-            [routerLink]="['/admin/profesionales/edit', p.id]"
-          >
-            <mat-icon>edit</mat-icon>
-          </button>
-
-          <!-- Eliminar -->
-          <button
-            mat-icon-button
-            color="warn"
-            class="delete-icon-button"
-            (click)="eliminar(p)"
-          >
-            <mat-icon>delete</mat-icon>
-          </button>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-    </table>
+    <button mat-stroked-button class="clear-button" (click)="clearFilters()">
+      <mat-icon>filter_alt_off</mat-icon>
+      Limpiar
+    </button>
   </div>
+
+  <p class="summary">{{ totalPerfiles() }} profesionales encontrados</p>
+
+  @if (loading()) {
+    <div class="state">
+      <mat-spinner diameter="42" />
+      <p>Cargando profesionales...</p>
+    </div>
+  } @else if (error()) {
+    <div class="state error">
+      <mat-icon>error</mat-icon>
+      <p>{{ error() }}</p>
+    </div>
+  } @else {
+    <div class="table-wrapper">
+      <table mat-table [dataSource]="perfilesFiltrados()" class="admin-table">
+        <!-- Nombre -->
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef>Nombre completo</th>
+          <td mat-cell *matCellDef="let p">
+            <strong>{{ p.usuario?.nombre }} {{ p.usuario?.apellidos }}</strong>
+          </td>
+        </ng-container>
+
+        <!-- Título -->
+        <ng-container matColumnDef="titulo">
+          <th mat-header-cell *matHeaderCellDef>Título profesional</th>
+          <td mat-cell *matCellDef="let p">{{ p.tituloProfesional || 'Sin título' }}</td>
+        </ng-container>
+
+        <!-- Modalidad -->
+        <ng-container matColumnDef="modalidad">
+          <th mat-header-cell *matHeaderCellDef>Modalidad</th>
+          <td mat-cell *matCellDef="let p">{{ p.modalidad?.nombre || 'No especificada' }}</td>
+        </ng-container>
+
+        <!-- Tarifa -->
+        <ng-container matColumnDef="tarifa">
+          <th mat-header-cell *matHeaderCellDef>Tarifa base</th>
+          <td mat-cell *matCellDef="let p">₡{{ p.tarifaBase || 0 }}</td>
+        </ng-container>
+
+        <!-- Disponibilidad -->
+        <ng-container matColumnDef="disponible">
+          <th mat-header-cell *matHeaderCellDef>Disponibilidad</th>
+          <td mat-cell *matCellDef="let p">
+            <span class="status-badge" [class.inactive-badge]="!p.disponible">
+              {{ p.disponible ? 'Disponible' : 'No disponible' }}
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Acciones -->
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef>Acciones</th>
+          <td mat-cell *matCellDef="let p">
+            <div class="acciones">
+              <!-- Ver detalle -->
+              <a
+                mat-icon-button
+                color="primary"
+                [routerLink]="['/admin/profesionales', p.id]"
+                matTooltip="Ver detalle"
+              >
+                <mat-icon>visibility</mat-icon>
+              </a>
+
+              <!-- Editar -->
+              <a
+                mat-icon-button
+                color="accent"
+                [routerLink]="['/admin/profesionales/edit', p.id]"
+                matTooltip="Editar"
+              >
+                <mat-icon>edit</mat-icon>
+              </a>
+
+              <!-- Activar/Desactivar -->
+              <button
+                mat-icon-button
+                [color]="p.disponible ? 'warn' : 'primary'"
+                (click)="toggleDisponibilidad(p)"
+                [matTooltip]="p.disponible ? 'Desactivar' : 'Activar'"
+              >
+                <mat-icon>{{ p.disponible ? 'toggle_on' : 'toggle_off' }}</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  }
 </section>

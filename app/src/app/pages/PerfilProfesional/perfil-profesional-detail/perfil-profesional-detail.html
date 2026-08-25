@@ -11,38 +11,90 @@
     </div>
   } @else if(perfil()){
     <mat-card class="perfil-card">
-      <mat-card-header>
-        <div mat-card-avatar class="perfil-avatar">
+      <!-- Header con imagen y nombre -->
+      <div class="perfil-header">
+        <div class="perfil-avatar">
           <img
-            *ngIf="perfil()?.imagenPerfil"
-            [src]="getImageUrl(perfil()?.imagenPerfil!)"
+            [src]="perfil()?.imagenPerfil ? getImageUrl(perfil()!.imagenPerfil!) : 'assets/default-profile.png'"
             alt="Foto de perfil"
           />
         </div>
-        <mat-card-title>
-          {{ perfil()?.usuario?.nombre }} {{ perfil()?.usuario?.apellidos }}
-        </mat-card-title>
-        <mat-card-subtitle>
-          {{ perfil()?.tituloProfesional }}
-        </mat-card-subtitle>
-      </mat-card-header>
+        <div class="perfil-header-info">
+          <h1 class="perfil-nombre">
+            {{ perfil()?.usuario?.nombre }} {{ perfil()?.usuario?.apellidos }}
+          </h1>
+          <p class="perfil-titulo">{{ perfil()?.tituloProfesional || 'Sin título' }}</p>
+          <span class="perfil-status" [class.status-active]="perfil()?.disponible" [class.status-inactive]="!perfil()?.disponible">
+            {{ perfil()?.disponible ? '🟢 Disponible' : '🔴 No disponible' }}
+          </span>
+        </div>
+      </div>
 
       <mat-card-content>
-        <p><strong>Modalidad:</strong> {{ perfil()?.modalidad?.nombre }}</p>
-        <p><strong>Experiencia:</strong> {{ perfil()?.annosExperiencia }} años</p>
-        <p><strong>Provincia:</strong> {{ perfil()?.provincia }}</p>
-        <p><strong>Cantón:</strong> {{ perfil()?.canton }}</p>
-        <p><strong>Distrito:</strong> {{ perfil()?.distrito }}</p>
-        <p><strong>Tarifa base:</strong> {{ perfil()?.tarifaBase }}</p>
-        <p><strong>Disponibilidad:</strong> {{ perfil()?.disponible ? 'Activo' : 'Inactivo' }}</p>
-        <p><strong>Descripción:</strong> {{ perfil()?.descripcion }}</p>
+        <!-- Información profesional -->
+        <div class="info-grid">
+          <div class="info-item">
+            <mat-icon>work</mat-icon>
+            <div>
+              <span class="info-label">Modalidad</span>
+              <span class="info-value">{{ perfil()?.modalidad?.nombre || 'No especificada' }}</span>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <mat-icon>schedule</mat-icon>
+            <div>
+              <span class="info-label">Experiencia</span>
+              <span class="info-value">{{ perfil()?.annosExperiencia || 0 }} años</span>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <mat-icon>attach_money</mat-icon>
+            <div>
+              <span class="info-label">Tarifa base</span>
+              <span class="info-value">₡{{ perfil()?.tarifaBase || 0 }}</span>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <mat-icon>location_on</mat-icon>
+            <div>
+              <span class="info-label">Ubicación</span>
+              <span class="info-value">
+                {{ perfil()?.provincia }}{{ perfil()?.canton ? ', ' + perfil()?.canton : '' }}{{ perfil()?.distrito ? ', ' + perfil()?.distrito : '' }}
+                {{ !perfil()?.provincia && !perfil()?.canton && !perfil()?.distrito ? 'No especificada' : '' }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Descripción -->
+        <div class="descripcion-section">
+          <h3>Descripción</h3>
+          <p>{{ perfil()?.descripcion || 'Sin descripción disponible' }}</p>
+        </div>
+
+        <!-- Especialidades -->
+        @if (perfil()?.especialidades?.length) {
+          <div class="especialidades-section">
+            <h3>Especialidades</h3>
+            <div class="especialidades-tags">
+              @for (esp of perfil()?.especialidades; track esp.id) {
+                <span class="tag">{{ esp.especialidad?.nombre || 'Sin nombre' }}</span>
+              }
+            </div>
+          </div>
+        }
       </mat-card-content>
 
       <mat-card-actions>
         <button mat-raised-button color="primary" [routerLink]="['/citas', perfil()?.id]">
+          <mat-icon>event_available</mat-icon>
           Solicitar cita
         </button>
-        <button mat-button [routerLink]="['/admin/profesionales']">
+        <button mat-stroked-button [routerLink]="['/admin/profesionales']">
+          <mat-icon>arrow_back</mat-icon>
           Volver al listado
         </button>
       </mat-card-actions>

@@ -64,6 +64,17 @@ export class ServicioForm {
   guardar = output<ServicioCreateDto | ServicioUpdateDto>();
   cancelar = output<void>();
 
+categoriasDisponibles = computed(() => {
+  const todas = this.categorias();
+  const servicioEditando = this.servicio();
+  
+  if (servicioEditando) {
+    return todas;
+  }
+  
+  return todas.filter(cat => cat.estado === true);
+});
+
   servicioModel = signal<ServicioFormModel>({
     idPerfil: 0,
     idCategoria: 0,

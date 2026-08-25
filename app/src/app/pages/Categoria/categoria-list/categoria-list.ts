@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 import { CategoriaService } from '../../../core/services/Categoria.Service';
+import { DialogService } from '../../../core/services/dialog.Service'; 
 import { Categoria } from '../../../core/models/categoria.model';
 
 @Component({
@@ -29,6 +30,7 @@ import { Categoria } from '../../../core/models/categoria.model';
 })
 export class CategoriaList {
   private readonly categoriaService = inject(CategoriaService);
+  private readonly dialogService = inject(DialogService); 
 
   categorias = signal<Categoria[]>([]);
   search = signal('');
@@ -77,8 +79,18 @@ export class CategoriaList {
     this.search.set('');
   }
 
-  // Cambiar estado
   toggleEstado(categoria: Categoria): void {
+    const accion = categoria.estado ? 'desactivar' : 'activar';
+    const mensaje = `¿Estás seguro de que deseas ${accion} la categoría "${categoria.nombre}"?`;
+    
+    this.dialogService.confirmar(mensaje, 'Confirmar acción', 'peligro').subscribe(confirmed => {
+      if (confirmed) {
+        this.ejecutarCambioEstado(categoria);
+      }
+    });
+  }
+
+  private ejecutarCambioEstado(categoria: Categoria): void {
     const nuevoEstado = !categoria.estado;
 
     this.categoriaService.cambiarEstado(categoria.id, nuevoEstado).subscribe({

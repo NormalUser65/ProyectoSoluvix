@@ -1,21 +1,6 @@
-import {
-  Component,
-  computed,
-  effect,
-  inject,
-  input,
-  output,
-  signal
-} from '@angular/core';
+import { Component, computed, effect, inject, input, output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormField,
-  form,
-  required,
-  min,
-  minLength,
-  maxLength
-} from '@angular/forms/signals';
+import { FormField, form, required, min, minLength, maxLength } from '@angular/forms/signals';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -24,12 +9,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { DialogService } from '../../../core/services/dialog.Service';
 
 import {
   PerfilProfesional,
   PerfilProfesionalCreateDto,
   PerfilProfesionalFormModel,
-  PerfilProfesionalUpdateDto
+  PerfilProfesionalUpdateDto,
 } from '../../../core/models/perfilProfesional.model';
 import { Modalidad } from '../../../core/models/modalidad.model';
 import { Especialidad } from '../../../core/models/especialidad.model';
@@ -48,10 +34,10 @@ import { Usuario } from '../../../core/models/usuario.model';
     MatButtonModule,
     MatIconModule,
     MatSelectModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
   ],
   templateUrl: './perfilProfesional-form.html',
-  styleUrl: './perfilProfesional-form.css'
+  styleUrl: './perfilProfesional-form.css',
 })
 export class PerfilProfesionalForm {
   perfil = input<PerfilProfesional | null>(null);
@@ -65,6 +51,17 @@ export class PerfilProfesionalForm {
 
   guardar = output<PerfilProfesionalCreateDto | PerfilProfesionalUpdateDto>();
   cancelar = output<void>();
+
+  especialidadesDisponibles = computed(() => {
+    const todas = this.especialidades();
+    const perfilEditando = this.perfil();
+
+    if (perfilEditando) {
+      return todas;
+    }
+
+    return todas.filter((esp) => esp.estado === true);
+  });
 
   uploadingImage = signal(false);
   imagePreview = signal<string | null>(null);
@@ -82,7 +79,7 @@ export class PerfilProfesionalForm {
     tarifaBase: 0,
     disponible: true,
     imagenPerfil: '',
-    especialidadIds: []
+    especialidadIds: [],
   });
 
   perfilForm = form(this.perfilModel, (path) => {
@@ -125,11 +122,11 @@ export class PerfilProfesionalForm {
         tarifaBase: prof.tarifaBase ?? 0,
         disponible: prof.disponible ?? true,
         imagenPerfil: prof.imagenPerfil ?? '',
-        especialidadIds: prof.especialidades?.map((e) => e.id) ?? []
+        especialidadIds: prof.especialidades?.map((e) => e.id) ?? [],
       });
       this.selectedImageFile.set(null);
       this.imagePreview.set(
-        prof.imagenPerfil ? this.imageService.getImageUrl(prof.imagenPerfil) : null
+        prof.imagenPerfil ? this.imageService.getImageUrl(prof.imagenPerfil) : null,
       );
     });
   }
@@ -147,16 +144,51 @@ export class PerfilProfesionalForm {
       tarifaBase: 0,
       disponible: true,
       imagenPerfil: '',
-      especialidadIds: []
+      especialidadIds: [],
     });
     this.selectedImageFile.set(null);
     this.imagePreview.set(null);
   }
 
+
+  private readonly dialogService = inject(DialogService);
+
   onImageSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
     if (!file) return;
+
+    // Validación de tipo de archivo
+    const tiposPermitidos = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+    if (!tiposPermitidos.includes(file.type)) {
+      this.dialogService
+        .confirmar(
+          'Solo se permiten archivos de imagen (JPEG, PNG, WEBP, GIF)',
+          'Formato no válido',
+          'normal',
+        )
+        .subscribe(() => {
+          input.value = '';
+        });
+      return;
+    }
+
+    const maxSizeInMB = 5;
+    const maxSizeInBytes = maxSizeInMB * 1024 * 1024;
+
+    if (file.size > maxSizeInBytes) {
+      this.dialogService
+        .confirmar(
+          `La imagen es demasiado grande. El tamaño máximo permitido es ${maxSizeInMB}MB.`,
+          'Imagen demasiado grande',
+          'peligro',
+        )
+        .subscribe(() => {
+          input.value = '';
+        });
+      return;
+    }
+
     this.selectedImageFile.set(file);
     this.imagePreview.set(URL.createObjectURL(file));
   }
@@ -185,7 +217,7 @@ export class PerfilProfesionalForm {
       next: (response) => {
         this.perfilModel.update((value) => ({
           ...value,
-          imagenPerfil: response.fileName
+          imagenPerfil: response.fileName,
         }));
         this.selectedImageFile.set(null);
         this.emitirGuardar();
@@ -206,23 +238,22 @@ export class PerfilProfesionalForm {
   }
 
   private buildDto(): PerfilProfesionalCreateDto | PerfilProfesionalUpdateDto {
-  const value = this.perfilModel();
-  return {
-    idUsuario: value.idUsuario!, 
-    tituloProfesional: value.tituloProfesional.trim(),
-    descripcion: value.descripcion.trim(),
-    annosExperiencia: Number(value.annosExperiencia),
-    idModalidad: value.idModalidad!,
-    provincia: value.provincia.trim(),
-    canton: value.canton.trim(),
-    distrito: value.distrito.trim(),
-    tarifaBase: Number(value.tarifaBase),
-    disponible: value.disponible,
-    imagenPerfil: value.imagenPerfil?.trim() ?? '',
-    especialidadIds: value.especialidadIds
-  };
-}
-
+    const value = this.perfilModel();
+    return {
+      idUsuario: value.idUsuario!,
+      tituloProfesional: value.tituloProfesional.trim(),
+      descripcion: value.descripcion.trim(),
+      annosExperiencia: Number(value.annosExperiencia),
+      idModalidad: value.idModalidad!,
+      provincia: value.provincia.trim(),
+      canton: value.canton.trim(),
+      distrito: value.distrito.trim(),
+      tarifaBase: Number(value.tarifaBase),
+      disponible: value.disponible,
+      imagenPerfil: value.imagenPerfil?.trim() ?? '',
+      especialidadIds: value.especialidadIds,
+    };
+  }
 
   submit() {
     this.marcarCamposComoTocados();

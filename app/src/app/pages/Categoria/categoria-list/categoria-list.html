@@ -1,33 +1,17 @@
 <section class="categories-panel">
-
   <section class="page-header">
-
     <div>
+      <span class="eyebrow"> Catálogo </span>
 
-      <span class="eyebrow">
-        Catálogo
-      </span>
+      <h1>Categorías disponibles</h1>
 
-      <h1>
-        Categorías disponibles
-      </h1>
-
-      <p>
-        Listado de categorías de servicios.
-      </p>
-
+      <p>Listado de categorías de servicios.</p>
     </div>
-
   </section>
 
-
   <section class="filters">
-
     <mat-form-field appearance="outline">
-
-      <mat-label>
-        Buscar categoría
-      </mat-label>
+      <mat-label> Buscar categoría </mat-label>
 
       <input
         matInput
@@ -36,85 +20,43 @@
         placeholder="Ejemplo: Fotografía, Retrato..."
       />
 
-      <mat-icon matSuffix>
-        search
-      </mat-icon>
-
+      <mat-icon matSuffix> search </mat-icon>
     </mat-form-field>
 
-
-    <button
-      mat-stroked-button
-      class="primary-button clear-button"
-      (click)="clearFilters()"
-    >
-
-      <mat-icon>
-        filter_alt_off
-      </mat-icon>
+    <button mat-stroked-button class="primary-button clear-button" (click)="clearFilters()">
+      <mat-icon> filter_alt_off </mat-icon>
 
       Limpiar
-
     </button>
-
   </section>
 
-
-  <div class="result-summary">
-    {{ totalCategorias() }} categorías encontradas
-  </div>
-
+  <div class="result-summary">{{ totalCategorias() }} categorías encontradas</div>
 
   @if (loading()) {
-
     <div class="state">
-
       <mat-spinner diameter="42"></mat-spinner>
 
-      <p>
-        Cargando categorías...
-      </p>
-
+      <p>Cargando categorías...</p>
     </div>
-
   } @else if (error()) {
-
     <div class="state error">
-
-      <mat-icon>
-        error
-      </mat-icon>
+      <mat-icon> error </mat-icon>
 
       <p>
         {{ error() }}
       </p>
-
     </div>
-
   } @else if (categoriasFiltradas().length === 0) {
-
     <div class="state">
+      <mat-icon> search_off </mat-icon>
 
-      <mat-icon>
-        search_off
-      </mat-icon>
-
-      <p>
-        No hay categorías disponibles.
-      </p>
-
+      <p>No hay categorías disponibles.</p>
     </div>
-
   } @else {
-
     <section class="categories-grid">
-
       @for (categoria of categoriasFiltradas(); track categoria.id) {
-
         <mat-card class="category-card">
-
           <div class="category-image-container">
-
             <img
               mat-card-image
               class="category-image"
@@ -122,71 +64,38 @@
               [alt]="'Imagen de la categoría ' + categoria.nombre"
             />
 
-
-            <span
-              class="status-badge"
-              [class.inactive-status]="!categoria.estado"
-            >
-
+            <span class="status-badge" [class.inactive-status]="!categoria.estado">
               {{ categoria.estado ? 'Activa' : 'Inactiva' }}
-
             </span>
 
-
-            <span class="category-label">
-              Categoría
-            </span>
-
+            <span class="category-label"> Categoría </span>
           </div>
 
-
           <mat-card-content class="category-content">
-
             <h2>
               {{ categoria.nombre }}
             </h2>
 
-
             <p class="category-description">
-
-              {{
-                categoria.descripcion ||
-                'Sin descripción disponible'
-              }}
-
+              {{ categoria.descripcion || 'Sin descripción disponible' }}
             </p>
 
-
             <div class="category-meta">
-
               <span class="meta-icon">
-
-                <mat-icon>
-                  photo_camera
-                </mat-icon>
-
+                <mat-icon> photo_camera </mat-icon>
               </span>
 
-
               <div>
-
-                <small>
-                  Servicios registrados
-                </small>
+                <small> Servicios registrados </small>
 
                 <strong>
                   {{ categoria.servicios?.length || 0 }}
                 </strong>
-
               </div>
-
             </div>
-
           </mat-card-content>
 
-
           <mat-card-actions class="category-actions">
-
             <button
               mat-stroked-button
               class="status-button"
@@ -194,33 +103,15 @@
               [class.activate-button]="!categoria.estado"
               (click)="toggleEstado(categoria)"
             >
-
               <mat-icon>
-
-                {{
-                  categoria.estado
-                    ? 'toggle_on'
-                    : 'toggle_off'
-                }}
-
+                {{ categoria.estado ? 'toggle_on' : 'toggle_off' }}
               </mat-icon>
 
-              {{
-                categoria.estado
-                  ? 'Desactivar'
-                  : 'Activar'
-              }}
-
+              {{ categoria.estado ? 'Desactivar' : 'Activar' }}
             </button>
-
           </mat-card-actions>
-
         </mat-card>
-
       }
-
     </section>
-
   }
-
 </section>

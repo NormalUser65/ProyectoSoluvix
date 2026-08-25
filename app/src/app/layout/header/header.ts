@@ -46,7 +46,7 @@ export class Header {
     },
     {
       label: 'Profesionales',
-      path: '/profesionales',
+      path: '/admin/profesionales',
       icon: 'person'
     }
   ];

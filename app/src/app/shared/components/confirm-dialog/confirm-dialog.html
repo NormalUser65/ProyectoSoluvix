@@ -1,0 +1,30 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+    <div class="dialog-icon" [class.warn-icon]="data.tipo === 'peligro'">
+      <mat-icon>
+        {{ data.tipo === 'peligro' ? 'warning' : 'info' }}
+      </mat-icon>
+    </div>
+    <h2 mat-dialog-title class="dialog-title">{{ data.titulo }}</h2>
+  </div>
+
+  <mat-dialog-content class="dialog-content">
+    <p>{{ data.mensaje }}</p>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="dialog-actions" align="end">
+    <button mat-stroked-button class="cancel-button" (click)="onCancel()">
+      <mat-icon>close</mat-icon>
+      Cancelar
+    </button>
+    <button 
+      mat-raised-button 
+      class="confirm-button"
+      [class.confirm-danger]="data.tipo === 'peligro'"
+      [class.confirm-normal]="data.tipo !== 'peligro'"
+      (click)="onConfirm()">
+      <mat-icon>check</mat-icon>
+      Confirmar
+    </button>
+  </mat-dialog-actions>
+</div>

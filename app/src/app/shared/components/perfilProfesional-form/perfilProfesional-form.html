@@ -1,7 +1,6 @@
 <mat-card class="perfil-form-card">
   <mat-card-content>
     <form class="perfil-form" (submit)="$event.preventDefault(); submit()">
-
       <!-- Usuario -->
       <section class="form-section">
         <div class="form-grid">
@@ -9,9 +8,19 @@
           @if (perfil() !== null && perfil()?.usuario) {
             <mat-form-field appearance="outline" class="full-width">
               <mat-label>Usuario</mat-label>
-              <input matInput type="text"
-                     [value]="perfil()!.usuario!.nombre + ' ' + perfil()!.usuario!.apellidos + ' (' + (perfil()!.usuario!.rol?.nombre ?? '') + ')'"
-                     disabled />
+              <input
+                matInput
+                type="text"
+                [value]="
+                  perfil()!.usuario!.nombre +
+                  ' ' +
+                  perfil()!.usuario!.apellidos +
+                  ' (' +
+                  (perfil()!.usuario!.rol?.nombre ?? '') +
+                  ')'
+                "
+                disabled
+              />
               <mat-hint>Este usuario ya tiene un perfil asociado</mat-hint>
             </mat-form-field>
           }
@@ -42,7 +51,9 @@
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Título profesional</mat-label>
             <input matInput type="text" [formField]="perfilForm.tituloProfesional" />
-            @if (perfilForm.tituloProfesional().touched() && perfilForm.tituloProfesional().invalid()) {
+            @if (
+              perfilForm.tituloProfesional().touched() && perfilForm.tituloProfesional().invalid()
+            ) {
               <mat-error>{{ perfilForm.tituloProfesional().errors()[0].message }}</mat-error>
             }
           </mat-form-field>
@@ -84,7 +95,7 @@
           <mat-form-field appearance="outline">
             <mat-label>Especialidades</mat-label>
             <mat-select multiple [formField]="perfilForm.especialidadIds">
-              @for (esp of especialidades(); track esp.id) {
+              @for (esp of especialidadesDisponibles(); track esp.id) {
                 <mat-option [value]="esp.id">{{ esp.nombre }}</mat-option>
               }
             </mat-select>
@@ -117,10 +128,17 @@
             <input matInput type="text" [formField]="perfilForm.distrito" />
           </mat-form-field>
 
-          <!-- Input de archivo fuera de mat-form-field -->
           <div class="file-upload">
             <label for="imagenPerfil">Imagen de perfil</label>
-            <input id="imagenPerfil" type="file" (change)="onImageSelected($event)" />
+            <input
+              id="imagenPerfil"
+              type="file"
+              (change)="onImageSelected($event)"
+              accept="image/*"
+            />
+            <small class="file-hint"
+              >Formatos permitidos: JPEG, PNG, WEBP, GIF. Tamaño máximo: 5MB</small
+            >
           </div>
         </div>
 
@@ -137,9 +155,12 @@
           Cancelar
         </button>
 
-        <button mat-stroked-button type="submit"
-                [color]="isEdit() ? 'accent' : 'primary'"
-                [disabled]="isSubmitting()">
+        <button
+          mat-stroked-button
+          type="submit"
+          [color]="isEdit() ? 'accent' : 'primary'"
+          [disabled]="isSubmitting()"
+        >
           @if (isSubmitting()) {
             <mat-icon>hourglass_top</mat-icon>
             Guardando...
@@ -149,7 +170,6 @@
           }
         </button>
       </div>
-
     </form>
   </mat-card-content>
 </mat-card>

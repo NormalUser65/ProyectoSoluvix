@@ -4,21 +4,40 @@
   <p>Listado de especialidades profesionales.</p>
 </section>
 
-<div class="result-summary">
-  {{ especialidades().length }} especialidades encontradas
-</div>
+<!-- NUEVO: Filtros -->
+<section class="filters">
+  <mat-form-field appearance="outline">
+    <mat-label>Buscar especialidad</mat-label>
+    <input
+      matInput
+      [ngModel]="search()"
+      (ngModelChange)="search.set($event)"
+      placeholder="Ejemplo: Diseño, Programación..."
+    />
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
 
-@if(loading()) {
+  <button mat-stroked-button class="primary-button clear-button" (click)="clearFilters()">
+    <mat-icon>filter_alt_off</mat-icon>
+    Limpiar
+  </button>
+</section>
+
+<!-- NUEVO: Result summary -->
+<div class="result-summary">{{ totalEspecialidades() }} especialidades encontradas</div>
+
+@if (loading()) {
   <div class="state">
     <mat-spinner diameter="42"></mat-spinner>
     <p>Cargando especialidades...</p>
   </div>
-} @else if(error()) {
+} @else if (error()) {
   <div class="state error">
     <mat-icon>error</mat-icon>
     <p>{{ error() }}</p>
   </div>
-} @else if(especialidades().length === 0) {
+} @else if (especialidadesFiltradas().length === 0) {
+  <!-- MODIFICADO -->
   <div class="state">
     <mat-icon>search_off</mat-icon>
     <p>No hay especialidades disponibles.</p>
@@ -26,7 +45,8 @@
 }
 
 <section class="specialties-grid">
-  @for (especialidad of especialidades(); track especialidad.id) {
+  @for (especialidad of especialidadesFiltradas(); track especialidad.id) {
+
     <mat-card class="specialty-card">
       <mat-card-content>
         <span class="status" [class.inactive]="!especialidad.estado">
@@ -40,20 +60,26 @@
         </div>
       </mat-card-content>
 
-      <mat-card-actions align="end">
+      <mat-card-actions class="specialty-actions">
         <button
-          mat-icon-button
-          [color]="especialidad.estado ? 'warn' : 'primary'"
+          mat-stroked-button
+          class="status-button"
+          [class.deactivate-button]="especialidad.estado"
+          [class.activate-button]="!especialidad.estado"
           (click)="toggleEstado(especialidad)"
-          [matTooltip]="especialidad.estado ? 'Desactivar especialidad' : 'Activar especialidad'">
-          <mat-icon>{{ especialidad.estado ? 'toggle_on' : 'toggle_off' }}</mat-icon>
+        >
+          <mat-icon>
+            {{ especialidad.estado ? 'toggle_on' : 'toggle_off' }}
+          </mat-icon>
+          {{ especialidad.estado ? 'Desactivar' : 'Activar' }}
         </button>
 
         <a
           mat-stroked-button
           color="primary"
           [routerLink]="['/especialidades', especialidad.id]"
-          class="view-icon-button">
+          class="view-icon-button"
+        >
           Detalle
           <mat-icon>more_horiz</mat-icon>
         </a>

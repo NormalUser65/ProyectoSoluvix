@@ -1,7 +1,6 @@
 <mat-card class="servicio-form-card">
   <mat-card-content>
     <form class="servicio-form" (submit)="$event.preventDefault(); submit()">
-
       <!-- Profesional asociado -->
       <section class="form-section">
         <div class="form-grid">
@@ -29,7 +28,7 @@
             <mat-label>Categoría</mat-label>
             <mat-select [formField]="servicioForm.idCategoria">
               <mat-option [value]="null">Seleccione una categoría</mat-option>
-              @for (cat of categorias(); track cat.id) {
+              @for (cat of categoriasDisponibles(); track cat.id) {
                 <mat-option [value]="cat.id">{{ cat.nombre }}</mat-option>
               }
             </mat-select>
@@ -89,7 +88,9 @@
           <mat-form-field appearance="outline">
             <mat-label>Duración estimada (min)</mat-label>
             <input matInput type="number" [formField]="servicioForm.duracionEstimada" />
-            @if (servicioForm.duracionEstimada().touched() && servicioForm.duracionEstimada().invalid()) {
+            @if (
+              servicioForm.duracionEstimada().touched() && servicioForm.duracionEstimada().invalid()
+            ) {
               <mat-error>{{ servicioForm.duracionEstimada().errors()[0].message }}</mat-error>
             }
           </mat-form-field>
@@ -105,9 +106,7 @@
         </div>
 
         <div class="publish-box">
-          <mat-slide-toggle [formField]="servicioForm.estado">
-            Servicio activo
-          </mat-slide-toggle>
+          <mat-slide-toggle [formField]="servicioForm.estado"> Servicio activo </mat-slide-toggle>
           <small>| Si está activo, será visible para los clientes.</small>
         </div>
       </section>
@@ -119,9 +118,12 @@
           Cancelar
         </button>
 
-        <button mat-stroked-button type="submit"
-                [color]="isEdit() ? 'accent' : 'primary'"
-                [disabled]="isSubmitting()">
+        <button
+          mat-stroked-button
+          type="submit"
+          [color]="isEdit() ? 'accent' : 'primary'"
+          [disabled]="isSubmitting()"
+        >
           @if (isSubmitting()) {
             <mat-icon>hourglass_top</mat-icon>
             Guardando...
@@ -131,7 +133,6 @@
           }
         </button>
       </div>
-
     </form>
   </mat-card-content>
 </mat-card>

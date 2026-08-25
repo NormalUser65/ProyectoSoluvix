@@ -47,32 +47,30 @@ import { PerfilProfesionalEditPage } from './pages/PerfilProfesional/perfil-prof
 import { EspecialidadList } from './pages/Especialidad copy/especialidad-list/especialidad-list';
 
 export const routes: Routes = [
-
   {
     path: '',
     component: MainLayout,
 
     children: [
-
       // INICIO
       {
         path: '',
         component: Home,
-        title: 'Inicio'
+        title: 'Inicio',
       },
 
       // LOGIN
       {
         path: 'login',
         component: Login,
-        title: 'Iniciar sesión'
+        title: 'Iniciar sesión',
       },
 
       // REGISTER
       {
         path: 'register',
         component: Register,
-        title: 'Crear una cuenta'
+        title: 'Crear una cuenta',
       },
 
       // PERFIL USUARIO
@@ -81,9 +79,7 @@ export const routes: Routes = [
         component: Perfil,
         title: 'Mi perfil',
 
-        canActivate: [
-          authGuard
-        ]
+        canActivate: [authGuard],
       },
 
       // EDITAR PERFIL
@@ -92,29 +88,27 @@ export const routes: Routes = [
         component: EditarPerfil,
         title: 'Editar mi perfil',
 
-        canActivate: [
-          authGuard
-        ]
+        canActivate: [authGuard],
       },
 
       //SIN AUTORIZACIÓN
       {
         path: 'sin-autorizacion',
         component: SinAutorizacion,
-        title: 'Sin autorización'
+        title: 'Sin autorización',
       },
 
       // SERVICIOS
       {
         path: 'servicios',
         component: ServicioList,
-        title: 'Catálogo servicios'
+        title: 'Catálogo servicios',
       },
 
       {
         path: 'servicios/:id',
         component: ServicioDetail,
-        title: 'Detalle servicio'
+        title: 'Detalle servicio',
       },
 
       {
@@ -122,14 +116,11 @@ export const routes: Routes = [
         component: ServicioAdminList,
         title: 'Mantenimiento servicios',
 
-        canActivate: [
-          authGuard,
-          roleGuard
-        ],
+        canActivate: [authGuard, roleGuard],
 
         data: {
-          roles: ['ADMIN']
-        }
+          roles: ['ADMIN'],
+        },
       },
 
       {
@@ -137,14 +128,11 @@ export const routes: Routes = [
         component: ServicioCreatePage,
         title: 'Registrar servicio',
 
-        canActivate: [
-          authGuard,
-          roleGuard
-        ],
+        canActivate: [authGuard, roleGuard],
 
         data: {
-          roles: ['ADMIN']
-        }
+          roles: ['ADMIN'],
+        },
       },
 
       {
@@ -152,14 +140,11 @@ export const routes: Routes = [
         component: ServicioEditPage,
         title: 'Editar servicio',
 
-        canActivate: [
-          authGuard,
-          roleGuard
-        ],
+        canActivate: [authGuard, roleGuard],
 
         data: {
-          roles: ['ADMIN']
-        }
+          roles: ['ADMIN'],
+        },
       },
 
       // USUARIOS
@@ -168,14 +153,11 @@ export const routes: Routes = [
         component: UsuarioList,
         title: 'Catálogo usuarios',
 
-        canActivate: [
-          authGuard,
-          roleGuard
-        ],
+        canActivate: [authGuard, roleGuard],
 
         data: {
-          roles: ['ADMIN']
-        }
+          roles: ['ADMIN'],
+        },
       },
 
       {
@@ -183,14 +165,11 @@ export const routes: Routes = [
         component: UsuarioDetail,
         title: 'Detalle usuario',
 
-        canActivate: [
-          authGuard,
-          roleGuard
-        ],
+        canActivate: [authGuard, roleGuard],
 
         data: {
-          roles: ['ADMIN']
-        }
+          roles: ['ADMIN'],
+        },
       },
 
       {
@@ -198,27 +177,24 @@ export const routes: Routes = [
         component: UsuarioAdminList,
         title: 'Gestión usuarios',
 
-        canActivate: [
-          authGuard,
-          roleGuard
-        ],
+        canActivate: [authGuard, roleGuard],
 
         data: {
-          roles: ['ADMIN']
-        }
+          roles: ['ADMIN'],
+        },
       },
 
       // PROFESIONALES
       {
         path: 'profesionales',
         component: PerfilProfesionalList,
-        title: 'Catálogo profesionales'
+        title: 'Catálogo profesionales',
       },
 
       {
         path: 'profesionales/:id',
         component: PerfilProfesionalDetail,
-        title: 'Detalle profesional'
+        title: 'Detalle profesional',
       },
 
       {
@@ -226,14 +202,11 @@ export const routes: Routes = [
         component: PerfilProfesionalAdminList,
         title: 'Gestión profesionales',
 
-        canActivate: [
-          authGuard,
-          roleGuard
-        ],
+        canActivate: [authGuard, roleGuard],
 
         data: {
-          roles: ['ADMIN']
-        }
+          roles: ['ADMIN'],
+        },
       },
 
       {
@@ -241,14 +214,11 @@ export const routes: Routes = [
         component: PerfilProfesionalCreatePage,
         title: 'Registrar profesional',
 
-        canActivate: [
-          authGuard,
-          roleGuard
-        ],
+        canActivate: [authGuard, roleGuard],
 
         data: {
-          roles: ['ADMIN']
-        }
+          roles: ['ADMIN'],
+        },
       },
 
       {
@@ -256,14 +226,23 @@ export const routes: Routes = [
         component: PerfilProfesionalEditPage,
         title: 'Editar profesional',
 
-        canActivate: [
-          authGuard,
-          roleGuard
-        ],
+        canActivate: [authGuard, roleGuard],
 
         data: {
-          roles: ['ADMIN']
-        }
+          roles: ['ADMIN'],
+        },
+      },
+
+      {
+        path: 'admin/profesionales/:id',
+        component: PerfilProfesionalDetail,
+        title: 'Detalle profesional',
+
+        canActivate: [authGuard, roleGuard],
+
+        data: {
+          roles: ['ADMIN'],
+        },
       },
 
       // CITAS
@@ -272,14 +251,11 @@ export const routes: Routes = [
         component: CitaList,
         title: 'Listado de citas',
 
-        canActivate: [
-          authGuard,
-          roleGuard
-        ],
+        canActivate: [authGuard, roleGuard],
 
         data: {
-          roles: ['ADMIN']
-        }
+          roles: ['ADMIN'],
+        },
       },
 
       {
@@ -287,14 +263,11 @@ export const routes: Routes = [
         component: CitaCreatePage,
         title: 'Registrar cita',
 
-        canActivate: [
-          authGuard,
-          roleGuard
-        ],
+        canActivate: [authGuard, roleGuard],
 
         data: {
-          roles: ['CLIENTE']
-        }
+          roles: ['CLIENTE'],
+        },
       },
 
       {
@@ -302,14 +275,11 @@ export const routes: Routes = [
         component: CitaDetail,
         title: 'Detalle cita',
 
-        canActivate: [
-          authGuard,
-          roleGuard
-        ],
+        canActivate: [authGuard, roleGuard],
 
         data: {
-          roles: ['ADMIN']
-        }
+          roles: ['ADMIN'],
+        },
       },
 
       // CATEGORÍAS
@@ -318,14 +288,11 @@ export const routes: Routes = [
         component: CategoriaList,
         title: 'Catálogo categorías',
 
-        canActivate: [
-          authGuard,
-          roleGuard
-        ],
+        canActivate: [authGuard, roleGuard],
 
         data: {
-          roles: ['ADMIN']
-        }
+          roles: ['ADMIN'],
+        },
       },
 
       // ESPECIALIDADES
@@ -334,22 +301,17 @@ export const routes: Routes = [
         component: EspecialidadList,
         title: 'Catálogo especialidades',
 
-        canActivate: [
-          authGuard,
-          roleGuard
-        ],
+        canActivate: [authGuard, roleGuard],
 
         data: {
-          roles: ['ADMIN']
-        }
+          roles: ['ADMIN'],
+        },
       },
-
     ],
   },
 
   {
     path: '**',
-    redirectTo: ''
-  }
-
+    redirectTo: '',
+  },
 ];
