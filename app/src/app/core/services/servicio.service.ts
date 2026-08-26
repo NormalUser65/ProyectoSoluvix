@@ -25,6 +25,15 @@ export class ServicioService {
     return this.http.put<ApiResponse<Servicio>>(`${this.apiUrl}/${id}`, dto);
   }
 
+  //Ultimos cambios
+  listarPorProfesional(idPerfil: number) {
+    return this.http.get<ApiPaginatedResponse<Servicio>>(`${this.apiUrl}/profesional/${idPerfil}`);
+  }
+
+  cambiarEstado(id: number, estado: boolean) {
+    return this.http.patch<ApiResponse<Servicio>>(`${this.apiUrl}/${id}/estado`, { estado });
+  }
+
   getImageUrl(imageName: string): string {
     return `${environment.imageUrl}/${imageName}`;
   }

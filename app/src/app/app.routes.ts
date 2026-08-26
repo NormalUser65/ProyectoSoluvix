@@ -130,7 +130,7 @@ export const routes: Routes = [
         canActivate: [authGuard, roleGuard],
 
         data: {
-          roles: ['ADMIN'],
+          roles: ['ADMIN', 'PROFESIONAL'],
         },
       },
 
@@ -142,7 +142,7 @@ export const routes: Routes = [
         canActivate: [authGuard, roleGuard],
 
         data: {
-          roles: ['ADMIN'],
+          roles: ['ADMIN', 'PROFESIONAL'],
         },
       },
 
@@ -154,7 +154,7 @@ export const routes: Routes = [
         canActivate: [authGuard, roleGuard],
 
         data: {
-          roles: ['ADMIN'],
+          roles: ['ADMIN', 'PROFESIONAL'],
         },
       },
 

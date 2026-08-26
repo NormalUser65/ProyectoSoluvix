@@ -1,115 +1,60 @@
 <section class="admin-panel">
-
   <section class="admin-header">
-
     <div>
-      <span class="eyebrow">
-        Administración
-      </span>
+      <span class="eyebrow"> Administración </span>
 
-      <h1>
-        Mantenimiento de servicios
-      </h1>
+      <h1>Mantenimiento de servicios</h1>
     </div>
 
+    <!-- Ocultar botón "Nuevo servicio" si es profesional -->
+    @if (!esProfesional()) {
       <a
-      mat-stroked-button
-      color="primary"
-      class="create-icon-button"
-      routerLink="/admin/servicios/create"
+        mat-stroked-button
+        color="primary"
+        class="create-icon-button"
+        routerLink="/admin/servicios/create"
       >
-      <mat-icon>add</mat-icon>
-      Nuevo servicio
-    </a>
-
+        <mat-icon>add</mat-icon>
+        Nuevo servicio
+      </a>
+    }
   </section>
-
 
   <section class="admin-filters">
-
     <mat-form-field appearance="outline">
-
       <mat-label>Buscar</mat-label>
 
-      <input
-        matInput
-        [(ngModel)]="search"
-        placeholder="Nombre, descripción o categoría"
-      />
+      <input matInput [(ngModel)]="search" placeholder="Nombre, descripción o categoría" />
 
-      <mat-icon matSuffix>
-        search
-      </mat-icon>
-
+      <mat-icon matSuffix> search </mat-icon>
     </mat-form-field>
 
-
-    <button
-      mat-stroked-button
-      class="secondary-button"
-      (click)="clearSearch()"
-    >
-      Limpiar
-    </button>
-
+    <button mat-stroked-button class="secondary-button" (click)="clearSearch()">Limpiar</button>
   </section>
 
-
-  <p class="summary">
-    {{ totalServicios() }} servicios encontrados
-  </p>
-
+  <p class="summary">{{ totalServicios() }} servicios encontrados</p>
 
   @if (loading()) {
-
     <div class="state">
-
       <mat-spinner diameter="42" />
 
-      <p>
-        Cargando mantenimiento...
-      </p>
-
+      <p>Cargando mantenimiento...</p>
     </div>
-
   } @else if (error()) {
-
     <div class="state error">
-
-      <mat-icon>
-        error
-      </mat-icon>
+      <mat-icon> error </mat-icon>
 
       <p>
         {{ error() }}
       </p>
-
     </div>
-
   } @else {
-
     <div class="table-wrapper">
-
-      <table
-        mat-table
-        [dataSource]="serviciosFiltrados()"
-        class="admin-table"
-      >
-
+      <table mat-table [dataSource]="serviciosFiltrados()" class="admin-table">
         <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef>Servicio</th>
 
-          <th
-            mat-header-cell
-            *matHeaderCellDef
-          >
-            Servicio
-          </th>
-
-          <td
-            mat-cell
-            *matCellDef="let srv"
-          >
-
+          <td mat-cell *matCellDef="let srv">
             <strong>
               {{ srv.nombre }}
             </strong>
@@ -117,194 +62,106 @@
             <small>
               {{ srv.descripcion }}
             </small>
-
           </td>
-
         </ng-container>
-
 
         <ng-container matColumnDef="categoria">
+          <th mat-header-cell *matHeaderCellDef>Categoría</th>
 
-          <th
-            mat-header-cell
-            *matHeaderCellDef
-          >
-            Categoría
-          </th>
-
-          <td
-            mat-cell
-            *matCellDef="let srv"
-          >
+          <td mat-cell *matCellDef="let srv">
             {{ srv.categoria?.nombre || 'Sin categoría' }}
           </td>
-
         </ng-container>
-
 
         <ng-container matColumnDef="precio">
+          <th mat-header-cell *matHeaderCellDef>Precio</th>
 
-          <th
-            mat-header-cell
-            *matHeaderCellDef
-          >
-            Precio
-          </th>
-
-          <td
-            mat-cell
-            *matCellDef="let srv"
-          >
-            {{ srv.precio | currency:'CRC' }}
+          <td mat-cell *matCellDef="let srv">
+            {{ srv.precio | currency: 'CRC' }}
           </td>
-
         </ng-container>
-
 
         <ng-container matColumnDef="duracion">
+          <th mat-header-cell *matHeaderCellDef>Duración</th>
 
-          <th
-            mat-header-cell
-            *matHeaderCellDef
-          >
-            Duración
-          </th>
-
-          <td
-            mat-cell
-            *matCellDef="let srv"
-          >
-            {{ srv.duracionEstimada }} min
-          </td>
-
+          <td mat-cell *matCellDef="let srv">{{ srv.duracionEstimada }} min</td>
         </ng-container>
-
 
         <ng-container matColumnDef="profesional">
+          <th mat-header-cell *matHeaderCellDef>Profesional</th>
 
-          <th
-            mat-header-cell
-            *matHeaderCellDef
-          >
-            Profesional
-          </th>
-
-          <td
-            mat-cell
-            *matCellDef="let srv"
-          >
+          <td mat-cell *matCellDef="let srv">
             {{ srv.perfil?.usuario?.nombre || 'Sin asignar' }}
           </td>
-
         </ng-container>
-
 
         <ng-container matColumnDef="modalidad">
+          <th mat-header-cell *matHeaderCellDef>Modalidad</th>
 
-          <th
-            mat-header-cell
-            *matHeaderCellDef
-          >
-            Modalidad
-          </th>
-
-          <td
-            mat-cell
-            *matCellDef="let srv"
-          >
+          <td mat-cell *matCellDef="let srv">
             {{ srv.modalidad?.nombre || 'N/A' }}
           </td>
-
         </ng-container>
-
 
         <ng-container matColumnDef="estado">
+          <th mat-header-cell *matHeaderCellDef>Estado</th>
 
-          <th
-            mat-header-cell
-            *matHeaderCellDef
-          >
-            Estado
-          </th>
-
-          <td
-            mat-cell
-            *matCellDef="let srv"
-          >
-            {{ srv.estado ? 'Activo' : 'Inactivo' }}
+          <td mat-cell *matCellDef="let srv">
+            <!-- Botón de toggle para activar/desactivar -->
+            <button
+              mat-stroked-button
+              class="status-button"
+              [class.deactivate-button]="srv.estado"
+              [class.activate-button]="!srv.estado"
+              (click)="toggleEstado(srv)"
+            >
+              <mat-icon>
+                {{ srv.estado ? 'toggle_on' : 'toggle_off' }}
+              </mat-icon>
+              {{ srv.estado ? 'Activo' : 'Inactivo' }}
+            </button>
           </td>
-
         </ng-container>
 
-
         <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef>Acciones</th>
 
-          <th
-            mat-header-cell
-            *matHeaderCellDef
-          >
-            Acciones
-          </th>
-
-          <td
-            mat-cell
-            *matCellDef="let srv"
-          >
-
+          <td mat-cell *matCellDef="let srv">
             <a
               mat-stroked-button
               color="primary"
               [routerLink]="['/servicios', srv.id]"
               class="view-icon-button"
             >
-              <mat-icon>
-                visibility
-              </mat-icon>
+              <mat-icon> visibility </mat-icon>
             </a>
 
+            <!-- Mostrar botón de editar solo si puede editar -->
+            @if (puedeEditar(srv)) {
+              <a
+                mat-stroked-button
+                color="accent"
+                class="edit-icon-button"
+                [routerLink]="['/admin/servicios/edit', srv.id]"
+                aria-label="Editar servicio"
+              >
+                <mat-icon> edit </mat-icon>
+              </a>
+            }
 
-            <a
-              mat-stroked-button
-              color="accent"
-              class="edit-icon-button"
-              [routerLink]="['/admin/servicios/edit', srv.id]"
-              aria-label="Editar servicio"
-            >
-              <mat-icon>
-                edit
-              </mat-icon>
-            </a>
-
-
-            <button
-              mat-stroked-button
-              color="warn"
-              class="delete-icon-button"
-            >
-              <mat-icon>
-                delete
-              </mat-icon>
-            </button>
-
+            <!-- Botón de eliminar solo para ADMIN -->
+            @if (!esProfesional()) {
+              <button mat-stroked-button color="warn" class="delete-icon-button">
+                <mat-icon> delete </mat-icon>
+              </button>
+            }
           </td>
-
         </ng-container>
 
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 
-        <tr
-          mat-header-row
-          *matHeaderRowDef="displayedColumns"
-        ></tr>
-
-        <tr
-          mat-row
-          *matRowDef="let row; columns: displayedColumns"
-        ></tr>
-
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
-
     </div>
-
   }
-
 </section>
