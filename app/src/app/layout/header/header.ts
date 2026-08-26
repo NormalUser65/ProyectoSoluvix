@@ -10,8 +10,8 @@ import { Usuario } from '../../core/models/usuario.model';
 
 interface MenuItem {
   label: string;
-  path: string;
   icon: string;
+  path?: string;
   roles?: string[];
   children?: MenuItem[];
 }
@@ -47,66 +47,79 @@ export class Header {
     },
     {
       label: 'Profesionales',
-      path: '/admin/profesionales',
+      path: '/profesionales',
       icon: 'person'
     }
   ];
 
+  readonly clientMenu: MenuItem[] = [
+    {
+      label: 'Mis citas',
+      path: '/mis-citas',
+      icon: 'event_note',
+      roles: ['CLIENTE']
+    },
+    {
+      label: 'Solicitar cita',
+      path: '/citas/create',
+      icon: 'event_available',
+      roles: ['CLIENTE']
+    }
+  ];
+
   readonly adminMenu: MenuItem[] = [
-  {
-    label: 'Usuarios',
-    path: '/usuarios',
-    icon: 'group'
-  },
-  {
-    label: 'Categorías',
-    path: '/categorias',
-    icon: 'category'
-  },
-  {
-    label: 'Especialidades',
-    path: '/especialidades',
-    icon: 'school'
-  },
-  {
-    label: 'Profesionales',
-    path: '/admin/profesionales',
-    icon: 'person'
-  },
-  {
-    label: 'Servicios',
-    path: '/admin/servicios',
-    icon: 'photo_camera'
-  },
-  {
-    label: 'Citas',
-    path: '/citas',
-    icon: 'event'
-  },
-  // 👇 NUEVO: Reportes
-  {
-    label: '📊 Reportes',
-    path: '/reportes',
-    icon: 'analytics',
-    children: [
-      {
-        label: 'Citas por Estado',
-        path: '/reportes/citas-estado',
-        icon: 'pie_chart'
-      },
-      {
-        label: 'Citas por Profesional',
-        path: '/reportes/citas-profesional',
-        icon: 'bar_chart'
-      },
-      {
-        label: 'Calificaciones',
-        path: '/reportes/calificaciones',
-        icon: 'star'
-      }
-    ]
-  }
-];
+    {
+      label: 'Usuarios',
+      path: '/usuarios',
+      icon: 'group'
+    },
+    {
+      label: 'Categorías',
+      path: '/categorias',
+      icon: 'category'
+    },
+    {
+      label: 'Especialidades',
+      path: '/especialidades',
+      icon: 'school'
+    },
+    {
+      label: 'Profesionales',
+      path: '/admin/profesionales',
+      icon: 'person'
+    },
+    {
+      label: 'Servicios',
+      path: '/admin/servicios',
+      icon: 'photo_camera'
+    },
+    {
+      label: 'Citas',
+      path: '/citas',
+      icon: 'event'
+    },
+    {
+      label: 'Reportes',
+      icon: 'analytics',
+      children: [
+        {
+          label: 'Citas por Estado',
+          path: '/reportes/citas-estado',
+          icon: 'pie_chart'
+        },
+        {
+          label: 'Citas por Profesional',
+          path: '/reportes/citas-profesional',
+          icon: 'bar_chart'
+        },
+        {
+          label: 'Calificaciones',
+          path: '/reportes/calificaciones',
+          icon: 'star'
+        }
+      ]
+    }
+  ];
 
   puedeMostrar(item: MenuItem): boolean {
     if (!item.roles?.length) {

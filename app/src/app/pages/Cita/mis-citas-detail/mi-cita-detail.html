@@ -1,0 +1,160 @@
+<a
+    mat-button
+    routerLink="/mis-citas"
+    >
+    <mat-icon>arrow_back</mat-icon>
+    Volver a mis citas
+    </a>
+
+    @if (loading()) {
+    <div class="state">
+        <mat-spinner diameter="42"></mat-spinner>
+
+        <p>
+        Cargando detalle...
+        </p>
+    </div>
+    } @else if (error()) {
+    <div class="state error">
+        <mat-icon>error</mat-icon>
+
+        <p>
+        {{ error() }}
+        </p>
+    </div>
+    } @else if (cita(); as item) {
+    <section class="detail-layout">
+        <mat-card class="detail-card">
+        <mat-card-content>
+            <div class="detail-header">
+            <div>
+                <span class="status">
+                {{ item.estado.nombre }}
+                </span>
+
+                <h1>
+                {{ item.servicio.nombre }}
+                </h1>
+
+                <p>
+                Información completa de su cita.
+                </p>
+            </div>
+
+            <mat-icon class="header-icon">
+                event
+            </mat-icon>
+            </div>
+
+            <section class="detail-section">
+            <h2>
+                <mat-icon>person</mat-icon>
+                Profesional
+            </h2>
+
+            <div class="detail-grid">
+                <div class="detail-item">
+                <span>Nombre</span>
+
+                <strong>
+                    {{ item.profesional.usuario.nombre }}
+                    {{ item.profesional.usuario.apellidos }}
+                </strong>
+                </div>
+
+                <div class="detail-item">
+                <span>Servicio</span>
+
+                <strong>
+                    {{ item.servicio.nombre }}
+                </strong>
+                </div>
+
+                <div class="detail-item">
+                <span>Modalidad</span>
+
+                <strong>
+                    {{ item.modalidad.nombre }}
+                </strong>
+                </div>
+
+                <div class="detail-item">
+                <span>Monto estimado</span>
+
+                <strong>
+                    ₡{{ item.montoEstimado }}
+                </strong>
+                </div>
+            </div>
+            </section>
+
+            <section class="detail-section">
+            <h2>
+                <mat-icon>schedule</mat-icon>
+                Fecha y horario
+            </h2>
+
+            <div class="detail-grid">
+                <div class="detail-item">
+                <span>Fecha</span>
+
+                <strong>
+                    {{ item.fechaCita | date:'dd/MM/yyyy' }}
+                </strong>
+                </div>
+
+                <div class="detail-item">
+                <span>Hora de inicio</span>
+
+                <strong>
+                    {{ item.horaInicio | date:'HH:mm' }}
+                </strong>
+                </div>
+
+                <div class="detail-item">
+                <span>Hora final</span>
+
+                <strong>
+                    {{ item.horaFin | date:'HH:mm' }}
+                </strong>
+                </div>
+            </div>
+            </section>
+
+            <section class="detail-section">
+            <h2>
+                <mat-icon>chat</mat-icon>
+                Comentarios
+            </h2>
+
+            <div class="comments">
+                <div class="comment">
+                <span>
+                    Comentario del cliente
+                </span>
+
+                <p>
+                    {{
+                    item.comentarioCliente ||
+                    'No hay comentario del cliente.'
+                    }}
+                </p>
+                </div>
+
+                @if (item.comentarioProfesional) {
+                <div class="comment">
+                    <span>
+                    Comentario del profesional
+                    </span>
+
+                    <p>
+                    {{ item.comentarioProfesional }}
+                    </p>
+                </div>
+                }
+            </div>
+            </section>
+        </mat-card-content>
+        </mat-card>
+    </section>
+}

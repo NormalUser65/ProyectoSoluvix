@@ -365,4 +365,110 @@ export const citaService = {
 
     return citaActualizada;
   },
+
+  async listarMisCitas(
+  idCliente: number,
+  idEstado?: number,
+  fechaInicio?: Date,
+  fechaFin?: Date
+) {
+  return prisma.cita.findMany({
+    where: {
+      idCliente,
+
+      ...(idEstado && {
+        idEstado
+      }),
+
+      ...(fechaInicio || fechaFin
+        ? {
+            fechaCita: {
+              ...(fechaInicio && {
+                gte: fechaInicio
+              }),
+
+              ...(fechaFin && {
+                lte: fechaFin
+              })
+            }
+          }
+        : {})
+    },
+
+    include: {
+      cliente: true,
+
+      profesional: {
+        include: {
+          usuario: true,
+          especialidades: {
+            include: {
+              especialidad: true
+            }
+          }
+        }
+      },
+
+      servicio: {
+        include: {
+          categoria: true
+        }
+      },
+
+      modalidad: true,
+      estado: true
+    },
+
+    orderBy: {
+      fechaCita: "desc"
+    }
+  });
+},
+
+  async obtenerMiCitaPorId(
+  id: number,
+  idCliente: number
+) {
+  const cita = await prisma.cita.findFirst({
+    where: {
+      id,
+      idCliente
+    },
+
+    include: {
+      cliente: true,
+
+      profesional: {
+        include: {
+          usuario: true,
+
+          especialidades: {
+            include: {
+              especialidad: true
+            }
+          }
+        }
+      },
+
+      servicio: {
+        include: {
+          categoria: true
+        }
+      },
+
+      modalidad: true,
+      estado: true,
+
+      historial: true
+    }
+  });
+
+  if (!cita) {
+    throw AppError.notFound(
+      "Cita no encontrada"
+    );
+  }
+
+  return cita;
+},
 };

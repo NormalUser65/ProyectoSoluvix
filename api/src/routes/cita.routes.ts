@@ -25,6 +25,16 @@ export class CitaRoutes {
     router.get("/filtrar/profesional", asyncHandler(controller.filtrarPorProfesional));
     router.get("/filtrar/rango-fechas", asyncHandler(controller.filtrarPorRangoFechas));
 
+    // Historial del cliente autenticado
+    router.get(
+      "/mis-citas",
+      authenticateToken,
+      asyncHandler(controller.listarMisCitas)
+    );
+
+    
+    router.get("/mis-citas/:id", authenticateToken, asyncHandler(controller.obtenerMiCitaPorId));
+
     // Obtener una cita por ID
     router.get("/:id", asyncHandler(controller.obtenerPorId));
 

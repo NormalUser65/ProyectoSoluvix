@@ -377,4 +377,79 @@
     width: 18px;
     height: 18px;
   }
+
+  
+}
+
+::ng-deep .profile-menu .mat-mdc-menu-content {
+  padding: 8px !important;
+  background: #ffffff !important;
+}
+
+::ng-deep .profile-menu.mat-mdc-menu-panel {
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 14px !important;
+
+  box-shadow:
+    0 10px 30px rgba(15, 23, 42, 0.10),
+    0 2px 8px rgba(15, 23, 42, 0.06) !important;
+
+  overflow: hidden !important;
+}
+
+
+/* Opciones */
+
+::ng-deep .profile-menu .mat-mdc-menu-item {
+  min-height: 48px !important;
+
+  border-radius: 10px !important;
+
+  color: #334155 !important;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+
+/* Texto */
+
+::ng-deep .profile-menu .mat-mdc-menu-item-text {
+  color: #334155 !important;
+  font-weight: 500 !important;
+}
+
+
+/* Iconos */
+
+::ng-deep .profile-menu .mat-mdc-menu-item mat-icon {
+  color: #64748b !important;
+  margin-right: 12px !important;
+}
+
+
+/* Hover */
+
+::ng-deep .profile-menu .mat-mdc-menu-item:hover {
+  background: #f8fafc !important;
+}
+
+::ng-deep .profile-menu .mat-mdc-menu-item:hover .mat-mdc-menu-item-text {
+  color: #0f172a !important;
+}
+
+::ng-deep .profile-menu .mat-mdc-menu-item:hover mat-icon {
+  color: #334155 !important;
+}
+
+
+/* Elimina cualquier fondo oscuro heredado */
+
+::ng-deep .profile-menu {
+  --mat-menu-container-color: #ffffff !important;
+  --mat-menu-item-label-text-color: #334155 !important;
+  --mat-menu-item-icon-color: #64748b !important;
+  --mat-menu-item-hover-state-layer-color: #f1f5f9 !important;
 }

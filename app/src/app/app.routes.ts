@@ -54,6 +54,9 @@ import { CitaEstado } from './pages/Reportes/cita-estado/cita-estado';
 import { CitaProfesional } from './pages/Reportes/cita-profesional/cita-profesional';
 import { Calificaciones } from './pages/Reportes/calificaciones/calificaciones';
 
+import { MisCitas } from './pages/Cita/mis-citas/mis-citas';
+import { MiCitaDetail } from './pages/Cita/mis-citas-detail/mi-cita-detail';
+
 export const routes: Routes = [
   {
     path: '',
@@ -346,6 +349,34 @@ export const routes: Routes = [
         title: 'Reporte de Calificaciones',
         canActivate: [authGuard, roleGuard],
         data: { roles: ['ADMIN', 'PROFESIONAL'] },
+      },
+      {
+        path: 'mis-citas',
+        component: MisCitas,
+        title: 'Mis citas',
+
+        canActivate: [
+          authGuard,
+          roleGuard
+        ],
+
+        data: {
+          roles: ['CLIENTE']
+        }
+      },
+      {
+      path: 'mis-citas/:id',
+        component: MiCitaDetail,
+        title: 'Detalle de mi cita',
+
+        canActivate: [
+          authGuard,
+          roleGuard
+        ],
+
+        data: {
+          roles: ['CLIENTE']
+        }
       },
     ],
   },

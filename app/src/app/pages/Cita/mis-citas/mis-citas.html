@@ -1,0 +1,207 @@
+<section class="page-header">
+    <span class="eyebrow">
+        Mi cuenta
+    </span>
+
+    <h1>
+        Mis citas
+    </h1>
+
+    <p>
+        Consulte el historial de sus solicitudes y filtre las citas
+        según su estado o fecha.
+    </p>
+    </section>
+
+    <section class="filters-section">
+    <div class="filters-header">
+        <div>
+        <h2>Filtrar historial</h2>
+        <p>
+            Puede utilizar uno o varios filtros al mismo tiempo.
+        </p>
+        </div>
+    </div>
+
+    <div class="filters-grid">
+        <mat-form-field appearance="outline">
+        <mat-label>Estado</mat-label>
+
+        <mat-select
+            [value]="idEstado()"
+            (selectionChange)="idEstado.set($event.value)"
+        >
+            <mat-option [value]="null">
+            Todos los estados
+            </mat-option>
+
+            @for (estado of estados(); track estado.id) {
+            <mat-option [value]="estado.id">
+                {{ estado.nombre }}
+            </mat-option>
+            }
+        </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+        <mat-label>Desde</mat-label>
+
+        <input
+            matInput
+            type="date"
+            [value]="fechaInicio()"
+            (change)="fechaInicio.set($any($event.target).value)"
+        />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+        <mat-label>Hasta</mat-label>
+
+        <input
+            matInput
+            type="date"
+            [value]="fechaFin()"
+            (change)="fechaFin.set($any($event.target).value)"
+        />
+        </mat-form-field>
+    </div>
+
+    <div class="filter-actions">
+        <button
+        mat-stroked-button
+        type="button"
+        (click)="limpiarFiltros()"
+        >
+        <mat-icon>restart_alt</mat-icon>
+        Limpiar
+        </button>
+
+        <button
+        mat-flat-button
+        type="button"
+        (click)="cargarCitas()"
+        >
+        <mat-icon>filter_alt</mat-icon>
+        Aplicar filtros
+        </button>
+    </div>
+    </section>
+
+    @if (loading()) {
+    <div class="state">
+        <mat-spinner diameter="42"></mat-spinner>
+
+        <p>
+        Cargando sus citas...
+        </p>
+    </div>
+    } @else if (error()) {
+    <div class="state error">
+        <mat-icon>error</mat-icon>
+
+        <p>
+        {{ error() }}
+        </p>
+    </div>
+    } @else if (citas().length === 0) {
+    <div class="state">
+        <mat-icon>event_busy</mat-icon>
+
+        <h2>No se encontraron citas</h2>
+
+        <p>
+        No existen citas que coincidan con los filtros seleccionados.
+        </p>
+    </div>
+    } @else {
+    <div class="result-summary">
+        {{ citas().length }} citas encontradas
+    </div>
+
+    <section class="appointments-grid">
+        @for (cita of citas(); track cita.id) {
+        <mat-card class="appointment-card">
+            <mat-card-content>
+            <div class="card-header">
+                <div class="service-icon">
+                <mat-icon>photo_camera</mat-icon>
+                </div>
+
+                <div class="card-title">
+                <span class="status">
+                    {{ cita.estado.nombre }}
+                </span>
+
+                <h2>
+                    {{ cita.servicio.nombre }}
+                </h2>
+                </div>
+            </div>
+
+            <div class="appointment-info">
+                <div class="info-item">
+                <mat-icon>person</mat-icon>
+
+                <div>
+                    <span>Profesional</span>
+
+                    <strong>
+                    {{ cita.profesional.usuario.nombre }}
+                    {{ cita.profesional.usuario.apellidos }}
+                    </strong>
+                </div>
+                </div>
+
+                <div class="info-item">
+                <mat-icon>calendar_today</mat-icon>
+
+                <div>
+                    <span>Fecha</span>
+
+                    <strong>
+                    {{ cita.fechaCita | date:'dd/MM/yyyy' }}
+                    </strong>
+                </div>
+                </div>
+
+                <div class="info-item">
+                <mat-icon>schedule</mat-icon>
+
+                <div>
+                    <span>Horario</span>
+
+                    <strong>
+                    {{ cita.horaInicio | date:'HH:mm' }}
+                    -
+                    {{ cita.horaFin | date:'HH:mm' }}
+                    </strong>
+                </div>
+                </div>
+
+                <div class="info-item">
+                <mat-icon>payments</mat-icon>
+
+                <div>
+                    <span>Monto estimado</span>
+
+                    <strong>
+                    ₡{{ cita.montoEstimado }}
+                    </strong>
+                </div>
+                </div>
+            </div>
+
+            <div class="card-actions">
+                <a
+                mat-stroked-button
+                [routerLink]="['/mis-citas', cita.id]"
+                >
+                <mat-icon>visibility</mat-icon>
+                Ver detalle
+                </a>
+            </div>
+            </mat-card-content>
+        </mat-card>
+        }
+    </section>
+}

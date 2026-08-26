@@ -130,4 +130,79 @@ export class CitaController {
     );
     return sendSuccess(res, citas);
   };
+
+  listarMisCitas = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  const usuarioId = req.user?.id;
+
+  if (!usuarioId) {
+    return res
+      .status(StatusCodes.UNAUTHORIZED)
+      .json({
+        success: false,
+        message: "Usuario no autenticado",
+      });
+  }
+
+  const idEstado =
+    req.query.idEstado
+      ? Number(req.query.idEstado)
+      : undefined;
+
+  const fechaInicio =
+    req.query.fechaInicio
+      ? new Date(String(req.query.fechaInicio))
+      : undefined;
+
+  const fechaFin =
+    req.query.fechaFin
+      ? new Date(String(req.query.fechaFin))
+      : undefined;
+
+  const citas =
+    await citaService.listarMisCitas(
+      usuarioId,
+      idEstado,
+      fechaInicio,
+      fechaFin
+    );
+
+  return sendSuccess(
+    res,
+    citas
+  );
+};
+
+obtenerMiCitaPorId = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  const usuarioId = req.user?.id;
+
+  if (!usuarioId) {
+    return res
+      .status(StatusCodes.UNAUTHORIZED)
+      .json({
+        success: false,
+        message: "Usuario no autenticado",
+      });
+  }
+
+  const id = Number(req.params.id);
+
+  const cita =
+    await citaService.obtenerMiCitaPorId(
+      id,
+      usuarioId
+    );
+
+  return sendSuccess(
+    res,
+    cita
+  );
+};
 }

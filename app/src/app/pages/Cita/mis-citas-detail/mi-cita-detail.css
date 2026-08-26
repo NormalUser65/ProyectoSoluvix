@@ -1,0 +1,221 @@
+    :host {
+    display: block;
+    min-height: 100vh;
+    padding: 3rem 5%;
+    background: #ffffff;
+    color: #263b48;
+    }
+
+    :host > a {
+    max-width: 1200px;
+    margin: 0 auto 1.5rem;
+    border-radius: 12px;
+    color: #4baac8;
+    font-weight: 700;
+    }
+
+    .detail-layout {
+    max-width: 1050px;
+    margin: 0 auto;
+    }
+
+    .detail-card {
+    overflow: hidden;
+    border: 1px solid #e3edf2;
+    border-radius: 26px;
+    background: #ffffff;
+    box-shadow: 0 10px 35px rgba(40, 69, 85, 0.08);
+    }
+
+    .detail-card mat-card-content {
+    padding: 0;
+    }
+
+    .detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 2rem 2.2rem;
+    border-bottom: 1px solid #eaf0f3;
+    background: #ffffff;
+    }
+
+    .detail-header h1 {
+    margin: 0.55rem 0 0.4rem;
+    color: #2d424f;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 800;
+    line-height: 1.15;
+    }
+
+    .detail-header p {
+    margin: 0;
+    color: #84929b;
+    line-height: 1.6;
+    }
+
+    .status {
+    display: inline-flex;
+    padding: 0.35rem 0.8rem;
+    align-items: center;
+    border-radius: 999px;
+    background: #fff2cd;
+    color: #c77a00;
+    font-size: 0.75rem;
+    font-weight: 750;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    }
+
+    .header-icon {
+    flex: 0 0 auto;
+    width: 72px;
+    height: 72px;
+    padding: 18px;
+    border-radius: 22px;
+    background: #e9f8fd;
+    color: #62c6e5;
+    font-size: 36px;
+    box-sizing: border-box;
+    }
+
+    .detail-section {
+    padding: 1.8rem 2.2rem;
+    border-bottom: 1px solid #edf2f4;
+    }
+
+    .detail-section:last-child {
+    border-bottom: 0;
+    }
+
+    .detail-section h2 {
+    display: flex;
+    margin: 0 0 1.3rem;
+    align-items: center;
+    gap: 0.55rem;
+    color: #344a57;
+    font-size: 1.05rem;
+    font-weight: 750;
+    }
+
+    .detail-section h2 mat-icon {
+    color: #68c7e4;
+    font-size: 21px;
+    }
+
+    .detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    }
+
+    .detail-item {
+    display: flex;
+    min-height: 74px;
+    padding: 1rem 1.1rem;
+    justify-content: center;
+    flex-direction: column;
+    border: 1px solid #e6eef2;
+    border-radius: 16px;
+    background: #fbfdfe;
+    }
+
+    .detail-item span {
+    margin-bottom: 0.3rem;
+    color: #929fa7;
+    font-size: 0.76rem;
+    font-weight: 600;
+    }
+
+    .detail-item strong {
+    color: #405460;
+    font-size: 0.95rem;
+    font-weight: 750;
+    line-height: 1.45;
+    }
+
+    .comments {
+    display: grid;
+    gap: 1rem;
+    }
+
+    .comment {
+    padding: 1.15rem 1.25rem;
+    border: 1px solid #e6eef2;
+    border-radius: 16px;
+    background: #fbfdfe;
+    }
+
+    .comment span {
+    display: block;
+    margin-bottom: 0.55rem;
+    color: #62bcd8;
+    font-size: 0.78rem;
+    font-weight: 750;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    }
+
+    .comment p {
+    margin: 0;
+    color: #536670;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    }
+
+    .state {
+    display: flex;
+    max-width: 1050px;
+    min-height: 280px;
+    margin: 2rem auto;
+    padding: 2rem;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 1px solid #e3edf2;
+    border-radius: 24px;
+    background: #ffffff;
+    color: #778790;
+    text-align: center;
+    }
+
+    .state > mat-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 0.8rem;
+    color: #68c7e4;
+    font-size: 48px;
+    }
+
+    .state.error {
+    border-color: #f2d7d7;
+    background: #fffafa;
+    color: #b65c5c;
+    }
+
+    .state.error > mat-icon {
+    color: #c76a6a;
+    }
+
+    @media (max-width: 750px) {
+    :host {
+        padding: 2rem 1rem;
+    }
+
+    .detail-header {
+        padding: 1.5rem;
+    }
+
+    .header-icon {
+        display: none;
+    }
+
+    .detail-section {
+        padding: 1.5rem;
+    }
+
+    .detail-grid {
+        grid-template-columns: 1fr;
+    }
+    }

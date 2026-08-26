@@ -1,11 +1,14 @@
 :host {
     display: block;
+    min-height: 100%;
+    background: #ffffff;
 }
 
 .edit-profile-page {
     max-width: 1000px;
     margin: 0 auto;
-    padding: 48px 24px;
+    padding: 48px 24px 64px;
+    background: #ffffff;
 }
 
 .page-header {
@@ -30,6 +33,7 @@
     margin: 0;
     color: #171d33;
     font-size: 2rem;
+    font-weight: 700;
 }
 
 .page-header p {
@@ -39,7 +43,18 @@
 
 .form-card {
     padding: 32px;
-    border-radius: 24px;
+    background: #ffffff !important;
+    color: #171d33 !important;
+    border: 1px solid #e8eaf0;
+    border-radius: 24px !important;
+    box-shadow:
+        0 8px 30px rgba(23, 29, 51, 0.06),
+        0 2px 8px rgba(23, 29, 51, 0.04) !important;
+}
+
+::ng-deep .form-card.mat-mdc-card {
+    background-color: #ffffff !important;
+    color: #171d33 !important;
 }
 
 .error-message {
@@ -48,6 +63,7 @@
     gap: 10px;
     margin-bottom: 24px;
     padding: 14px 16px;
+    border: 1px solid #fecaca;
     border-radius: 12px;
     background: #fff1f1;
     color: #b42318;
@@ -61,6 +77,29 @@
 
 .form-grid mat-form-field {
     width: 100%;
+}
+
+::ng-deep .edit-profile-page .mat-mdc-form-field {
+    --mdc-outlined-text-field-container-color: #ffffff;
+    --mdc-outlined-text-field-input-text-color: #242a3d;
+    --mdc-outlined-text-field-label-text-color: #747b8d;
+    --mdc-outlined-text-field-outline-color: #d8dce5;
+    --mdc-outlined-text-field-hover-outline-color: #aeb4c2;
+    --mdc-outlined-text-field-focus-outline-color: #635bff;
+    --mdc-outlined-text-field-focus-label-text-color: #635bff;
+}
+
+::ng-deep .edit-profile-page .mat-mdc-text-field-wrapper {
+    background: #ffffff !important;
+}
+
+::ng-deep .edit-profile-page input.mat-mdc-input-element {
+    color: #242a3d !important;
+    caret-color: #635bff !important;
+}
+
+::ng-deep .edit-profile-page .mat-mdc-form-field mat-icon {
+    color: #747b8d;
 }
 
 .password-section {
@@ -84,6 +123,7 @@
     margin: 0;
     color: #171d33;
     font-size: 1.1rem;
+    font-weight: 700;
 }
 
 .section-header p {
