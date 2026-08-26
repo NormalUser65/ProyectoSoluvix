@@ -48,7 +48,27 @@ export const citaService = {
     });
   },
 
-  async crear(data: CreateCitaDto) {
+  async crear(idCliente: number,
+  data: CreateCitaDto) {
+    const estadosNoBloqueantes = await prisma.estadoCita.findMany({
+      where: {
+        nombre: {
+          in: [
+            "Cancelada",
+            "Rechazada"
+          ]
+        }
+      },
+      select: {
+        id: true
+      }
+    });
+
+  const idsEstadosNoBloqueantes =
+    estadosNoBloqueantes.map(
+      (estado) => estado.id
+    );
+
     const estadoPendiente = await prisma.estadoCita.findFirst({
       where: { nombre: "Pendiente" },
     });
@@ -65,9 +85,18 @@ export const citaService = {
       throw AppError.badRequest("El servicio seleccionado no está activo");
     }
 
-    // Validar profesional
+    // Validar que el servicio pertenezca al profesional seleccionado
+    if (servicio.idPerfil !== data.idProfesional) {
+      throw AppError.badRequest(
+        "El servicio no pertenece al profesional seleccionado"
+      );
+    }
+
+    // Validar disponibilidad actual del profesional
     if (!servicio.perfil.disponible) {
-      throw AppError.badRequest("El profesional no está disponible");
+      throw AppError.badRequest(
+        "El profesional no está disponible"
+      );
     }
 
     // Validar fecha futura
@@ -85,12 +114,17 @@ export const citaService = {
     const traslape = await prisma.cita.findFirst({
       where: {
         idProfesional: data.idProfesional,
-        horaInicio: { lt: horaFinCalculada },
-        horaFin: { gt: data.horaInicio },
+
+        horaInicio: {
+          lt: horaFinCalculada
+        },
+
+        horaFin: {
+          gt: data.horaInicio
+        },
+
         idEstado: {
-          notIn: [
-            /* Cancelada, Rechazada */
-          ],
+          notIn: idsEstadosNoBloqueantes
         },
       },
     });
@@ -106,7 +140,7 @@ export const citaService = {
     // Crear cita
     return prisma.cita.create({
       data: {
-        idCliente: data.idCliente,
+        idCliente,
         idProfesional: data.idProfesional,
         idServicio: data.idServicio,
         idModalidad: data.idModalidad,
@@ -132,7 +166,6 @@ export const citaService = {
     return prisma.cita.update({
       where: { id },
       data: {
-        idCliente: data.idCliente,
         idProfesional: data.idProfesional,
         idServicio: data.idServicio,
         idModalidad: data.idModalidad,

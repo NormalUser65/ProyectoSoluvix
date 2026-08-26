@@ -1,7 +1,6 @@
 import { z } from "zod";
 
 const citaBaseSchema = z.object({
-  idCliente: z.number().int().positive("El cliente es obligatorio"),
   idProfesional: z.number().int().positive("El profesional es obligatorio"),
   idServicio: z.number().int().positive("El servicio es obligatorio"),
   idModalidad: z.number().int().positive("La modalidad es obligatoria"),
@@ -22,7 +21,13 @@ const citaBaseSchema = z.object({
     .number()
     .positive("El monto estimado debe ser mayor a 0")
     .optional(),
-});
+  }).refine(
+    (data) => data.horaFin > data.horaInicio,
+    {
+      message: "La hora final debe ser posterior a la hora inicial",
+      path: ["horaFin"],
+    }
+);
 
 // Crear
 export const createCitaSchema = citaBaseSchema.refine(

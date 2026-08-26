@@ -3,6 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import { citaService } from "../services/cita.service";
 import { sendSuccess } from "../utils/http-response";
 import { parseId } from "../utils/parse-id";
+import { AuthRequest } from "../middlewares/authMiddleware";
 
 export class CitaController {
   listar = async (req: Request, res: Response, next: NextFunction) => {
@@ -16,15 +17,32 @@ export class CitaController {
     return sendSuccess(res, cita);
   };
 
-  crear = async (req: Request, res: Response, next: NextFunction) => {
-    const cita = await citaService.crear(req.body);
-    return sendSuccess(
-      res,
-      cita,
-      "Cita registrada correctamente",
-      StatusCodes.CREATED,
-    );
-  };
+  crear = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  const usuarioId = req.user?.id;
+
+  if (!usuarioId) {
+    return res.status(StatusCodes.UNAUTHORIZED).json({
+      success: false,
+      message: "Usuario no autenticado",
+    });
+  }
+
+  const cita = await citaService.crear(
+    usuarioId,
+    req.body
+  );
+
+  return sendSuccess(
+    res,
+    cita,
+    "Cita registrada correctamente",
+    StatusCodes.CREATED
+  );
+};
 
   actualizar = async (req: Request, res: Response, next: NextFunction) => {
     const id = parseId(req.params.id);

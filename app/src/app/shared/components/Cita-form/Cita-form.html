@@ -8,19 +8,6 @@
 
     <div class="form-grid two-columns">
       <mat-form-field appearance="outline">
-        <mat-label>Cliente</mat-label>
-        <mat-select [formField]="citaForm.idCliente">
-          <mat-option [value]="null">Seleccione un cliente</mat-option>
-          @for (cliente of clientes(); track cliente.id) {
-            <mat-option [value]="cliente.id">{{ getNombreCliente(cliente) }}</mat-option>
-          }
-        </mat-select>
-        @if (citaForm.idCliente().touched() && citaForm.idCliente().invalid()) {
-          <mat-error>{{ citaForm.idCliente().errors()[0].message }}</mat-error>
-        }
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
         <mat-label>Profesional</mat-label>
         <mat-select
           [formField]="citaForm.idProfesional"
@@ -66,15 +53,18 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Modalidad</mat-label>
-        <mat-select [formField]="citaForm.idModalidad">
-          <mat-option [value]="null">Seleccione una modalidad</mat-option>
+        <mat-select
+          [formField]="citaForm.idModalidad">
+          <mat-option [value]="null">Seleccione primero un servicio</mat-option>
+
           @for (modalidad of modalidades(); track modalidad.id) {
-            <mat-option [value]="modalidad.id">{{ getNombreModalidad(modalidad) }}</mat-option>
+            <mat-option [value]="modalidad.id">
+              {{ getNombreModalidad(modalidad) }}
+            </mat-option>
           }
         </mat-select>
-        @if (citaForm.idModalidad().touched() && citaForm.idModalidad().invalid()) {
-          <mat-error>{{ citaForm.idModalidad().errors()[0].message }}</mat-error>
-        }
+        
+        <mat-hint>La modalidad se asigna según el servicio seleccionado.</mat-hint>
       </mat-form-field>
     </div>
   </section>

@@ -34,7 +34,6 @@ export interface Cita {
 }
 
 export interface CitaCreateDto {
-  idCliente: number;
   idProfesional: number;
   idServicio: number;
   idModalidad: number;

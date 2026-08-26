@@ -10,6 +10,7 @@ import {
   cancelarCitaSchema,
   completarCitaSchema,
 } from "../dtos/cita.dto";
+import { authenticateToken } from "../middlewares/authMiddleware";
 
 export class CitaRoutes {
   static get routes(): Router {
@@ -28,7 +29,7 @@ export class CitaRoutes {
     router.get("/:id", asyncHandler(controller.obtenerPorId));
 
     // Crear cita
-    router.post("/", validateRequest(createCitaSchema), asyncHandler(controller.crear));
+    router.post("/", authenticateToken, validateRequest(createCitaSchema), asyncHandler(controller.crear));
 
     // Actualizar cita
     router.put("/:id", validateRequest(updateCitaSchema), asyncHandler(controller.actualizar));

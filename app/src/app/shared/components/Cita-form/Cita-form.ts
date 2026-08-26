@@ -12,8 +12,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 
 import { CitaCreateDto, CitaFormModel } from '../../../core/models/cita.model';
-
-import { Usuario } from '../../../core/models/usuario.model';
 import { PerfilProfesional } from '../../../core/models/perfilProfesional.model';
 import { Servicio } from '../../../core/models/servicio.model';
 import { Modalidad } from '../../../core/models/modalidad.model';
@@ -37,7 +35,6 @@ import { Modalidad } from '../../../core/models/modalidad.model';
   styleUrl: './cita-form.css',
 })
 export class CitaForm {
-  clientes = input<Usuario[]>([]);
   profesionales = input<PerfilProfesional[]>([]);
   servicios = input<Servicio[]>([]);
   modalidades = input<Modalidad[]>([]);
@@ -59,7 +56,6 @@ export class CitaForm {
   });
 
   citaForm = form(this.citaModel, (path) => {
-    required(path.idCliente, { message: 'Seleccione un cliente' });
     required(path.idProfesional, { message: 'Seleccione un profesional' });
     required(path.idServicio, { message: 'Seleccione un servicio' });
     required(path.idModalidad, { message: 'Seleccione una modalidad' });
@@ -85,8 +81,8 @@ export class CitaForm {
       const hoy = new Date();
       hoy.setHours(0, 0, 0, 0);
 
-      if (fechaSeleccionada < hoy) {
-        return { kind: 'fechaPasada', message: 'La fecha de la cita no puede estar en el pasado' };
+      if (fechaSeleccionada <= hoy) {
+        return { kind: 'fechaPasada', message: 'La fecha de la cita debe ser posterior al día de hoy' };
       }
       return undefined;
     });
@@ -119,16 +115,22 @@ export class CitaForm {
 
   submit() {
     if (this.isSubmitting()) return;
+
     this.marcarCamposComoTocados();
+
     if (this.formularioInvalido()) return;
 
     const dto = this.buildDto();
-    console.log('JSON enviado al API:', JSON.stringify(dto, null, 2));
+
+    console.log(
+      'JSON enviado al API:',
+      JSON.stringify(dto, null, 2)
+    );
+
     this.guardar.emit(dto);
   }
 
   private marcarCamposComoTocados() {
-    this.citaForm.idCliente().markAsTouched();
     this.citaForm.idProfesional().markAsTouched();
     this.citaForm.idServicio().markAsTouched();
     this.citaForm.idModalidad().markAsTouched();
@@ -140,7 +142,6 @@ export class CitaForm {
 
   private formularioInvalido(): boolean {
     return (
-      this.citaForm.idCliente().invalid() ||
       this.citaForm.idProfesional().invalid() ||
       this.citaForm.idServicio().invalid() ||
       this.citaForm.idModalidad().invalid() ||
@@ -159,7 +160,6 @@ export class CitaForm {
     const horaFin = new Date(`${value.fechaCita}T${value.horaFin}:00`).toISOString();
 
     return {
-      idCliente: Number(value.idCliente),
       idProfesional: Number(value.idProfesional),
       idServicio: Number(value.idServicio),
       idModalidad: Number(value.idModalidad),
@@ -173,10 +173,8 @@ export class CitaForm {
 
   private recalcularHoraFin() {
     const servicioId = this.citaModel().idServicio;
-    const profesionalId = this.citaModel().idProfesional;
 
     const servicio = this.servicios().find((s) => s.id === servicioId);
-    const profesional = this.profesionales().find((p) => p.id === profesionalId);
 
     if (!servicio) return;
 
@@ -189,7 +187,7 @@ export class CitaForm {
 
       const horaFinStr = horaInicioCompleta.toISOString().split('T')[1].substring(0, 5); // HH:mm
 
-      const monto = Number(servicio.precio) + Number(profesional?.tarifaBase ?? 0);
+      const monto = Number(servicio.precio);
 
       this.citaModel.update((model) => ({
         ...model,
@@ -200,7 +198,20 @@ export class CitaForm {
   }
 
   onServicioChange(servicioId: number) {
-    this.citaModel.update((model) => ({ ...model, idServicio: servicioId }));
+    const servicio = this.servicios().find(
+      (s) => s.id === servicioId
+    );
+
+    if (!servicio) {
+      return;
+    }
+
+    this.citaModel.update((model) => ({
+      ...model,
+      idServicio: servicioId,
+      idModalidad: servicio.idModalidad,
+    }));
+
     this.recalcularHoraFin();
   }
 
@@ -212,14 +223,6 @@ export class CitaForm {
   onHoraInicioChange(horaInicio: string) {
     this.citaModel.update((model) => ({ ...model, horaInicio }));
     this.recalcularHoraFin();
-  }
-
-  getNombreCliente(cliente: Usuario): string {
-    const item = cliente as any;
-    const nombre = item.nombre ?? item.nombreCompleto ?? item.usuario?.nombre ?? '';
-    const apellidos = item.apellidos ?? item.apellido ?? item.usuario?.apellidos ?? '';
-    const resultado = `${nombre} ${apellidos}`.trim();
-    return resultado || `Cliente #${cliente.id}`;
   }
 
   getNombreProfesional(profesional: PerfilProfesional): string {
