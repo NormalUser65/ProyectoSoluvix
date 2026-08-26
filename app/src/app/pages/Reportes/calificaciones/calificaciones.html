@@ -1,0 +1,199 @@
+<section class="reporte-container">
+  <header class="reporte-header">
+    <h1>Reporte de Calificaciones</h1>
+    <p>Análisis de calificaciones y reseñas de servicios</p>
+    @if (esProfesional()) {
+      <span class="rol-badge">Visualizando tus propios datos</span>
+    }
+    @if (esAdmin()) {
+      <span class="rol-badge">Administrador - Todos los profesionales</span>
+    }
+  </header>
+
+  <!-- Filtros -->
+  <mat-card class="filtros-card">
+    <div class="filtros-grid">
+      @if (esAdmin()) {
+        <mat-form-field appearance="outline">
+          <mat-label>Profesional</mat-label>
+          <mat-select [value]="idProfesional()" (selectionChange)="idProfesional.set($event.value)">
+            <mat-option [value]="null">Seleccione un profesional</mat-option>
+            @for (prof of profesionales(); track prof.id) {
+              <mat-option [value]="prof.id">
+                {{ prof.usuario?.nombre }} {{ prof.usuario?.apellidos }}
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      }
+
+      <mat-form-field appearance="outline">
+        <mat-label>Umbral de baja calificación</mat-label>
+        <input
+          matInput
+          type="number"
+          min="1"
+          max="5"
+          step="0.5"
+          [ngModel]="umbralBajaCalificacion()"
+          (ngModelChange)="umbralBajaCalificacion.set($event)"
+        />
+        <mat-hint>Valor entre 1 y 5 (actual: {{ umbralBajaCalificacion() }})</mat-hint>
+      </mat-form-field>
+    </div>
+
+    <div class="filtros-acciones">
+      <button mat-raised-button color="primary" (click)="generarReporte()">
+        <mat-icon>refresh</mat-icon>
+        Generar reporte
+      </button>
+      <button mat-stroked-button (click)="limpiarFiltros()">
+        <mat-icon>filter_alt_off</mat-icon>
+        Limpiar filtros
+      </button>
+    </div>
+  </mat-card>
+
+  <!-- Resultados -->
+  @if (loading()) {
+    <div class="state">
+      <mat-spinner diameter="42" />
+      <p>Generando reporte...</p>
+    </div>
+  } @else if (error()) {
+    <div class="state error">
+      <mat-icon>error</mat-icon>
+      <p>{{ error() }}</p>
+    </div>
+  } @else if (reporte(); as reporte) {
+    @if (profesionalData(); as profesional) {
+      <!-- Resumen del profesional -->
+      <mat-card class="resumen-card">
+        <div class="resumen-header">
+          <div>
+            <h2>{{ profesional.nombre }}</h2>
+            <span class="subtitle">Perfil profesional</span>
+          </div>
+          <div class="resumen-stats">
+            <div class="stat-item">
+              <span class="stat-label">Promedio general</span>
+              <span
+                class="stat-value"
+                [style.color]="getColorPromedio(profesional.promedioGeneral)"
+              >
+                {{ profesional.promedioGeneral > 0 ? profesional.promedioGeneral : 'Sin reseñas' }}
+              </span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Total reseñas</span>
+              <span class="stat-value">{{ profesional.totalResenas }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Estrellas -->
+        @if (profesional.promedioGeneral > 0) {
+          <div class="estrellas-container">
+            @for (estrella of getEstrellas(profesional.promedioGeneral); track $index) {
+              <mat-icon class="star-icon" [class.filled]="estrella === 1">
+                {{ estrella === 1 ? 'star' : 'star_border' }}
+              </mat-icon>
+            }
+            <span
+              class="status-badge"
+              [style.background]="getStatusColor(profesional.promedioGeneral)"
+            >
+              {{ getStatusLabel(profesional.promedioGeneral) }}
+            </span>
+          </div>
+        } @else {
+          <div class="sin-resenas">
+            <mat-icon>chat_bubble_outline</mat-icon>
+            <span>Este profesional aún no tiene reseñas</span>
+          </div>
+        }
+      </mat-card>
+
+      <!-- Mejor Servicio -->
+      @if (mejorServicio(); as servicio) {
+        <mat-card class="mejor-servicio-card">
+          <div class="mejor-servicio-header">
+            <mat-icon class="trophy-icon">emoji_events</mat-icon>
+            <div>
+              <h3>Mejor servicio calificado</h3>
+              <p class="servicio-nombre">{{ servicio.nombreServicio }}</p>
+            </div>
+          </div>
+          <div class="mejor-servicio-stats">
+            <div class="stat-item">
+              <span class="stat-label">Promedio</span>
+              <span class="stat-value" [style.color]="getColorPromedio(servicio.promedio)">
+                {{ servicio.promedio }}
+              </span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Reseñas</span>
+              <span class="stat-value">{{ servicio.totalResenas }}</span>
+            </div>
+          </div>
+        </mat-card>
+      }
+
+      <!-- Servicios con baja calificación -->
+      @if (serviciosBajaCalificacion().length > 0) {
+        <mat-card class="baja-calificacion-card">
+          <div class="baja-calificacion-header">
+            <mat-icon class="warning-icon">warning</mat-icon>
+            <div>
+              <h3>Servicios con baja calificación</h3>
+              <p class="umbral-info">Por debajo del umbral de {{ umbralActual() }}</p>
+            </div>
+          </div>
+
+          <div class="baja-calificacion-grid">
+            @for (servicio of serviciosBajaCalificacion(); track servicio.idServicio) {
+              <div class="baja-item">
+                <span class="baja-nombre">{{ servicio.nombreServicio }}</span>
+                <span class="baja-promedio" [style.color]="getColorPromedio(servicio.promedio)">
+                  {{ servicio.promedio }} ⭐
+                </span>
+                <span class="baja-resenas">{{ servicio.totalResenas }} reseñas</span>
+              </div>
+            }
+          </div>
+        </mat-card>
+      } @else if (profesional.totalResenas > 0) {
+        <mat-card class="sin-baja-card">
+          <mat-icon>check_circle</mat-icon>
+          <div>
+            <h3>Todos los servicios están bien calificados</h3>
+            <p>Ningún servicio está por debajo del umbral de {{ umbralActual() }}</p>
+          </div>
+        </mat-card>
+      }
+
+      <!-- Todos los servicios -->
+      @if (todosServicios().length > 0) {
+        <mat-card class="todos-servicios-card">
+          <h3>Todos los servicios</h3>
+          <div class="servicios-grid">
+            @for (servicio of todosServicios(); track servicio.idServicio) {
+              <div class="servicio-item" [class.baja]="isBajaCalificacion(servicio.promedio)">
+                <span class="servicio-nombre-item">{{ servicio.nombreServicio }}</span>
+                <div class="servicio-stats">
+                  <span
+                    class="servicio-promedio"
+                    [style.color]="getColorPromedio(servicio.promedio)"
+                  >
+                    {{ servicio.promedio }} ⭐
+                  </span>
+                  <span class="servicio-resenas">{{ servicio.totalResenas }} reseñas</span>
+                </div>
+              </div>
+            }
+          </div>
+        </mat-card>
+      }
+    }
+  }
+</section>

@@ -86,6 +86,63 @@
             </div>
           </div>
         }
+
+        <div class="resenas-section">
+          <div class="resenas-header">
+            <h3>Reseñas</h3>
+            <div class="resenas-stats">
+              @if (totalResenas() > 0) {
+                <span class="promedio">
+                  <mat-icon>star</mat-icon>
+                  {{ promedio() }}
+                </span>
+                <span class="total">({{ totalResenas() }} reseñas)</span>
+              } @else {
+                <span class="sin-resenas">Aún no hay reseñas</span>
+              }
+            </div>
+          </div>
+
+          @if (loadingResenas()) {
+            <div class="loading-resenas">
+              <mat-spinner diameter="24" />
+              <span>Cargando reseñas...</span>
+            </div>
+          } @else {
+            @if (resenas().length === 0) {
+              <div class="empty-resenas">
+                <mat-icon>chat_bubble_outline</mat-icon>
+                <p>Este profesional aún no tiene reseñas.<br />Sé el primero en calificar su servicio.</p>
+              </div>
+            } @else {
+              <div class="resenas-list">
+                @for (resena of resenas(); track resena.id) {
+                  <div class="resena-item">
+                    <div class="resena-header">
+                      <div class="resena-cliente">
+                        <mat-icon>person</mat-icon>
+                        <span class="cliente-nombre">
+                          {{ resena.cliente?.nombre }} {{ resena.cliente?.apellidos }}
+                        </span>
+                      </div>
+                      <div class="resena-puntuacion">
+                        @for (star of [1,2,3,4,5]; track star) {
+                          <mat-icon class="star-icon" [class.filled]="star <= resena.puntuacion">
+                            {{ star <= resena.puntuacion ? 'star' : 'star_border' }}
+                          </mat-icon>
+                        }
+                      </div>
+                    </div>
+                    @if (resena.comentario) {
+                      <p class="resena-comentario">{{ resena.comentario }}</p>
+                    }
+                    <span class="resena-fecha">{{ resena.fechaResenna | date:'dd/MM/yyyy' }}</span>
+                  </div>
+                }
+              </div>
+            }
+          }
+        </div>
       </mat-card-content>
 
       <mat-card-actions>

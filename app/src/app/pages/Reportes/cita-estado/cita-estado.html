@@ -1,0 +1,145 @@
+<section class="reporte-container">
+  <header class="reporte-header">
+    <h1>Reporte de Citas por Estado</h1>
+    <p>Análisis de citas agrupadas por su estado actual</p>
+  </header>
+
+  <!-- Filtros -->
+  <mat-card class="filtros-card">
+    <div class="filtros-grid">
+      <mat-form-field appearance="outline">
+        <mat-label>Fecha inicio</mat-label>
+        <input
+          matInput
+          [matDatepicker]="pickerInicio"
+          [value]="fechaInicio()"
+          (dateChange)="fechaInicio.set($event.value?.toISOString().split('T')[0] || null)"
+        />
+        <mat-datepicker-toggle matSuffix [for]="pickerInicio"></mat-datepicker-toggle>
+        <mat-datepicker #pickerInicio></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Fecha fin</mat-label>
+        <input
+          matInput
+          [matDatepicker]="pickerFin"
+          [value]="fechaFin()"
+          (dateChange)="fechaFin.set($event.value?.toISOString().split('T')[0] || null)"
+        />
+        <mat-datepicker-toggle matSuffix [for]="pickerFin"></mat-datepicker-toggle>
+        <mat-datepicker #pickerFin></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Profesional</mat-label>
+        <mat-select [value]="idProfesional()" (selectionChange)="idProfesional.set($event.value)">
+          <mat-option [value]="null">Todos</mat-option>
+          @for (prof of profesionales(); track prof.id) {
+            <mat-option [value]="prof.id">
+              {{ prof.usuario?.nombre }} {{ prof.usuario?.apellidos }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Categoría</mat-label>
+        <mat-select [value]="idCategoria()" (selectionChange)="idCategoria.set($event.value)">
+          <mat-option [value]="null">Todas</mat-option>
+          @for (cat of categorias(); track cat.id) {
+            <mat-option [value]="cat.id">{{ cat.nombre }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="filtros-acciones">
+      <button mat-raised-button color="primary" (click)="generarReporte()">
+        <mat-icon>refresh</mat-icon>
+        Generar reporte
+      </button>
+      <button mat-stroked-button (click)="limpiarFiltros()">
+        <mat-icon>filter_alt_off</mat-icon>
+        Limpiar filtros
+      </button>
+    </div>
+  </mat-card>
+
+  <!-- Resultados -->
+  @if (loading()) {
+    <div class="state">
+      <mat-spinner diameter="42" />
+      <p>Generando reporte...</p>
+    </div>
+  } @else if (error()) {
+    <div class="state error">
+      <mat-icon>error</mat-icon>
+      <p>{{ error() }}</p>
+    </div>
+  } @else if (reporte(); as reporte) {
+    <!-- Resumen -->
+    <mat-card class="resumen-card">
+      <div class="resumen-header">
+        <h2>Resumen</h2>
+        <span class="total-general"
+          >Total de citas: <strong>{{ totalGeneral() }}</strong></span
+        >
+      </div>
+
+      @if (filtrosAplicados(); as filtros) {
+        <div class="filtros-aplicados">
+          <small>
+            Periodo:
+            @if (filtros.fechaInicio || filtros.fechaFin) {
+              {{ filtros.fechaInicio || 'Sin inicio' }} - {{ filtros.fechaFin || 'Sin fin' }}
+            } @else {
+              Todos los periodos
+            }
+            @if (filtros.profesional) {
+              | Profesional: {{ filtros.profesional }}
+            }
+            @if (filtros.categoria) {
+              | Categoría: {{ filtros.categoria }}
+            }
+          </small>
+        </div>
+      }
+    </mat-card>
+
+    <!-- Gráfico de estados -->
+    <div class="estados-grid">
+      @for (item of totalPorEstado(); track item.estado) {
+        <mat-card class="estado-card" [style.border-left-color]="getColorEstado(item.estado)">
+          <div class="estado-info">
+            <div class="estado-icon">
+              <mat-icon [style.color]="getColorEstado(item.estado)">
+                {{ getIconoEstado(item.estado) }}
+              </mat-icon>
+            </div>
+            <div class="estado-detalle">
+              <span class="estado-nombre">{{ item.estado }}</span>
+              <span class="estado-total">{{ item.total }} citas</span>
+              <div class="estado-barra">
+                <div
+                  class="estado-barra-llenado"
+                  [style.width.%]="item.porcentaje"
+                  [style.background]="getColorEstado(item.estado)"
+                ></div>
+              </div>
+              <span class="estado-porcentaje">{{ item.porcentaje }}%</span>
+            </div>
+          </div>
+        </mat-card>
+      }
+    </div>
+
+    <!-- Si no hay datos -->
+    @if (!hayDatos()) {
+      <div class="state">
+        <mat-icon>search_off</mat-icon>
+        <p>No hay citas que coincidan con los filtros seleccionados</p>
+      </div>
+    }
+  }
+</section>

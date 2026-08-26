@@ -1,0 +1,289 @@
+.reporte-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.reporte-header {
+  margin-bottom: 2rem;
+}
+
+.reporte-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #023047;
+}
+
+.reporte-header p {
+  margin: 0.5rem 0 0;
+  color: rgba(2, 48, 71, 0.7);
+  font-size: 1rem;
+}
+
+.rol-badge {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.25rem 1rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: #e3f2fd;
+  color: #0d47a1;
+}
+
+/* Filtros */
+.filtros-card {
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(2, 48, 71, 0.08);
+  box-shadow: 0 12px 28px rgba(2, 48, 71, 0.09);
+}
+
+.filtros-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.filtros-acciones {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.filtros-acciones button {
+  border-radius: 999px !important;
+  font-weight: 600 !important;
+}
+
+.filtros-acciones button mat-icon {
+  margin-right: 6px;
+}
+
+/* Resumen */
+.resumen-card {
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(2, 48, 71, 0.08);
+  box-shadow: 0 12px 28px rgba(2, 48, 71, 0.09);
+}
+
+.resumen-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.resumen-header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #023047;
+}
+
+.total-general {
+  font-size: 1rem;
+  color: rgba(2, 48, 71, 0.7);
+}
+
+.total-general strong {
+  font-size: 1.4rem;
+  color: #023047;
+}
+
+.filtros-aplicados {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(2, 48, 71, 0.06);
+}
+
+.filtros-aplicados small {
+  color: rgba(2, 48, 71, 0.5);
+  font-size: 0.85rem;
+}
+
+/* Tabla */
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 16px;
+  border: 1px solid rgba(2, 48, 71, 0.08);
+  background: #ffffff;
+  margin-bottom: 2rem;
+}
+
+.profesionales-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+.profesionales-table th,
+.profesionales-table td {
+  padding: 0.85rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(2, 48, 71, 0.06);
+}
+
+.profesionales-table th {
+  background: color-mix(in srgb, #023047 6%, white);
+  font-weight: 700;
+  color: #023047;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.profesionales-table td {
+  color: #023047;
+  font-size: 0.9rem;
+}
+
+.profesionales-table tbody tr:hover {
+  background: color-mix(in srgb, #ffb703 6%, white);
+}
+
+.profesionales-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.profesional-nombre {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+.profesional-nombre mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  color: rgba(2, 48, 71, 0.5);
+}
+
+.porcentaje-valor {
+  font-weight: 700;
+}
+
+/* Progreso general */
+.progreso-general {
+  padding: 1.5rem;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(2, 48, 71, 0.08);
+  box-shadow: 0 12px 28px rgba(2, 48, 71, 0.09);
+}
+
+.progreso-general h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #023047;
+}
+
+.progreso-barras {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.progreso-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.progreso-nombre {
+  min-width: 180px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #023047;
+  white-space: nowrap;
+}
+
+.progreso-barra {
+  flex: 1;
+  height: 8px;
+  background: #f0f0f0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progreso-llenado {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.8s ease;
+}
+
+.progreso-porcentaje {
+  min-width: 50px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(2, 48, 71, 0.7);
+  text-align: right;
+}
+
+/* Estados */
+.state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 3rem 0;
+  color: rgba(2, 48, 71, 0.7);
+}
+
+.state mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+}
+
+.state.error {
+  color: #c62828;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .reporte-container {
+    padding: 1rem;
+  }
+
+  .filtros-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filtros-acciones {
+    flex-direction: column;
+  }
+
+  .filtros-acciones button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .resumen-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .profesionales-table {
+    min-width: 500px;
+  }
+
+  .progreso-item {
+    flex-wrap: wrap;
+  }
+
+  .progreso-nombre {
+    min-width: 100%;
+  }
+}

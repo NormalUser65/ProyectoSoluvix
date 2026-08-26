@@ -276,4 +276,178 @@ mat-card-actions button mat-icon {
   .info-item {
     padding: 0.5rem 0.75rem;
   }
+
+  .resenas-section {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(2, 48, 71, 0.08);
+}
+
+.resenas-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.resenas-header h3 {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: rgba(2, 48, 71, 0.5);
+}
+
+.resenas-stats {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.promedio {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #023047;
+}
+
+.promedio mat-icon {
+  color: #ffb703;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.total {
+  font-size: 0.85rem;
+  color: rgba(2, 48, 71, 0.5);
+}
+
+.sin-resenas {
+  font-size: 0.85rem;
+  color: rgba(2, 48, 71, 0.5);
+  font-style: italic;
+}
+
+.loading-resenas {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 0;
+  color: rgba(2, 48, 71, 0.6);
+}
+
+.empty-resenas {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.5rem 0;
+  color: rgba(2, 48, 71, 0.5);
+}
+
+.empty-resenas mat-icon {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+  color: #d1d5db;
+}
+
+.empty-resenas p {
+  margin: 0;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.resenas-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.resena-item {
+  padding: 0.75rem 1rem;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border: 1px solid rgba(2, 48, 71, 0.06);
+  transition: background 0.2s ease;
+}
+
+.resena-item:hover {
+  background: #f0f1f2;
+}
+
+.resena-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.resena-cliente {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.resena-cliente mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: rgba(2, 48, 71, 0.5);
+}
+
+.cliente-nombre {
+  font-weight: 600;
+  color: #023047;
+  font-size: 0.9rem;
+}
+
+.resena-puntuacion {
+  display: flex;
+  gap: 0.1rem;
+}
+
+.star-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  color: #d1d5db;
+}
+
+.star-icon.filled {
+  color: #ffb703;
+}
+
+.resena-comentario {
+  margin: 0.5rem 0 0.25rem;
+  font-size: 0.9rem;
+  color: rgba(2, 48, 71, 0.8);
+  line-height: 1.5;
+}
+
+.resena-fecha {
+  font-size: 0.75rem;
+  color: rgba(2, 48, 71, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .resenas-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .resena-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+}
+
 }

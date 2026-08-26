@@ -1,0 +1,253 @@
+.resena-create-container {
+  padding: 2rem;
+  max-width: 700px;
+  margin: 0 auto;
+  min-height: 80vh;
+  display: flex;
+  align-items: flex-start;
+}
+
+.resena-card {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 24px;
+  border: 1px solid rgba(2, 48, 71, 0.08);
+  box-shadow: 0 12px 40px rgba(2, 48, 71, 0.1);
+  overflow: hidden;
+}
+
+mat-card-header {
+  padding: 1.5rem 1.5rem 0 !important;
+}
+
+mat-card-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #023047;
+}
+
+mat-card-title mat-icon {
+  color: #ffb703;
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+}
+
+mat-card-subtitle {
+  font-size: 1rem;
+  color: rgba(2, 48, 71, 0.7);
+}
+
+mat-card-content {
+  padding: 1.5rem !important;
+}
+
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem 0;
+  color: rgba(2, 48, 71, 0.7);
+}
+
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem 0;
+  color: #c62828;
+}
+
+.error-state mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+}
+
+/* Información de la cita */
+.cita-info {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(2, 48, 71, 0.06);
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid rgba(2, 48, 71, 0.04);
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-row .label {
+  font-weight: 600;
+  color: rgba(2, 48, 71, 0.6);
+  font-size: 0.85rem;
+}
+
+.info-row .value {
+  font-weight: 500;
+  color: #023047;
+}
+
+/* Formulario */
+.resena-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.field-label {
+  font-weight: 600;
+  color: #023047;
+  font-size: 0.95rem;
+}
+
+.required {
+  color: #c62828;
+}
+
+.optional {
+  color: rgba(2, 48, 71, 0.5);
+  font-weight: 400;
+}
+
+/* Estrellas */
+.puntuacion-container {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.25rem 0;
+}
+
+.star-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  transition: transform 0.2s ease;
+  border-radius: 8px;
+}
+
+.star-btn:hover {
+  transform: scale(1.2);
+}
+
+.star-btn mat-icon {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+  color: #d1d5db;  /* Gris cuando no está seleccionado */
+  transition: all 0.2s ease;
+}
+
+.star-btn.active mat-icon {
+  color: #ffb703;  /* Amarillo dorado cuando está seleccionado */
+}
+
+.star-btn:hover mat-icon {
+  color: #f59f00;  /* Amarillo más oscuro al pasar el mouse */
+  transform: scale(1.1);
+}
+
+.star-btn.active:hover mat-icon {
+  color: #e6a200;  /* Amarillo aún más oscuro al pasar el mouse sobre seleccionado */
+}
+
+/* Para pantallas pequeñas */
+@media (max-width: 768px) {
+  .star-btn mat-icon {
+    font-size: 32px;
+    width: 32px;
+    height: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .star-btn mat-icon {
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* Acciones */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(2, 48, 71, 0.08);
+}
+
+.form-actions button {
+  border-radius: 999px !important;
+  font-weight: 600 !important;
+  min-width: 120px;
+}
+
+.form-actions button mat-icon {
+  margin-right: 6px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .resena-create-container {
+    padding: 1rem;
+  }
+
+  mat-card-title {
+    font-size: 1.3rem;
+  }
+
+  .star-btn mat-icon {
+    font-size: 32px;
+    width: 32px;
+    height: 32px;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .form-actions button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .info-row {
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .resena-create-container {
+    padding: 0.5rem;
+  }
+
+  mat-card-content {
+    padding: 1rem !important;
+  }
+
+  .star-btn mat-icon {
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+  }
+}

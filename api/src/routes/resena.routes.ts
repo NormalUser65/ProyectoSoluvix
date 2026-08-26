@@ -9,13 +9,14 @@ export class ResenaRoutes {
     const router = Router();
     const controller = new ResenaController();
 
-    // Listar reseñas
     router.get("/", asyncHandler(controller.listar));
 
-    // Obtener reseña por id
     router.get("/:id", asyncHandler(controller.obtenerPorId));
 
-    // Crear reseña
+    router.get("/profesional/:idProfesional", asyncHandler(controller.obtenerPorProfesional));
+
+    router.get("/cita/:idCita", asyncHandler(controller.obtenerPorCita));
+
     router.post("/", validateRequest(createResenaSchema), asyncHandler(controller.crear));
 
     return router;

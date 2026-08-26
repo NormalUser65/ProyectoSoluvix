@@ -13,6 +13,7 @@ import { ServicioRoutes } from './Servicio.routes';
 import { ServicioEspecialidadRoutes } from './ServicioEspecialidad.routes';
 import { UsuarioRoutes } from './usuario.routes';
 import { ImageRoutes } from './image.routes';
+import { ReporteRoutes } from "./reporte.routes";
 
 export class AppRoutes {
     static get routes(): Router {
@@ -26,12 +27,12 @@ export class AppRoutes {
         router.use('/modalidad', ModalidadRoutes.routes) 
         router.use('/profesionales', PerfilProfesionalRoutes.routes)  
         router.use('/profesionalEspecialidad', ProfesionalEspecialidadRoutes.routes)       
-        router.use('/resena', ResenaRoutes.routes) 
+        router.use('/resenas', ResenaRoutes.routes) 
         router.use('/rol', RolRouts.routes)         
         router.use('/servicio', ServicioRoutes.routes)  
         router.use('/servicioEspecialidad', ServicioEspecialidadRoutes.routes)  
         router.use('/usuario', UsuarioRoutes.routes)  
-
+        router.use('/reportes', ReporteRoutes.routes);
         return router;
     }
 }
