@@ -21,26 +21,20 @@ const citaBaseSchema = z.object({
     .number()
     .positive("El monto estimado debe ser mayor a 0")
     .optional(),
-  }).refine(
-    (data) => data.horaFin > data.horaInicio,
-    {
-      message: "La hora final debe ser posterior a la hora inicial",
-      path: ["horaFin"],
-    }
-);
+});
 
-// Crear
+
 export const createCitaSchema = citaBaseSchema.refine(
-  (data: z.infer<typeof citaBaseSchema>) => data.horaFin > data.horaInicio,
+  (data) => data.horaFin > data.horaInicio,
   {
     message: "La hora final debe ser posterior a la hora inicial",
     path: ["horaFin"],
-  },
+  }
 );
 
 export const updateCitaSchema = citaBaseSchema.partial();
 
-// Nuevos DTOs para el cambio de estados próximamente
+
 export const aceptarCitaSchema = z.object({
   comentarioProfesional: z.string().trim().max(500).optional(),
 });
