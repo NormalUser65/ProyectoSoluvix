@@ -1,520 +1,288 @@
 <section class="detail-panel">
-
-  <a
-    mat-button
-    routerLink="/citas"
-    class="back-button"
-  >
-    <mat-icon>
-      arrow_back
-    </mat-icon>
-
+  <a mat-button routerLink="/citas" class="back-button">
+    <mat-icon> arrow_back </mat-icon>
     Volver a las citas
   </a>
 
-
   @if (loading()) {
-
     <div class="state">
-
       <mat-spinner diameter="42"></mat-spinner>
-
-      <p>
-        Cargando detalle...
-      </p>
-
+      <p>Cargando detalle...</p>
     </div>
-
   } @else if (error()) {
-
     <div class="state error">
-
-      <mat-icon>
-        error
-      </mat-icon>
-
-      <p>
-        {{ error() }}
-      </p>
-
+      <mat-icon> error </mat-icon>
+      <p>{{ error() }}</p>
     </div>
-
   } @else if (cita(); as cita) {
-
     <section class="detail-layout">
-
-
       <!-- ENCABEZADO PRINCIPAL -->
-
       <mat-card class="header-card">
-
         <div class="header-content">
-
           <div class="header-information">
-
-            <span class="eyebrow">
-              Gestión de citas
-            </span>
-
+            <span class="eyebrow"> Gestión de citas </span>
             <span
               class="status-badge"
               [class.pending-status]="cita.estado?.nombre === 'Pendiente'"
               [class.accepted-status]="cita.estado?.nombre === 'Aceptada'"
               [class.completed-status]="cita.estado?.nombre === 'Completada'"
               [class.cancelled-status]="
-                cita.estado?.nombre === 'Cancelada' ||
-                cita.estado?.nombre === 'Rechazada'
+                cita.estado?.nombre === 'Cancelada' || cita.estado?.nombre === 'Rechazada'
               "
             >
               {{ cita.estado?.nombre || 'Sin estado' }}
             </span>
-
-            <h1>
-              Cita #{{ cita.id }}
-            </h1>
-
-            <p class="subtitle">
-              Información completa de la cita seleccionada.
-            </p>
-
+            <h1>Cita #{{ cita.id }}</h1>
+            <p class="subtitle">Información completa de la cita seleccionada.</p>
           </div>
-
 
           <div class="date-box">
-
             <span class="date-icon">
-
-              <mat-icon>
-                event
-              </mat-icon>
-
+              <mat-icon> event </mat-icon>
             </span>
-
             <div>
-
-              <small>
-                Fecha y horario
-              </small>
-
+              <small> Fecha y horario </small>
               <strong>
-                {{ cita.fechaCita | date:'dd/MM/yyyy' }}
+                {{ cita.fechaCita | date: 'dd/MM/yyyy' }}
               </strong>
-
               <span>
-                {{ cita.horaInicio | date:'HH:mm' }}
+                {{ cita.horaInicio | date: 'HH:mm' }}
                 -
-                {{ cita.horaFin | date:'HH:mm' }}
+                {{ cita.horaFin | date: 'HH:mm' }}
               </span>
-
             </div>
-
           </div>
-
         </div>
-
       </mat-card>
 
-
       <!-- TARJETAS DE INFORMACIÓN -->
-
       <section class="info-grid">
-
-
         <!-- INFORMACIÓN GENERAL -->
-
         <mat-card class="info-card">
-
           <div class="card-heading">
-
             <span class="card-icon">
-
-              <mat-icon>
-                event_note
-              </mat-icon>
-
+              <mat-icon> event_note </mat-icon>
             </span>
-
             <div>
-
-              <small>
-                Datos principales
-              </small>
-
-              <h2>
-                Información general
-              </h2>
-
+              <small> Datos principales </small>
+              <h2>Información general</h2>
             </div>
-
           </div>
 
-
           <div class="info-list">
-
             <div class="info-row">
-
-              <strong>
-                Identificador
-              </strong>
-
-              <span>
-                #{{ cita.id }}
-              </span>
-
+              <strong> Identificador </strong>
+              <span> #{{ cita.id }} </span>
             </div>
-
-
             <div class="info-row">
-
-              <strong>
-                Fecha
-              </strong>
-
+              <strong> Fecha </strong>
               <span>
-                {{ cita.fechaCita | date:'dd/MM/yyyy' }}
+                {{ cita.fechaCita | date: 'dd/MM/yyyy' }}
               </span>
-
             </div>
-
-
             <div class="info-row">
-
-              <strong>
-                Hora
-              </strong>
-
+              <strong> Hora </strong>
               <span>
-                {{ cita.horaInicio | date:'HH:mm' }}
+                {{ cita.horaInicio | date: 'HH:mm' }}
                 -
-                {{ cita.horaFin | date:'HH:mm' }}
+                {{ cita.horaFin | date: 'HH:mm' }}
               </span>
-
             </div>
-
-
             <div class="info-row">
-
-              <strong>
-                Estado
-              </strong>
-
+              <strong> Estado </strong>
               <span>
                 {{ cita.estado?.nombre || 'Sin estado' }}
               </span>
-
             </div>
-
-
             <div class="info-row">
-
-              <strong>
-                Modalidad
-              </strong>
-
+              <strong> Modalidad </strong>
               <span>
                 {{ cita.modalidad?.nombre || 'N/A' }}
               </span>
-
             </div>
-
           </div>
-
         </mat-card>
 
-
-
         <!-- CLIENTE -->
-
         <mat-card class="info-card">
-
           <div class="card-heading">
-
             <span class="card-icon">
-
-              <mat-icon>
-                person
-              </mat-icon>
-
+              <mat-icon> person </mat-icon>
             </span>
-
             <div>
-
-              <small>
-                Persona solicitante
-              </small>
-
-              <h2>
-                Cliente
-              </h2>
-
+              <small> Persona solicitante </small>
+              <h2>Cliente</h2>
             </div>
-
           </div>
 
-
           <div class="info-list">
-
             <div class="info-row">
-
-              <strong>
-                Nombre
-              </strong>
-
+              <strong> Nombre </strong>
               <span>
                 {{ cita.cliente?.nombre || 'N/A' }}
               </span>
-
             </div>
-
-
             <div class="info-row">
-
-              <strong>
-                Correo
-              </strong>
-
+              <strong> Correo </strong>
               <span>
                 {{ cita.cliente?.correo || 'N/A' }}
               </span>
-
             </div>
-
-
             <div class="info-row">
-
-              <strong>
-                Teléfono
-              </strong>
-
+              <strong> Teléfono </strong>
               <span>
                 {{ cita.cliente?.telefono || 'No registrado' }}
               </span>
-
             </div>
-
           </div>
-
         </mat-card>
 
-
-
         <!-- PROFESIONAL -->
-
         <mat-card class="info-card">
-
           <div class="card-heading">
-
             <span class="card-icon">
-
-              <mat-icon>
-                badge
-              </mat-icon>
-
+              <mat-icon> badge </mat-icon>
             </span>
-
             <div>
-
-              <small>
-                Encargado del servicio
-              </small>
-
-              <h2>
-                Profesional
-              </h2>
-
+              <small> Encargado del servicio </small>
+              <h2>Profesional</h2>
             </div>
-
           </div>
 
-
           <div class="info-list">
-
             <div class="info-row">
-
-              <strong>
-                Nombre
-              </strong>
-
+              <strong> Nombre </strong>
               <span>
                 {{
-                  cita.profesional?.usuario?.nombre ||
-                  cita.profesional?.tituloProfesional ||
-                  'N/A'
+                  cita.profesional?.usuario?.nombre || cita.profesional?.tituloProfesional || 'N/A'
                 }}
               </span>
-
             </div>
-
-
             <div class="info-row">
-
-              <strong>
-                Correo
-              </strong>
-
+              <strong> Correo </strong>
               <span>
                 {{ cita.profesional?.usuario?.correo || 'N/A' }}
               </span>
-
             </div>
-
-
             <div class="info-row">
-
-              <strong>
-                Especialidad
-              </strong>
-
+              <strong> Especialidad </strong>
               <span>
-                {{
-                  cita.profesional
-                    ?.especialidades?.[0]
-                    ?.especialidad
-                    ?.nombre || 'N/A'
-                }}
+                {{ cita.profesional?.especialidades?.[0]?.especialidad?.nombre || 'N/A' }}
               </span>
-
             </div>
-
           </div>
-
         </mat-card>
 
-
-
         <!-- SERVICIO -->
-
         <mat-card class="info-card">
-
           <div class="card-heading">
-
             <span class="card-icon">
-
-              <mat-icon>
-                photo_camera
-              </mat-icon>
-
+              <mat-icon> photo_camera </mat-icon>
             </span>
-
             <div>
-
-              <small>
-                Servicio contratado
-              </small>
-
-              <h2>
-                Servicio
-              </h2>
-
+              <small> Servicio contratado </small>
+              <h2>Servicio</h2>
             </div>
-
           </div>
 
-
           <div class="info-list">
-
             <div class="info-row">
-
-              <strong>
-                Nombre
-              </strong>
-
+              <strong> Nombre </strong>
               <span>
                 {{ cita.servicio?.nombre || 'N/A' }}
               </span>
-
             </div>
-
-
             <div class="info-row">
-
-              <strong>
-                Categoría
-              </strong>
-
+              <strong> Categoría </strong>
               <span>
                 {{ cita.servicio?.categoria?.nombre || 'N/A' }}
               </span>
-
             </div>
-
-
             <div class="info-row">
-
-              <strong>
-                Precio
-              </strong>
-
-              <span class="price">
-                ₡{{ cita.servicio?.precio }}
-              </span>
-
+              <strong> Precio </strong>
+              <span class="price"> ₡{{ cita.servicio?.precio }} </span>
             </div>
-
-
             <div class="info-row">
-
-              <strong>
-                Duración
-              </strong>
-
-              <span>
-                {{ cita.servicio?.duracionEstimada }} min
-              </span>
-
+              <strong> Duración </strong>
+              <span> {{ cita.servicio?.duracionEstimada }} min </span>
             </div>
-
           </div>
-
         </mat-card>
-
-
 
         <!-- OBSERVACIONES -->
-
         <mat-card class="info-card observations-card full-width">
-
           <div class="card-heading">
-
             <span class="card-icon">
-
-              <mat-icon>
-                notes
-              </mat-icon>
-
+              <mat-icon> notes </mat-icon>
             </span>
-
             <div>
-
-              <small>
-                Información adicional
-              </small>
-
-              <h2>
-                Observaciones
-              </h2>
-
+              <small> Información adicional </small>
+              <h2>Observaciones</h2>
             </div>
-
           </div>
-
-
           <p class="description">
-
-            {{
-              cita.comentarioCliente ||
-              cita.comentarioProfesional ||
-              'No hay observaciones registradas.'
-            }}
-
+            {{ cita.comentarioCliente || 'No hay observaciones registradas.' }}
           </p>
-
         </mat-card>
 
+        <!-- RESEÑA -->
+        <mat-card class="info-card resena-card full-width">
+          <div class="card-heading">
+            <span class="card-icon">
+              <mat-icon>star_rate</mat-icon>
+            </span>
+            <div>
+              <small> Calificación del servicio </small>
+              <h2>Reseña</h2>
+            </div>
+          </div>
+
+          @if (loadingResena()) {
+            <div class="loading-resena">
+              <mat-spinner diameter="24" />
+              <span>Cargando reseña...</span>
+            </div>
+          } @else if (tieneResena()) {
+            <div class="resena-contenido">
+              <div class="resena-puntuacion">
+                @for (star of [1,2,3,4,5]; track star) {
+                  <mat-icon class="star-icon" [class.filled]="star <= resena()!.puntuacion">
+                    {{ star <= resena()!.puntuacion ? 'star' : 'star_border' }}
+                  </mat-icon>
+                }
+                <span class="puntuacion-texto">{{ resena()!.puntuacion }}/5</span>
+              </div>
+              @if (resena()?.comentario) {
+                <p class="resena-comentario">"{{ resena()?.comentario }}"</p>
+              }
+              <span class="resena-fecha">Reseñado el {{ resena()?.fechaResenna | date:'dd/MM/yyyy' }}</span>
+            </div>
+          } @else if (puedeResenar()) {
+            <div class="resena-accion">
+              <p class="resena-mensaje">¡Tu cita ha sido completada! ¿Cómo fue tu experiencia?</p>
+              <button mat-raised-button color="primary" (click)="irACrearResena()">
+                <mat-icon>star_rate</mat-icon>
+                Calificar servicio
+              </button>
+            </div>
+          } @else if (estaCompletada() && !esClientePropietario()) {
+            <div class="resena-info">
+              <mat-icon>info</mat-icon>
+              <span>Solo el cliente puede reseñar esta cita</span>
+            </div>
+          } @else if (!estaCompletada()) {
+            <div class="resena-info">
+              <mat-icon>info</mat-icon>
+              <span>La cita debe estar completada para poder reseñar</span>
+            </div>
+          } @else {
+            <div class="resena-info">
+              <mat-icon>info</mat-icon>
+              <span>No hay reseña para esta cita</span>
+            </div>
+          }
+        </mat-card>
       </section>
-
     </section>
-
   }
-
 </section>

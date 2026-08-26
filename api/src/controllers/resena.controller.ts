@@ -24,6 +24,28 @@ export class ResenaController {
     }
   };
 
+  obtenerPorProfesional = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const idProfesional = Number(req.params.idProfesional);
+      const resenas = await resenaService.obtenerPorProfesional(idProfesional);
+      return res.status(StatusCodes.OK).json({ success: true, data: resenas });
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  };
+
+  obtenerPorCita = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const idCita = Number(req.params.idCita);
+      const resena = await resenaService.obtenerPorCita(idCita);
+      return res.status(StatusCodes.OK).json({ success: true, data: resena });
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  };
+
   crear = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { idCita, idCliente, puntuacion, comentario } = req.body;

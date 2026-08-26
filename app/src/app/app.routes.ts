@@ -46,6 +46,14 @@ import { PerfilProfesionalEditPage } from './pages/PerfilProfesional/perfil-prof
 // Especialidades
 import { EspecialidadList } from './pages/Especialidad copy/especialidad-list/especialidad-list';
 
+// Reseña
+import { ResenaCreate } from './pages/Resenna/resenna-create/resena-create';
+
+// Reportes
+import { CitaEstado } from './pages/Reportes/cita-estado/cita-estado';
+import { CitaProfesional } from './pages/Reportes/cita-profesional/cita-profesional';
+import { Calificaciones } from './pages/Reportes/calificaciones/calificaciones';
+
 export const routes: Routes = [
   {
     path: '',
@@ -278,7 +286,7 @@ export const routes: Routes = [
         canActivate: [authGuard, roleGuard],
 
         data: {
-          roles: ['ADMIN'],
+          roles: ['CLIENTE', 'ADMIN'],
         },
       },
 
@@ -306,6 +314,38 @@ export const routes: Routes = [
         data: {
           roles: ['ADMIN'],
         },
+      },
+
+      {
+        path: 'resenas/create/:id',
+        component: ResenaCreate,
+        title: 'Crear reseña',
+        canActivate: [authGuard, roleGuard],
+        data: {
+          roles: ['CLIENTE'],
+        },
+      },
+
+      {
+        path: 'reportes/citas-estado',
+        component: CitaEstado,
+        title: 'Reporte de Citas por Estado',
+        canActivate: [authGuard, roleGuard],
+        data: { roles: ['ADMIN'] },
+      },
+      {
+        path: 'reportes/citas-profesional',
+        component: CitaProfesional,
+        title: 'Reporte de Citas por Profesional',
+        canActivate: [authGuard, roleGuard],
+        data: { roles: ['ADMIN', 'PROFESIONAL'] },
+      },
+      {
+        path: 'reportes/calificaciones',
+        component: Calificaciones,
+        title: 'Reporte de Calificaciones',
+        canActivate: [authGuard, roleGuard],
+        data: { roles: ['ADMIN', 'PROFESIONAL'] },
       },
     ],
   },

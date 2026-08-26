@@ -1,0 +1,126 @@
+<section class="resena-create-container">
+  <mat-card class="resena-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>star_rate</mat-icon>
+        Calificar servicio
+      </mat-card-title>
+      <mat-card-subtitle>
+        Deja tu reseña sobre la cita completada
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      @if (loading() && !cita()) {
+        <div class="loading-state">
+          <mat-spinner diameter="42" />
+          <p>Cargando información de la cita...</p>
+        </div>
+      }
+
+      @if (error()) {
+        <div class="error-state">
+          <mat-icon>error</mat-icon>
+          <p>{{ error() }}</p>
+          <button mat-raised-button color="primary" (click)="volver()">
+            <mat-icon>arrow_back</mat-icon>
+            Volver
+          </button>
+        </div>
+      }
+
+      @if (cita() && !error()) {
+        <div class="cita-info">
+          <div class="info-row">
+            <span class="label">Servicio:</span>
+            <span class="value">{{ cita()?.servicio?.nombre || 'N/A' }}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Profesional:</span>
+            <span class="value">{{ cita()?.profesional?.usuario?.nombre }} {{ cita()?.profesional?.usuario?.apellidos }}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Fecha:</span>
+            <span class="value">{{ cita()?.fechaCita | date:'dd/MM/yyyy' }}</span>
+          </div>
+        </div>
+
+        <form [formGroup]="resenaForm" (ngSubmit)="enviarResena()" class="resena-form">
+          <!-- Puntuación -->
+          <div class="form-field">
+            <label class="field-label">
+              Puntuación <span class="required">*</span>
+            </label>
+            <div class="puntuacion-container">
+              @for (p of puntuaciones; track p) {
+                <button
+                  type="button"
+                  class="star-btn"
+                  [class.active]="resenaForm.get('puntuacion')?.value === p"
+                  (click)="resenaForm.patchValue({ puntuacion: p })"
+                >
+                  <mat-icon>{{ resenaForm.get('puntuacion')?.value >= p ? 'star' : 'star_border' }}</mat-icon>
+                </button>
+              }
+            </div>
+            @if (resenaForm.get('puntuacion')?.invalid && resenaForm.get('puntuacion')?.touched) {
+              <mat-error>
+                {{ resenaForm.get('puntuacion')?.hasError('required') ? 'La puntuación es obligatoria' : 'La puntuación debe ser entre 1 y 5' }}
+              </mat-error>
+            }
+          </div>
+
+          <!-- Comentario -->
+          <div class="form-field">
+            <label class="field-label">Comentario <span class="optional">(opcional)</span></label>
+            <mat-form-field appearance="outline" class="full-width">
+              <textarea
+                matInput
+                formControlName="comentario"
+                rows="4"
+                placeholder="Cuéntanos tu experiencia..."
+                maxlength="500"
+              ></textarea>
+              <mat-hint align="end">
+                {{ resenaForm.get('comentario')?.value?.length || 0 }}/500
+              </mat-hint>
+            </mat-form-field>
+            @if (resenaForm.get('comentario')?.invalid && resenaForm.get('comentario')?.touched) {
+              <mat-error>
+                {{ resenaForm.get('comentario')?.hasError('maxlength') ? 'El comentario no puede superar los 500 caracteres' : '' }}
+              </mat-error>
+            }
+          </div>
+
+          <!-- Acciones -->
+          <div class="form-actions">
+            <button
+              mat-stroked-button
+              type="button"
+              (click)="volver()"
+              [disabled]="loading()"
+            >
+              <mat-icon>close</mat-icon>
+              Cancelar
+            </button>
+
+            <button
+              mat-raised-button
+              color="primary"
+              type="submit"
+              [disabled]="loading() || resenaForm.invalid"
+            >
+              @if (loading()) {
+                <mat-icon>hourglass_top</mat-icon>
+                Enviando...
+              } @else {
+                <mat-icon>send</mat-icon>
+                Enviar reseña
+              }
+            </button>
+          </div>
+        </form>
+      }
+    </mat-card-content>
+  </mat-card>
+</section>
